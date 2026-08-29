@@ -124,6 +124,16 @@ class LottoApp {
     this.historyList = document.getElementById('historyList');
     this.clearHistoryBtn = document.getElementById('clearHistoryBtn');
 
+    // Contact Form (Formspree)
+    this.contactForm = document.getElementById('contactForm');
+    this.contactFormContainer = document.getElementById('contactFormContainer');
+    this.contactSuccessCard = document.getElementById('contactSuccessCard');
+    this.contactErrorCard = document.getElementById('contactErrorCard');
+    this.contactErrorMessage = document.getElementById('contactErrorMessage');
+    this.submitContactBtn = document.getElementById('submitContactBtn');
+    this.resetContactFormBtn = document.getElementById('resetContactFormBtn');
+    this.retryContactBtn = document.getElementById('retryContactBtn');
+
     // Toast
     this.toast = document.getElementById('toast');
   }
@@ -210,6 +220,73 @@ class LottoApp {
         this.showToast('추첨 기록이 모두 삭제되었습니다.');
       }
     });
+
+    // Formspree Contact Form Submit
+    if (this.contactForm) {
+      this.contactForm.addEventListener('submit', (e) => this.handleContactSubmit(e));
+    }
+
+    if (this.resetContactFormBtn) {
+      this.resetContactFormBtn.addEventListener('click', () => {
+        this.contactForm.reset();
+        this.contactSuccessCard.classList.add('hidden');
+        this.contactErrorCard.classList.add('hidden');
+        this.contactFormContainer.classList.remove('hidden');
+      });
+    }
+
+    if (this.retryContactBtn) {
+      this.retryContactBtn.addEventListener('click', () => {
+        this.contactErrorCard.classList.add('hidden');
+        this.contactFormContainer.classList.remove('hidden');
+      });
+    }
+  }
+
+  // Handle Formspree AJAX submission
+  async handleContactSubmit(e) {
+    e.preventDefault();
+
+    const btnText = this.submitContactBtn.querySelector('.btn-text');
+    const btnSpinner = this.submitContactBtn.querySelector('.btn-spinner');
+
+    btnText.classList.add('hidden');
+    btnSpinner.classList.remove('hidden');
+    this.submitContactBtn.disabled = true;
+
+    const formData = new FormData(this.contactForm);
+
+    try {
+      const response = await fetch('https://formspree.io/f/xdeooqza', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        // Success
+        this.contactFormContainer.classList.add('hidden');
+        this.contactSuccessCard.classList.remove('hidden');
+        this.sound.playFanfare();
+        this.triggerConfetti();
+        this.showToast('문의가 성공적으로 접수되었습니다!');
+      } else {
+        const errorData = await response.json();
+        throw new Error(errorData.error || '서버 오류로 인해 전송에 실패했습니다.');
+      }
+    } catch (err) {
+      console.error('Contact Form Error:', err);
+      this.contactFormContainer.classList.add('hidden');
+      this.contactErrorMessage.textContent = err.message || '전송 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.';
+      this.contactErrorCard.classList.remove('hidden');
+      this.showToast('문의 전송에 실패했습니다.');
+    } finally {
+      btnText.classList.remove('hidden');
+      btnSpinner.classList.add('hidden');
+      this.submitContactBtn.disabled = false;
+    }
   }
 
   // Generate 6 unique random numbers (1~45) obeying fixed and excluded constraints
