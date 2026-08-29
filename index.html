@@ -2,446 +2,1341 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>황금손 로또 6/45 번호 추첨기 | Golden Lotto</title>
-  <meta name="description" content="다크 모드와 화이트 모드를 지원하는 실감나는 3D 애니메이션과 사운드 효과의 로또 6/45 행운 번호 추첨 사이트입니다.">
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>신비로운 오늘의 타로 운세 | Mystic Tarot Fortune</title>
+  <meta name="description" content="이름과 생년월일을 기반으로 시드 랜덤 알고리즘을 통해 오늘의 종합운, 애정운, 금전운, 건강운 및 오늘의 타로 카드를 알려드립니다.">
+  
+  <!-- Fonts: Pretendard & Cinzel (Tarot Roman Style) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Pretendard:wght@400;500;600;700;800;900&family=Song+Myung&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Canvas Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    /* ==========================================================================
+       1. VARIABLES & THEME (Mystic Tarot Aesthetics)
+       ========================================================================== */
+    :root {
+      --gold-primary: #d4af37;
+      --gold-light: #f7e089;
+      --gold-dark: #aa8214;
+      --gold-gradient: linear-gradient(135deg, #fae084 0%, #d4af37 50%, #997819 100%);
+      --gold-glow: rgba(212, 175, 55, 0.4);
+      --gold-glow-strong: rgba(212, 175, 55, 0.75);
+
+      --bg-dark: #0a0814;
+      --bg-space: radial-gradient(circle at 50% 15%, #20183b 0%, #0d0a1b 45%, #06040c 100%);
+      --card-bg: rgba(23, 19, 43, 0.75);
+      --card-bg-hover: rgba(33, 27, 61, 0.85);
+      --card-border: rgba(212, 175, 55, 0.3);
+      --card-border-glow: rgba(212, 175, 55, 0.6);
+
+      --text-main: #f8fafc;
+      --text-muted: #b8b3d1;
+      --text-gold: #fae084;
+
+      --accent-purple: #9333ea;
+      --accent-pink: #ec4899;
+      --accent-blue: #38bdf8;
+      --accent-green: #34d399;
+
+      --font-body: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-tarot: 'Cinzel', serif;
+      --font-korean-mystic: 'Song Myung', serif;
+
+      --radius-xl: 24px;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-dark);
+      background-image: var(--bg-space);
+      background-attachment: fixed;
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* Cosmic Particle & Constellation Background Layer */
+    .cosmic-layer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      background: 
+        radial-gradient(1.5px 1.5px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(1.5px 1.5px at 100px 150px, #fae084, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 250px 80px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 350px 280px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 450px 120px, #fae084, rgba(0,0,0,0)),
+        radial-gradient(1.5px 1.5px at 600px 350px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 750px 200px, #ffffff, rgba(0,0,0,0));
+      background-repeat: repeat;
+      background-size: 800px 800px;
+      opacity: 0.6;
+      animation: starsFloat 120s linear infinite;
+    }
+
+    @keyframes starsFloat {
+      from { transform: translateY(0); }
+      to { transform: translateY(-800px); }
+    }
+
+    .nebula-glow {
+      position: fixed;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(147, 51, 234, 0.18) 0%, rgba(212, 175, 55, 0.1) 40%, transparent 70%);
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Container */
+    .container {
+      width: 100%;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 24px 20px 60px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header */
+    .mystic-header {
+      text-align: center;
+      margin-bottom: 28px;
+      padding-top: 10px;
+    }
+
+    .header-symbol {
+      font-size: 2.2rem;
+      color: var(--gold-primary);
+      display: inline-block;
+      margin-bottom: 6px;
+      animation: pulseSymbol 3s infinite ease-in-out;
+      text-shadow: 0 0 15px var(--gold-glow);
+    }
+
+    @keyframes pulseSymbol {
+      0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.85; }
+      50% { transform: scale(1.1) rotate(180deg); opacity: 1; text-shadow: 0 0 25px var(--gold-glow-strong); }
+    }
+
+    .mystic-header h1 {
+      font-family: var(--font-korean-mystic);
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 6px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+
+    .mystic-header p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+
+    .today-date-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 12px;
+      padding: 4px 14px;
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      font-size: 0.85rem;
+      color: var(--gold-light);
+      font-weight: 600;
+    }
+
+    /* Common Card Styles */
+    .mystic-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-xl);
+      padding: 28px 24px;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.8), 0 0 25px rgba(212, 175, 55, 0.08);
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    /* Ornate Gold Corners */
+    .mystic-card::before, .mystic-card::after {
+      content: "✦";
+      position: absolute;
+      font-size: 0.75rem;
+      color: var(--gold-primary);
+      opacity: 0.6;
+    }
+    .mystic-card::before { top: 10px; left: 12px; }
+    .mystic-card::after { bottom: 10px; right: 12px; }
+
+    /* Form Styles */
+    .form-title {
+      font-family: var(--font-korean-mystic);
+      font-size: 1.3rem;
+      text-align: center;
+      margin-bottom: 20px;
+      color: var(--gold-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .fortune-form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-group label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--gold-light);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .input-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-box i {
+      position: absolute;
+      left: 16px;
+      color: var(--gold-primary);
+      opacity: 0.8;
+      font-size: 1rem;
+      pointer-events: none;
+    }
+
+    .form-input {
+      width: 100%;
+      background: rgba(10, 8, 20, 0.7);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: var(--radius-lg);
+      padding: 14px 16px 14px 44px;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--text-main);
+      outline: none;
+      transition: all 0.25s ease;
+    }
+
+    .form-input:focus {
+      border-color: var(--gold-primary);
+      box-shadow: 0 0 16px var(--gold-glow);
+      background: rgba(15, 12, 30, 0.9);
+    }
+
+    .form-input::placeholder {
+      color: rgba(184, 179, 209, 0.4);
+    }
+
+    /* Submit Button */
+    .btn-tarot {
+      width: 100%;
+      margin-top: 10px;
+      padding: 16px;
+      background: var(--gold-gradient);
+      color: #120d24;
+      font-family: var(--font-korean-mystic);
+      font-size: 1.15rem;
+      font-weight: 700;
+      border: none;
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 8px 24px rgba(212, 175, 55, 0.4);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-tarot:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px var(--gold-glow-strong);
+      filter: brightness(1.08);
+    }
+
+    .btn-tarot:active {
+      transform: translateY(1px);
+    }
+
+    /* Seed Random Notice */
+    .seed-notice {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      opacity: 0.75;
+    }
+
+    /* ==========================================================================
+       2. TAROT RESULT SECTION
+       ========================================================================== */
+    .result-section {
+      display: none;
+      animation: fadeInResult 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes fadeInResult {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* User Profile Banner in Result */
+    .profile-banner {
+      background: rgba(212, 175, 55, 0.08);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 14px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+
+    .profile-info strong {
+      color: var(--gold-light);
+      font-size: 1.05rem;
+    }
+
+    .btn-reselect {
+      background: transparent;
+      border: 1px solid var(--card-border);
+      color: var(--gold-light);
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-reselect:hover {
+      background: rgba(212, 175, 55, 0.2);
+    }
+
+    /* Main Tarot Card 3D Flip Display */
+    .tarot-hero-container {
+      perspective: 1000px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 28px;
+    }
+
+    .tarot-card-3d {
+      width: 220px;
+      height: 330px;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+      cursor: pointer;
+    }
+
+    .tarot-card-3d.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 18px;
+      backface-visibility: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7), 0 0 20px var(--gold-glow);
+    }
+
+    /* Back of Tarot Card */
+    .card-back {
+      background: radial-gradient(circle at 50% 50%, #2a1a4a 0%, #130a24 100%);
+      border: 3px solid var(--gold-primary);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-back::before {
+      content: "";
+      position: absolute;
+      inset: 8px;
+      border: 1px dashed rgba(212, 175, 55, 0.6);
+      border-radius: 12px;
+    }
+
+    .tarot-back-pattern {
+      font-size: 3.5rem;
+      color: var(--gold-primary);
+      text-shadow: 0 0 15px var(--gold-glow);
+      animation: spinBack 20s linear infinite;
+    }
+
+    @keyframes spinBack {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .tap-hint {
+      margin-top: 16px;
+      font-size: 0.8rem;
+      color: var(--gold-light);
+      letter-spacing: 1px;
+      animation: pulseText 1.5s infinite alternate;
+    }
+
+    @keyframes pulseText {
+      from { opacity: 0.5; }
+      to { opacity: 1; }
+    }
+
+    /* Front of Tarot Card */
+    .card-front {
+      background: radial-gradient(circle at 50% 30%, #301f54 0%, #120924 100%);
+      border: 3px solid var(--gold-primary);
+      transform: rotateY(180deg);
+      text-align: center;
+      justify-content: space-between;
+    }
+
+    .card-number {
+      font-family: var(--font-tarot);
+      font-size: 0.85rem;
+      color: var(--gold-light);
+      letter-spacing: 2px;
+    }
+
+    .card-icon {
+      font-size: 4rem;
+      margin: 10px 0;
+      color: var(--gold-light);
+      filter: drop-shadow(0 0 16px var(--gold-glow-strong));
+    }
+
+    .card-name-kr {
+      font-family: var(--font-korean-mystic);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 2px;
+    }
+
+    .card-name-en {
+      font-family: var(--font-tarot);
+      font-size: 0.75rem;
+      color: var(--gold-primary);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .card-keywords {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+      line-height: 1.4;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 4px 10px;
+      border-radius: 12px;
+    }
+
+    /* Overall Fortune Score Card */
+    .overall-card {
+      background: linear-gradient(135deg, rgba(35, 25, 60, 0.85) 0%, rgba(20, 14, 40, 0.95) 100%);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      border-radius: var(--radius-xl);
+      padding: 24px;
+      text-align: center;
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    .score-circle-wrapper {
+      position: relative;
+      width: 130px;
+      height: 130px;
+      margin: 0 auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .score-circle-svg {
+      width: 100%;
+      height: 100%;
+      transform: rotate(-90deg);
+    }
+
+    .score-circle-bg {
+      fill: none;
+      stroke: rgba(255, 255, 255, 0.08);
+      stroke-width: 8;
+    }
+
+    .score-circle-bar {
+      fill: none;
+      stroke: url(#goldGrad);
+      stroke-width: 8;
+      stroke-linecap: round;
+      stroke-dasharray: 345;
+      stroke-dashoffset: 345;
+      transition: stroke-dashoffset 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .score-text {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .score-number {
+      font-size: 2.3rem;
+      font-weight: 900;
+      color: var(--gold-light);
+      line-height: 1;
+      font-family: var(--font-tarot);
+    }
+
+    .score-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .overall-grade {
+      font-family: var(--font-korean-mystic);
+      font-size: 1.35rem;
+      color: var(--gold-light);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .overall-summary {
+      font-size: 0.98rem;
+      color: var(--text-main);
+      line-height: 1.6;
+      word-break: keep-all;
+    }
+
+    /* 4 Category Fortune Cards Grid */
+    .category-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    @media (min-width: 580px) {
+      .category-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .fortune-category-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      backdrop-filter: blur(12px);
+      transition: all 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .fortune-category-card:hover {
+      border-color: var(--card-border-glow);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    }
+
+    .cat-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .cat-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .cat-title.love { color: var(--accent-pink); }
+    .cat-title.wealth { color: var(--gold-light); }
+    .cat-title.health { color: var(--accent-green); }
+    .cat-title.career { color: var(--accent-blue); }
+
+    .cat-stars {
+      color: #fbbf24;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+    }
+
+    .cat-desc {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      word-break: keep-all;
+      margin-bottom: 12px;
+    }
+
+    .cat-tip {
+      background: rgba(255, 255, 255, 0.04);
+      border-left: 3px solid var(--gold-primary);
+      padding: 8px 12px;
+      border-radius: 4px;
+      font-size: 0.82rem;
+      color: var(--text-main);
+    }
+
+    /* Lucky Elements Summary Bar */
+    .lucky-elements-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+
+    .lucky-title {
+      font-family: var(--font-korean-mystic);
+      font-size: 1.1rem;
+      color: var(--gold-light);
+      margin-bottom: 16px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .lucky-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    @media (min-width: 480px) {
+      .lucky-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .lucky-item {
+      background: rgba(10, 8, 20, 0.6);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: var(--radius-md);
+      padding: 12px 10px;
+      text-align: center;
+    }
+
+    .lucky-item-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .lucky-item-value {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--gold-light);
+    }
+
+    /* Actions */
+    .result-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-action {
+      flex: 1;
+      min-width: 140px;
+      padding: 14px 18px;
+      border-radius: var(--radius-lg);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-copy {
+      background: rgba(212, 175, 55, 0.15);
+      border: 1px solid var(--gold-primary);
+      color: var(--gold-light);
+    }
+    .btn-copy:hover {
+      background: rgba(212, 175, 55, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .btn-retry {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--text-main);
+    }
+    .btn-retry:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: rgba(20, 15, 38, 0.95);
+      border: 1px solid var(--gold-primary);
+      color: var(--gold-light);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px var(--gold-glow);
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      z-index: 1000;
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* Footer */
+    .mystic-footer {
+      text-align: center;
+      margin-top: auto;
+      padding: 30px 0 20px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      opacity: 0.7;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
 </head>
-<body class="dark-theme">
-  <!-- Background Glow & Particles -->
-  <div class="bg-glow"></div>
-  <div class="bg-grid"></div>
+<body>
+  <!-- Cosmic Background Particles & Glow -->
+  <div class="cosmic-layer"></div>
+  <div class="nebula-glow"></div>
 
-  <!-- Header -->
-  <header class="app-header">
-    <div class="header-container">
-      <div class="logo">
-        <span class="logo-icon">✨</span>
-        <h1>황금손 로또 <span>6/45</span></h1>
+  <!-- SVG Gradient definition for score circle -->
+  <svg style="width:0;height:0;position:absolute;" aria-hidden="true" focusable="false">
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fae084" />
+      <stop offset="50%" stop-color="#d4af37" />
+      <stop offset="100%" stop-color="#aa8214" />
+    </linearGradient>
+  </svg>
+
+  <div class="container">
+    
+    <!-- Header -->
+    <header class="mystic-header">
+      <div class="header-symbol">✧ ☽ ✦ ☾ ✧</div>
+      <h1>신비로운 오늘의 타로 운세</h1>
+      <p>우주와 별이 전하는 오늘의 기운과 운명의 메시지</p>
+      <div class="today-date-badge" id="todayDateBadge">
+        <i class="fa-regular fa-calendar-check"></i> <span id="currentDateStr">2026년 8월 29일 토요일</span>
       </div>
+    </header>
+
+    <!-- SECTION 1: Input Form Card -->
+    <section id="inputSection" class="mystic-card">
+      <h2 class="form-title"><i class="fa-solid fa-wand-magic-sparkles"></i> 운명선 확인을 위한 정보 입력</h2>
       
-      <!-- Header Controls: Sound & Theme Switcher -->
-      <div class="header-actions">
-        <!-- Sound Toggle -->
-        <button id="soundToggleBtn" class="icon-btn" title="소리 켜기/끄기" aria-label="소리 토글">
-          <i class="fa-solid fa-volume-high"></i>
+      <form id="fortuneForm" class="fortune-form">
+        <!-- Name Input -->
+        <div class="form-group">
+          <label for="userName"><i class="fa-solid fa-signature"></i> 당신의 성함 / 닉네임</label>
+          <div class="input-box">
+            <i class="fa-regular fa-user"></i>
+            <input type="text" id="userName" class="form-input" placeholder="예: 홍길동" required autocomplete="name">
+          </div>
+        </div>
+
+        <!-- Birthdate Input -->
+        <div class="form-group">
+          <label for="userBirth"><i class="fa-solid fa-cake-candles"></i> 생년월일 (양력 기준)</label>
+          <div class="input-box">
+            <i class="fa-regular fa-calendar"></i>
+            <input type="date" id="userBirth" class="form-input" required value="1998-05-15">
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" id="btnSubmit" class="btn-tarot">
+          <i class="fa-solid fa-eye"></i> 오늘의 타로 운세 열어보기
         </button>
 
-        <!-- Theme Mode Switcher (Dark / White) -->
-        <div class="theme-switch-wrapper" title="테마 모드 변경">
-          <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="다크/화이트 모드 변경">
-            <span class="theme-icon-box dark-icon">
-              <i class="fa-solid fa-moon"></i>
-            </span>
-            <span class="theme-icon-box light-icon">
-              <i class="fa-solid fa-sun"></i>
-            </span>
-            <span class="theme-text" id="themeText">다크 모드</span>
-          </button>
+        <p class="seed-notice">
+          <i class="fa-solid fa-lock"></i> 같은 날에는 항상 동일한 결과가 나오며, 날짜가 바뀌면 새로운 운세가 펼쳐집니다.
+        </p>
+      </form>
+    </section>
+
+    <!-- SECTION 2: Fortune Result Section (Revealed on submit) -->
+    <section id="resultSection" class="result-section">
+      
+      <!-- User Banner -->
+      <div class="profile-banner">
+        <div class="profile-info">
+          <span id="resUserName">홍길동</span> 님의 오늘 운명선
+        </div>
+        <button type="button" id="btnReselect" class="btn-reselect">
+          <i class="fa-solid fa-rotate-left"></i> 다시 입력
+        </button>
+      </div>
+
+      <!-- Tarot Hero 3D Card -->
+      <div class="tarot-hero-container">
+        <div class="tarot-card-3d" id="tarotCard3D" title="카드를 터치하여 뒤집어보세요!">
+          <!-- Card Back -->
+          <div class="card-face card-back">
+            <div class="tarot-back-pattern">☸</div>
+            <div class="tap-hint">TAP TO REVEAL</div>
+          </div>
+          <!-- Card Front -->
+          <div class="card-face card-front">
+            <div class="card-number" id="tarotCardNumber">THE SUN XIX</div>
+            <div class="card-icon" id="tarotCardIcon">☀️</div>
+            <div>
+              <div class="card-name-kr" id="tarotCardNameKr">태양 (The Sun)</div>
+              <div class="card-name-en" id="tarotCardNameEn">CLARITY & SUCCESS</div>
+            </div>
+            <div class="card-keywords" id="tarotCardKeywords">성공 • 활력 • 명예 • 기쁨</div>
+          </div>
         </div>
       </div>
-    </div>
-  </header>
 
-  <!-- Main Content -->
-  <main class="app-main">
-    <div class="container">
-
-      <!-- Navigation Tabs -->
-      <nav class="main-nav">
-        <button class="nav-tab active" data-tab="liveDraw">
-          <i class="fa-solid fa-play"></i> 생방송 라이브 추첨
-        </button>
-        <button class="nav-tab" data-tab="multiDraw">
-          <i class="fa-solid fa-layer-group"></i> 5세트 일괄 생성 (A~E)
-        </button>
-        <button class="nav-tab" data-tab="filterModal">
-          <i class="fa-solid fa-sliders"></i> 고정수 / 제외수 설정
-          <span id="activeFilterBadge" class="filter-badge hidden">0</span>
-        </button>
-        <button class="nav-tab" data-tab="historySection">
-          <i class="fa-solid fa-clock-rotate-left"></i> 추첨 기록
-        </button>
-        <button class="nav-tab" data-tab="statsSection">
-          <i class="fa-solid fa-chart-pie"></i> 번호 분석 & 통계
-        </button>
-        <button class="nav-tab" data-tab="contactSection">
-          <i class="fa-solid fa-paper-plane"></i> 제휴 / 광고 문의
-        </button>
-      </nav>
-
-      <!-- TAB 1: Live Draw Machine -->
-      <section id="liveDrawTab" class="tab-pane active">
-        <div class="draw-hero-card">
-          <!-- Lottery Machine Visualization -->
-          <div class="machine-wrapper">
-            <div class="machine-sphere" id="lotteryMachine">
-              <div class="machine-inner">
-                <div class="rotating-balls" id="tumblingBalls">
-                  <!-- Animated decorative tumbling balls generated via JS -->
-                </div>
-                <div class="machine-light-ring"></div>
-              </div>
-              <div class="machine-pipe"></div>
-            </div>
-          </div>
-
-          <!-- Drawn Balls Display -->
-          <div class="draw-result-container">
-            <div class="result-label">추첨된 행운의 번호</div>
-            <div class="balls-display" id="liveBallsContainer">
-              <div class="ball-slot" data-index="0"><span class="placeholder">?</span></div>
-              <div class="ball-slot" data-index="1"><span class="placeholder">?</span></div>
-              <div class="ball-slot" data-index="2"><span class="placeholder">?</span></div>
-              <div class="ball-slot" data-index="3"><span class="placeholder">?</span></div>
-              <div class="ball-slot" data-index="4"><span class="placeholder">?</span></div>
-              <div class="ball-slot" data-index="5"><span class="placeholder">?</span></div>
-              <div class="bonus-plus">+</div>
-              <div class="ball-slot bonus-slot" data-index="6"><span class="placeholder">?</span></div>
-            </div>
-            <div class="bonus-tag">보너스 번호</div>
-          </div>
-
-          <!-- Quick Stats of Current Draw -->
-          <div class="current-draw-stats hidden" id="currentDrawStats">
-            <span class="stat-pill"><i class="fa-solid fa-calculator"></i> 번호 총합: <strong id="currentSum">0</strong></span>
-            <span class="stat-pill"><i class="fa-solid fa-scale-balanced"></i> 홀:짝 = <strong id="currentOddEven">0:0</strong></span>
-            <span class="stat-pill"><i class="fa-solid fa-chart-line"></i> 고저 비율: <strong id="currentHighLow">0:0</strong></span>
-          </div>
-
-          <!-- Action Controls -->
-          <div class="draw-controls">
-            <button id="startLiveDrawBtn" class="btn btn-primary btn-glow">
-              <i class="fa-solid fa-dice"></i> 실시간 추첨 시작!
-            </button>
-            <button id="instantDrawBtn" class="btn btn-secondary">
-              <i class="fa-solid fa-bolt"></i> 즉시 번호 확인
-            </button>
-            <button id="copyLiveResultBtn" class="btn btn-outline" disabled>
-              <i class="fa-solid fa-copy"></i> 번호 복사
-            </button>
+      <!-- Overall Fortune Score & Summary Card -->
+      <div class="overall-card">
+        <div class="score-circle-wrapper">
+          <svg class="score-circle-svg" viewBox="0 0 120 120">
+            <circle class="score-circle-bg" cx="60" cy="60" r="55"></circle>
+            <circle class="score-circle-bar" id="scoreCircleBar" cx="60" cy="60" r="55"></circle>
+          </svg>
+          <div class="score-text">
+            <span class="score-number" id="overallScoreNum">94</span>
+            <span class="score-label">종합 지수</span>
           </div>
         </div>
-      </section>
 
-      <!-- TAB 2: Multi 5-Set Draw (A~E) -->
-      <section id="multiDrawTab" class="tab-pane">
-        <div class="card multi-card">
-          <div class="card-header">
-            <div>
-              <h2><i class="fa-solid fa-receipt"></i> 1회 구매용 5세트 (A, B, C, D, E)</h2>
-              <p class="card-subtitle">로또 용지 한 장(5,000원) 분량의 추천 번호 조합을 한 번에 생성합니다.</p>
-            </div>
-            <div class="card-actions">
-              <button id="generateMultiBtn" class="btn btn-primary">
-                <i class="fa-solid fa-arrows-rotate"></i> 5세트 자동 추출
-              </button>
-              <button id="copyAllMultiBtn" class="btn btn-outline">
-                <i class="fa-solid fa-clipboard-check"></i> 5세트 전체 복사
-              </button>
-            </div>
-          </div>
+        <div class="overall-grade" id="overallGradeText">✨ 대길(大吉) - 눈부신 성취의 날</div>
+        <p class="overall-summary" id="overallSummaryText">
+          오늘은 당신의 숨은 잠재력이 최고조로 발휘되는 빛나는 하루입니다. 망설였던 일에 과감히 도전하면 기대 이상의 큰 결실을 맺게 됩니다.
+        </p>
+      </div>
 
-          <div class="multi-sets-list" id="multiSetsList">
-            <!-- 5 rows injected dynamically -->
-          </div>
-        </div>
-      </section>
-
-      <!-- TAB 3: Fixed / Excluded Numbers Filter Modal/Section -->
-      <section id="filterModalTab" class="tab-pane">
-        <div class="card filter-card">
-          <div class="card-header">
-            <div>
-              <h2><i class="fa-solid fa-sliders"></i> 번호 맞춤 필터링</h2>
-              <p class="card-subtitle">원하는 고정수(반드시 포함)와 제외수(절대 미포함)를 선택하세요.</p>
-            </div>
-            <button id="resetFilterBtn" class="btn btn-outline btn-sm">
-              <i class="fa-solid fa-trash-can"></i> 필터 초기화
-            </button>
-          </div>
-
-          <div class="filter-mode-selector">
-            <label class="radio-label">
-              <input type="radio" name="filterMode" value="fixed" checked>
-              <span class="radio-custom fixed-radio">
-                <i class="fa-solid fa-thumbtack"></i> 고정수 선택 (최대 5개)
-              </span>
-            </label>
-            <label class="radio-label">
-              <input type="radio" name="filterMode" value="excluded">
-              <span class="radio-custom excluded-radio">
-                <i class="fa-solid fa-ban"></i> 제외수 선택 (최대 39개)
-              </span>
-            </label>
-          </div>
-
-          <!-- 1~45 Number Grid Selector -->
-          <div class="number-picker-grid" id="numberPickerGrid">
-            <!-- 1 to 45 buttons injected via JS -->
-          </div>
-
-          <div class="filter-summary">
-            <div class="filter-box fixed-box">
-              <h3><span class="badge fixed-badge">고정수</span> <span id="fixedCount">(0/5)</span></h3>
-              <div class="selected-tags" id="fixedTags">
-                <span class="empty-text">선택된 고정수가 없습니다.</span>
-              </div>
-            </div>
-            <div class="filter-box excluded-box">
-              <h3><span class="badge excluded-badge">제외수</span> <span id="excludedCount">(0/39)</span></h3>
-              <div class="selected-tags" id="excludedTags">
-                <span class="empty-text">선택된 제외수가 없습니다.</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- TAB 4: History -->
-      <section id="historySectionTab" class="tab-pane">
-        <div class="card history-card">
-          <div class="card-header">
-            <div>
-              <h2><i class="fa-solid fa-clock-rotate-left"></i> 나의 추첨 기록</h2>
-              <p class="card-subtitle">로컬 브라우저에 자동 보관된 이전 추첨 번호 목록입니다.</p>
-            </div>
-            <div class="card-actions">
-              <button id="clearHistoryBtn" class="btn btn-outline btn-danger btn-sm">
-                <i class="fa-solid fa-trash"></i> 전체 삭제
-              </button>
-            </div>
-          </div>
-
-          <div class="history-list" id="historyList">
-            <!-- Dynamic History -->
-          </div>
-        </div>
-      </section>
-
-      <!-- TAB 5: Statistics & Insights -->
-      <section id="statsSectionTab" class="tab-pane">
-        <div class="card stats-card">
-          <div class="card-header">
-            <h2><i class="fa-solid fa-chart-pie"></i> 로또 6/45 번호대별 가이드 & 꿀팁</h2>
-          </div>
-
-          <div class="stats-grid">
-            <div class="stat-info-card">
-              <h3><span class="color-dot dot-yellow"></span> 1 ~ 10 번대 (노랑)</h3>
-              <p>첫 시작 번호로 자주 출현하는 1번대 구간입니다.</p>
-            </div>
-            <div class="stat-info-card">
-              <h3><span class="color-dot dot-blue"></span> 11 ~ 20 번대 (파랑)</h3>
-              <p>평균적으로 1~2개씩 꾸준히 포함되는 황금 밸런스 구간입니다.</p>
-            </div>
-            <div class="stat-info-card">
-              <h3><span class="color-dot dot-red"></span> 21 ~ 30 번대 (빨강)</h3>
-              <p>중간 허리를 담당하는 번호대로 조합 시 필수적인 핵심 구간입니다.</p>
-            </div>
-            <div class="stat-info-card">
-              <h3><span class="color-dot dot-gray"></span> 31 ~ 40 번대 (회색)</h3>
-              <p>후반부 번호대로 고액 당첨 조합에 자주 등장합니다.</p>
-            </div>
-            <div class="stat-info-card">
-              <h3><span class="color-dot dot-green"></span> 41 ~ 45 번대 (초록)</h3>
-              <p>총 5개 숫자로 구성되며 엔딩 번호로 활약합니다.</p>
-            </div>
-            <div class="stat-info-card special-card">
-              <h3><i class="fa-solid fa-lightbulb"></i> 당첨 밸런스 TIP</h3>
-              <p>번호 총합은 보통 <strong>100 ~ 170</strong> 사이, 홀짝 비율은 <strong>3:3 또는 4:2, 2:4</strong>일 때 당첨 확률 통계가 가장 높습니다!</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- TAB 6: Contact & Partnership Form (Formspree) -->
-      <section id="contactSectionTab" class="tab-pane">
-        <div class="card contact-card">
-          <div class="card-header">
-            <div>
-              <h2><i class="fa-solid fa-handshake"></i> 제휴 및 광고 / 기능 문의</h2>
-              <p class="card-subtitle">비즈니스 제휴, 배너 광고, 기능 개선 제안 등 무엇이든 편하게 남겨주세요.</p>
-            </div>
-          </div>
-
-          <!-- Contact Form Container -->
-          <div id="contactFormContainer">
-            <form id="contactForm" action="https://formspree.io/f/xdeooqza" method="POST" class="contact-form">
-              
-              <div class="form-grid">
-                <!-- Name Field -->
-                <div class="form-group">
-                  <label for="contactName">성함 / 담당자명 <span class="required-star">*</span></label>
-                  <div class="input-wrapper">
-                    <i class="fa-solid fa-user input-icon"></i>
-                    <input type="text" id="contactName" name="name" class="form-input" placeholder="홍길동" required>
-                  </div>
-                </div>
-
-                <!-- Company Field -->
-                <div class="form-group">
-                  <label for="contactCompany">회사 / 브랜드명</label>
-                  <div class="input-wrapper">
-                    <i class="fa-solid fa-building input-icon"></i>
-                    <input type="text" id="contactCompany" name="company" class="form-input" placeholder="예: (주)로또컴퍼니 (선택사항)">
-                  </div>
-                </div>
-
-                <!-- Email Field -->
-                <div class="form-group">
-                  <label for="contactEmail">이메일 주소 <span class="required-star">*</span></label>
-                  <div class="input-wrapper">
-                    <i class="fa-solid fa-envelope input-icon"></i>
-                    <input type="email" id="contactEmail" name="_replyto" class="form-input" placeholder="example@domain.com" required>
-                  </div>
-                </div>
-
-                <!-- Phone Field -->
-                <div class="form-group">
-                  <label for="contactPhone">연락처</label>
-                  <div class="input-wrapper">
-                    <i class="fa-solid fa-phone input-icon"></i>
-                    <input type="tel" id="contactPhone" name="phone" class="form-input" placeholder="010-1234-5678 (선택사항)">
-                  </div>
-                </div>
-              </div>
-
-              <!-- Inquiry Type / Category -->
-              <div class="form-group">
-                <label for="contactCategory">문의 유형 <span class="required-star">*</span></label>
-                <div class="input-wrapper">
-                  <i class="fa-solid fa-tags input-icon"></i>
-                  <select id="contactCategory" name="category" class="form-select" required>
-                    <option value="" disabled selected>문의 유형을 선택해주세요</option>
-                    <option value="비즈니스 제휴 제안">🤝 비즈니스 제휴 제안</option>
-                    <option value="광고 및 스폰서십 문의">📢 광고 / 배너 스폰서십 문의</option>
-                    <option value="새로운 기능 제안 및 피드백">💡 새로운 기능 제안 및 피드백</option>
-                    <option value="오류 신고 및 기술 지원">🛠️ 오류 신고 및 기술 지원</option>
-                    <option value="기타 일반 문의">💬 기타 일반 문의</option>
-                  </select>
-                </div>
-              </div>
-
-              <!-- Subject Field -->
-              <div class="form-group">
-                <label for="contactSubject">문의 제목 <span class="required-star">*</span></label>
-                <div class="input-wrapper">
-                  <i class="fa-solid fa-heading input-icon"></i>
-                  <input type="text" id="contactSubject" name="_subject" class="form-input" placeholder="문의 제목을 간략히 입력해주세요" required>
-                </div>
-              </div>
-
-              <!-- Message Field -->
-              <div class="form-group">
-                <label for="contactMessage">상세 문의 내용 <span class="required-star">*</span></label>
-                <div class="input-wrapper">
-                  <textarea id="contactMessage" name="message" class="form-textarea" rows="5" placeholder="제휴 내용, 광고 희망 기간 및 형태, 상세 피드백 등을 자세히 적어주시면 더욱 빠른 검토가 가능합니다." required></textarea>
-                </div>
-              </div>
-
-              <!-- Privacy Policy Agreement -->
-              <div class="form-group checkbox-group">
-                <label class="checkbox-label">
-                  <input type="checkbox" id="privacyAgree" name="privacyAgree" required>
-                  <span class="custom-checkbox"></span>
-                  <span class="checkbox-text">
-                    [필수] 원활한 문의 응대 및 회신을 위한 개인정보(성함, 이메일, 연락처) 수집 및 이용에 동의합니다.
-                  </span>
-                </label>
-              </div>
-
-              <!-- Submit Button -->
-              <div class="form-actions">
-                <button type="submit" id="submitContactBtn" class="btn btn-primary btn-submit btn-glow">
-                  <span class="btn-text"><i class="fa-solid fa-paper-plane"></i> 문의하기 전송</span>
-                  <span class="btn-spinner hidden"><i class="fa-solid fa-spinner fa-spin"></i> 전송 중...</span>
-                </button>
-              </div>
-            </form>
-          </div>
-
-          <!-- Formspree Success Result Card (Hidden by default) -->
-          <div id="contactSuccessCard" class="contact-result-card hidden">
-            <div class="result-icon success-icon">
-              <i class="fa-solid fa-circle-check"></i>
-            </div>
-            <h3>문의가 성공적으로 전달되었습니다!</h3>
-            <p>소중한 문의를 남겨주셔서 진심으로 감사드립니다.<br>작성해주신 이메일로 담당자가 검토 후 1~2영업일 이내에 신속히 답변드리겠습니다.</p>
-            <div class="result-actions">
-              <button id="resetContactFormBtn" class="btn btn-primary">
-                <i class="fa-solid fa-rotate-left"></i> 추가 문의 작성하기
-              </button>
-              <button class="btn btn-outline" onclick="document.querySelector('[data-tab=liveDraw]').click()">
-                <i class="fa-solid fa-dice"></i> 로또 추첨하러 가기
-              </button>
-            </div>
-          </div>
-
-          <!-- Formspree Error Result Card (Hidden by default) -->
-          <div id="contactErrorCard" class="contact-result-card error-card hidden">
-            <div class="result-icon error-icon">
-              <i class="fa-solid fa-triangle-exclamation"></i>
-            </div>
-            <h3>문의 전송 중 오류가 발생했습니다</h3>
-            <p id="contactErrorMessage">네트워크 상태를 확인하신 후 다시 시도해주세요.</p>
-            <button id="retryContactBtn" class="btn btn-primary">
-              <i class="fa-solid fa-rotate-right"></i> 다시 시도하기
-            </button>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- Info Banner / Official Link & Contact Link -->
-      <aside class="official-banner">
-        <div class="banner-content">
-          <i class="fa-solid fa-award banner-icon"></i>
+      <!-- 4 Categories (종합운, 애정운, 금전운, 건강운) -->
+      <div class="category-grid">
+        
+        <!-- 1. 애정운 (Love) -->
+        <div class="fortune-category-card">
           <div>
-            <h4>동행복권 공식 로또 6/45 추첨 안내</h4>
-            <p>매주 토요일 오후 8시 35분 MBC 생방송 추첨 (만 19세 이상 구매 가능)</p>
+            <div class="cat-header">
+              <span class="cat-title love"><i class="fa-solid fa-heart"></i> 애정운</span>
+              <span class="cat-stars" id="loveStars">★★★★★</span>
+            </div>
+            <p class="cat-desc" id="loveDesc">
+              상대방과의 소통이 물 흐르듯 원활하며, 싱글이라면 뜻밖의 매력적인 인연이 다가옵니다.
+            </p>
+          </div>
+          <div class="cat-tip" id="loveTip">
+            💡 <strong>조언:</strong> 솔직한 감정 표현이 마음에 깊은 울림을 줍니다.
           </div>
         </div>
-        <div class="banner-buttons">
-          <button class="btn btn-sm btn-primary" onclick="document.querySelector('[data-tab=contactSection]').click()">
-            <i class="fa-solid fa-handshake"></i> 제휴 문의하기
-          </button>
-          <a href="https://dhlottery.co.kr" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline">
-            동행복권 공식사이트 <i class="fa-solid fa-arrow-up-right-from-square"></i>
-          </a>
-        </div>
-      </aside>
 
-    </div>
-  </main>
+        <!-- 2. 금전운 (Wealth) -->
+        <div class="fortune-category-card">
+          <div>
+            <div class="cat-header">
+              <span class="cat-title wealth"><i class="fa-solid fa-coins"></i> 금전운</span>
+              <span class="cat-stars" id="wealthStars">★★★★☆</span>
+            </div>
+            <p class="cat-desc" id="wealthDesc">
+              작은 투자나 거래에서 긍정적인 성과가 따르며, 지출보다 유입의 흐름이 강합니다.
+            </p>
+          </div>
+          <div class="cat-tip" id="wealthTip">
+            💡 <strong>조언:</strong> 충동구매를 피하고 계획된 지출을 유지하세요.
+          </div>
+        </div>
+
+        <!-- 3. 건강운 (Health) -->
+        <div class="fortune-category-card">
+          <div>
+            <div class="cat-header">
+              <span class="cat-title health"><i class="fa-solid fa-seedling"></i> 건강운</span>
+              <span class="cat-stars" id="healthStars">★★★★★</span>
+            </div>
+            <p class="cat-desc" id="healthDesc">
+              활력이 넘치고 신체 리듬이 매우 안정적입니다. 가벼운 유산소 운동이 에너지를 더해줍니다.
+            </p>
+          </div>
+          <div class="cat-tip" id="healthTip">
+            💡 <strong>조언:</strong> 충분한 수분 섭취와 따뜻한 차 한 잔을 곁들이세요.
+          </div>
+        </div>
+
+        <!-- 4. 대인 / 사업운 (Career / Social) -->
+        <div class="fortune-category-card">
+          <div>
+            <div class="cat-header">
+              <span class="cat-title career"><i class="fa-solid fa-compass"></i> 대인/성공운</span>
+              <span class="cat-stars" id="careerStars">★★★★☆</span>
+            </div>
+            <p class="cat-desc" id="careerDesc">
+              주변 사람들의 두터운 신뢰를 얻으며 협력 프로젝트에서 탁월한 리더십을 발휘합니다.
+            </p>
+          </div>
+          <div class="cat-tip" id="careerTip">
+            💡 <strong>조언:</strong> 상대방의 의견을 먼저 경청하면 귀인이 돕습니다.
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Lucky Elements -->
+      <div class="lucky-elements-card">
+        <div class="lucky-title"><i class="fa-solid fa-clover"></i> 오늘의 행운 가이드</div>
+        <div class="lucky-grid">
+          <div class="lucky-item">
+            <div class="lucky-item-label"><i class="fa-solid fa-palette"></i> 행운의 색상</div>
+            <div class="lucky-item-value" id="luckyColor">골드 옐로우</div>
+          </div>
+          <div class="lucky-item">
+            <div class="lucky-item-label"><i class="fa-solid fa-hashtag"></i> 행운의 숫자</div>
+            <div class="lucky-item-value" id="luckyNumber">7, 21</div>
+          </div>
+          <div class="lucky-item">
+            <div class="lucky-item-label"><i class="fa-solid fa-compass"></i> 행운의 방위</div>
+            <div class="lucky-item-value" id="luckyDirection">남동쪽 (SE)</div>
+          </div>
+          <div class="lucky-item">
+            <div class="lucky-item-label"><i class="fa-solid fa-clock"></i> 행운의 시간대</div>
+            <div class="lucky-item-value" id="luckyTime">14:00 ~ 16:00</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Result Action Buttons -->
+      <div class="result-actions">
+        <button type="button" id="btnCopyResult" class="btn-action btn-copy">
+          <i class="fa-solid fa-share-nodes"></i> 운세 결과 복사하기
+        </button>
+        <button type="button" id="btnReset" class="btn-action btn-retry">
+          <i class="fa-solid fa-arrow-rotate-right"></i> 다른 사람 운세 보기
+        </button>
+      </div>
+
+    </section>
+
+    <!-- Footer -->
+    <footer class="mystic-footer">
+      <p>© 2026 신비로운 오늘의 타로 운세. 매일 새로운 하루의 지혜를 전합니다.</p>
+      <p>본 운세 결과는 시드 기반 결정론적 알고리즘으로 생성되며 재미와 힐링을 위한 콘텐츠입니다.</p>
+    </footer>
+
+  </div>
 
   <!-- Toast Notification -->
-  <div id="toast" class="toast">번호가 클립보드에 복사되었습니다!</div>
+  <div id="toast" class="toast">운세 결과가 클립보드에 복사되었습니다!</div>
 
-  <!-- Footer -->
-  <footer class="app-footer">
-    <div class="container">
-      <div class="footer-links">
-        <a href="#" onclick="document.querySelector('[data-tab=liveDraw]').click(); return false;">라이브 추첨</a>
-        <span class="divider">|</span>
-        <a href="#" onclick="document.querySelector('[data-tab=multiDraw]').click(); return false;">5세트 자동 추출</a>
-        <span class="divider">|</span>
-        <a href="#" onclick="document.querySelector('[data-tab=filterModal]').click(); return false;">고정수/제외수 필터</a>
-        <span class="divider">|</span>
-        <a href="#" onclick="document.querySelector('[data-tab=statsSection]').click(); return false;">번호 분석 가이드</a>
-        <span class="divider">|</span>
-        <a href="#" onclick="document.querySelector('[data-tab=contactSection]').click(); return false;">제휴 및 광고 문의</a>
-      </div>
-      <p>© 2026 황금손 로또 6/45 번호 추첨기. 행운과 대박을 기원합니다!</p>
-      <p class="disclaimer">본 사이트의 추첨 번호는 무작위 알고리즘에 의해 생성되며, 당첨을 보장하지 않습니다.</p>
-    </div>
-  </footer>
+  <!-- ==========================================================================
+       3. JAVASCRIPT LOGIC (Deterministic Seed RNG & Data Engine)
+       ========================================================================== -->
+  <script>
+    /* -------------------------------------------------------------
+     * 1. 22 Major Arcana Tarot Cards Database
+     * ------------------------------------------------------------- */
+    const TAROT_DECK = [
+      { id: 0, num: "THE FOOL 0", nameKr: "광대 (The Fool)", nameEn: "NEW BEGINNINGS", icon: "🃏", keywords: "새로운 시작 • 순수 • 자유로운 모험 • 가능성" },
+      { id: 1, num: "THE MAGICIAN I", nameKr: "마법사 (The Magician)", nameEn: "CREATIVITY & WILL", icon: "🪄", keywords: "창조력 • 잠재력 발휘 • 명확한 의지 • 기회" },
+      { id: 2, num: "THE HIGH PRIESTESS II", nameKr: "여사제 (High Priestess)", nameEn: "INTUITION & WISDOM", icon: "📜", keywords: "깊은 직관 • 내면의 지혜 • 통찰력 • 신비" },
+      { id: 3, num: "THE EMPRESS III", nameKr: "여황제 (The Empress)", nameEn: "ABUNDANCE & BEAUTY", icon: "👑", keywords: "풍요로움 • 창조적 결실 • 따뜻한 포용 • 번영" },
+      { id: 4, num: "THE EMPEROR IV", nameKr: "황제 (The Emperor)", nameEn: "STABILITY & POWER", icon: "🏛️", keywords: "확고한 리더십 • 안정된 기반 • 결단력 • 권위" },
+      { id: 5, num: "THE HIEROPHANT V", nameKr: "교황 (The Hierophant)", nameEn: "GUIDANCE & TRUST", icon: "🕊️", keywords: "현명한 조언 • 신뢰 • 올바른 길 • 정신적 스승" },
+      { id: 6, num: "THE LOVERS VI", nameKr: "연인 (The Lovers)", nameEn: "HARMONY & LOVE", icon: "💖", keywords: "아름다운 사랑 • 완벽한 조화 • 가치 있는 선택" },
+      { id: 7, num: "THE CHARIOT VII", nameKr: "전차 (The Chariot)", nameEn: "VICTORY & MOMENTUM", icon: "⚔️", keywords: "강력한 추진력 • 장애물 극복 • 확고한 승리" },
+      { id: 8, num: "STRENGTH VIII", nameKr: "힘 (Strength)", nameEn: "COURAGE & PATIENCE", icon: "🦁", keywords: "부드러운 카리스마 • 불굴의 용기 • 내면의 힘" },
+      { id: 9, num: "THE HERMIT IX", nameKr: "은둔자 (The Hermit)", nameEn: "SEARCH FOR TRUTH", icon: "🏮", keywords: "진지한 성찰 • 내면의 진리 탐구 • 평온한 휴식" },
+      { id: 10, num: "WHEEL OF FORTUNE X", nameKr: "운명의 수레바퀴", nameEn: "TURNING POINT", icon: "☸", keywords: "행운의 전환점 • 운명의 기회 • 긍정적 순환" },
+      { id: 11, num: "JUSTICE XI", nameKr: "정의 (Justice)", nameEn: "BALANCE & TRUTH", icon: "⚖️", keywords: "공정한 판단 • 균형 잡힌 시각 • 정당한 보상" },
+      { id: 12, num: "THE HANGED MAN XII", nameKr: "매달린 사람", nameEn: "NEW PERSPECTIVE", icon: "⏳", keywords: "새로운 관점 • 기다림의 지혜 • 발상의 전환" },
+      { id: 13, num: "DEATH / RENEWAL XIII", nameKr: "변화와 재생 (Death)", nameEn: "TRANSFORMATION", icon: "🦋", keywords: "과거의 정리 • 새로운 탄생 • 극적인 도약" },
+      { id: 14, num: "TEMPERANCE XIV", nameKr: "절제 (Temperance)", nameEn: "MODERATION & PEACE", icon: "🌊", keywords: "마음의 평정 • 조화로운 균형 • 유연한 융합" },
+      { id: 15, num: "THE DEVIL XV", nameKr: "악마 (The Devil)", nameEn: "OVERCOMING DESIRE", icon: "🔥", keywords: "집착 극복 • 열정의 올바른 사용 • 유혹 경계" },
+      { id: 16, num: "THE TOWER XVI", nameKr: "탑 (The Tower)", nameEn: "BREAKTHROUGH", icon: "⚡", keywords: "낡은 틀의 붕괴 • 신선한 충격 • 빠른 재정비" },
+      { id: 17, num: "THE STAR XVII", nameKr: "별 (The Star)", nameEn: "HOPE & INSPIRATION", icon: "⭐", keywords: "희망찬 미래 • 영감의 샘 • 빛나는 꿈의 실현" },
+      { id: 18, num: "THE MOON XVIII", nameKr: "달 (The Moon)", nameEn: "INTUITION & IMAGINATION", icon: "🌙", keywords: "풍부한 감수성 • 안개 속의 길잡이 • 예술적 직관" },
+      { id: 19, num: "THE SUN XIX", nameKr: "태양 (The Sun)", nameEn: "SUCCESS & VITALITY", icon: "☀️", keywords: "최고의 성공 • 찬란한 행복 • 넘치는 에너지" },
+      { id: 20, num: "JUDGEMENT XX", nameKr: "심판 (Judgement)", nameEn: "AWAKENING & REWARD", icon: "🎺", keywords: "기쁜 소식 • 노력의 결실 • 새로운 부활" },
+      { id: 21, num: "THE WORLD XXI", nameKr: "세계 (The World)", nameEn: "COMPLETION & FULFILLMENT", icon: "🌍", keywords: "완벽한 성취 • 대단원의 완성 • 영광스러운 조화" }
+    ];
 
-  <script src="app.js"></script>
+    /* -------------------------------------------------------------
+     * 2. Category Descriptions Database
+     * ------------------------------------------------------------- */
+    const FORTUNE_MESSAGES = {
+      overall: [
+        { min: 90, grade: "✨ 대길(大吉) - 눈부신 성취의 날", summary: "숨겨둔 당신의 잠재력이 활짝 피어나는 날입니다. 마음에 품었던 계획을 실행에 옮기면 뜻밖의 큰 행운과 조력자가 나타납니다." },
+        { min: 78, grade: "🌟 중길(中吉) - 순풍에 돛 단 듯한 하루", summary: "모든 일이 순조롭게 흘러가며 작은 노력으로도 큰 만족을 얻을 수 있는 날입니다. 긍정적인 마음가짐이 주변을 밝게 만듭니다." },
+        { min: 65, grade: "🍃 소길(小吉) - 평온하고 안정된 기운", summary: "서두르지 않고 묵묵히 자신의 페이스를 유지할 때 가장 알찬 결실이 맺어집니다. 주변과의 잔잔한 소통 속에서 기쁨을 찾으세요." },
+        { min: 50, grade: "🛡️ 평안(平安) - 지혜로운 관망의 날", summary: "무리한 결정보다는 현재 상태를 점검하고 내실을 다지기에 적합한 날입니다. 내면의 목소리에 귀를 기울이고 여유를 가지세요." },
+        { min: 0,  grade: "🌱 조심(慎重) - 새로운 도약을 위한 정비", summary: "돌다리도 두들겨 보고 건너는 신중함이 큰 복을 부릅니다. 오늘 마주치는 작은 변수는 더 큰 성장을 위한 소중한 디딤돌입니다." }
+      ],
+      love: [
+        { text: "마음을 열고 솔직하게 다가가면 상대방도 따뜻하게 화답합니다. 솔로라면 예상치 못한 장소에서 호감 어린 눈빛을 받게 됩니다.", tip: "미소와 다정한 말 한마디가 최고의 매력 포인트입니다." },
+        { text: "서로에 대한 신뢰가 한층 깊어지는 하루입니다. 사소한 대화 속에서 서로의 진심을 확인하게 됩니다.", tip: "상대방의 취향을 배려하는 작은 서프라이즈를 준비해보세요." },
+        { text: "잔잔하고 편안한 감정의 교류가 이어집니다. 무리한 약속보다는 편안한 대화로 마음의 안정을 찾으세요.", tip: "조용한 카페나 산책로에서의 데이트가 좋습니다." },
+        { text: "사소한 오해가 생길 수 있으니 감정적인 대화는 잠시 미루고 차분하게 경청하는 자세를 유지하세요.", tip: "역지사지의 마음으로 상대의 입장을 먼저 생각해보세요." }
+      ],
+      wealth: [
+        { text: "재물운의 흐름이 매우 활발합니다. 기대치 않던 보너스나 유익한 경제적 기회가 찾아올 수 있습니다.", tip: "재테크 아이디어를 정리하거나 장기 계획을 세우기에 최적입니다." },
+        { text: "수입과 지출의 밸런스가 아주 좋습니다. 실속 있는 소비로 만족감이 높은 하루가 됩니다.", tip: "필요했던 물품을 합리적인 가격에 구매할 찬스가 생깁니다." },
+        { text: "안정적인 금전 흐름이 유지됩니다. 욕심을 내기보다는 기존 자산을 차분히 관리하는 것이 유리합니다.", tip: "불필요한 지출 목록을 점검하고 커피 한 잔의 절약을 실천해보세요." },
+        { text: "충동적인 지출이나 과소비를 경계해야 할 시점입니다. 고가의 쇼핑이나 투자는 하루 뒤로 미루세요.", tip: "지갑을 열기 전 꼭 필요한 지출인지 세 번 생각하세요." }
+      ],
+      health: [
+        { text: "몸과 마음의 에너지가 넘치고 컨디션이 최상입니다. 새로운 운동이나 취미를 시작하기에 훌륭합니다.", tip: "가벼운 조깅이나 스트레칭으로 활력을 유지하세요." },
+        { text: "생체 리듬이 안정적이며 피로 회복 속도가 빠릅니다. 맑은 정신으로 업무나 학업에 집중할 수 있습니다.", tip: "신선한 채소와 제철 과일로 비타민을 보충하세요." },
+        { text: "전반적으로 양호하나 오후 시간대에 가벼운 나른함이 올 수 있습니다. 충분한 수분을 섭취하세요.", tip: "눈의 피로를 풀기 위해 먼 곳을 바라보며 휴식하세요." },
+        { text: "면역력 관리에 신경 써야 할 때입니다. 과로를 피하고 규칙적인 수면 시간을 확보하세요.", tip: "따뜻한 허브티를 마시고 반신욕으로 피로를 녹이세요." }
+      ],
+      career: [
+        { text: "당신의 아이디어와 성과가 돋보여 주변의 신뢰와 인정을 한 몸에 받는 보람찬 날입니다.", tip: "자신감 있게 의견을 제안하면 뜻을 함께할 동료가 생깁니다." },
+        { text: "협업과 커뮤니케이션이 매우 매끄럽게 진행됩니다. 막혔던 프로젝트가 활로를 찾습니다.", tip: "동료에게 먼저 감사의 인사를 건네며 팀워크를 다져보세요." },
+        { text: "차분하게 맡은 바 책임을 다할 때 실속을 챙길 수 있습니다. 기본에 충실하세요.", tip: "오늘 할 일 목록(To-Do)을 우선순위대로 정리해보세요." },
+        { text: "주변의 작은 의견 차이에 흔들리지 마세요. 원칙을 지키며 침착하게 대처하면 무난히 해결됩니다.", tip: "중요한 문서는 두 번 검토하여 실수를 예방하세요." }
+      ]
+    };
+
+    const LUCKY_COLORS = ["골드 옐로우", "미스틱 퍼플", "스카이 블루", "포레스트 그린", "로즈 핑크", "크림 화이트", "딥 네이비", "루비 레드"];
+    const LUCKY_DIRECTIONS = ["동남쪽 (SE)", "정동쪽 (E)", "남서쪽 (SW)", "정남쪽 (S)", "북서쪽 (NW)", "정북쪽 (N)"];
+    const LUCKY_TIMES = ["08:00 ~ 10:00", "11:00 ~ 13:00", "14:00 ~ 16:00", "17:00 ~ 19:00", "20:00 ~ 22:00"];
+
+    /* -------------------------------------------------------------
+     * 3. Deterministic PRNG Algorithm (Mulberry32)
+     * ------------------------------------------------------------- */
+    function createSeededRandom(seedStr) {
+      let h = 2166136261 >>> 0;
+      for (let i = 0; i < seedStr.length; i++) {
+        h = Math.imul(h ^ seedStr.charCodeAt(i), 16777619);
+      }
+      let a = h;
+      return function() {
+        let t = a += 0x6D2B79F5;
+        t = Math.imul(t ^ t >>> 15, t | 1);
+        t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+        return ((t ^ t >>> 14) >>> 0) / 4294967296;
+      };
+    }
+
+    // Web Audio Chime Sound
+    function playMysticChime() {
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        const ctx = new AudioContext();
+        if (ctx.state === 'suspended') ctx.resume();
+
+        const freqs = [523.25, 659.25, 783.99, 1046.50, 1318.51]; // C5, E5, G5, C6, E6
+        freqs.forEach((f, idx) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          const st = ctx.currentTime + idx * 0.08;
+
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(f, st);
+
+          gain.gain.setValueAtTime(0.2, st);
+          gain.gain.exponentialRampToValueAtTime(0.001, st + 0.6);
+
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+
+          osc.start(st);
+          osc.stop(st + 0.6);
+        });
+      } catch(e) {}
+    }
+
+    /* -------------------------------------------------------------
+     * 4. Application Logic
+     * ------------------------------------------------------------- */
+    document.addEventListener('DOMContentLoaded', () => {
+      const fortuneForm = document.getElementById('fortuneForm');
+      const userNameInput = document.getElementById('userName');
+      const userBirthInput = document.getElementById('userBirth');
+      const inputSection = document.getElementById('inputSection');
+      const resultSection = document.getElementById('resultSection');
+      const currentDateStr = document.getElementById('currentDateStr');
+      const tarotCard3D = document.getElementById('tarotCard3D');
+      const toast = document.getElementById('toast');
+      const btnCopyResult = document.getElementById('btnCopyResult');
+      const btnReset = document.getElementById('btnReset');
+      const btnReselect = document.getElementById('btnReselect');
+
+      // Set formatted current date in Korean
+      const now = new Date();
+      const days = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
+      const dateFormatted = `${now.getFullYear()}년 ${now.getMonth() + 1}월 ${now.getDate()}일 ${days[now.getDay()]}`;
+      if (currentDateStr) currentDateStr.textContent = dateFormatted;
+
+      const dateSeedKey = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}`;
+
+      // Form Submit Handler
+      fortuneForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = userNameInput.value.trim();
+        const birth = userBirthInput.value.trim();
+
+        if (!name || !birth) {
+          alert('이름과 생년월일을 모두 입력해주세요.');
+          return;
+        }
+
+        // Generate Seed-based Fortune
+        const seedStr = `${name}_${birth}_${dateSeedKey}`;
+        const rng = createSeededRandom(seedStr);
+
+        renderFortuneResult(name, birth, rng);
+      });
+
+      // 3D Tarot Card Flip on click
+      tarotCard3D.addEventListener('click', () => {
+        tarotCard3D.classList.toggle('flipped');
+        playMysticChime();
+      });
+
+      // Reset / Re-enter
+      function resetToInput() {
+        resultSection.style.display = 'none';
+        inputSection.style.display = 'block';
+        tarotCard3D.classList.remove('flipped');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      btnReset.addEventListener('click', resetToInput);
+      btnReselect.addEventListener('click', resetToInput);
+
+      // Copy Fortune Result
+      btnCopyResult.addEventListener('click', () => {
+        if (!window.currentFortuneData) return;
+        const d = window.currentFortuneData;
+        const text = `🔮 [${d.name}님의 오늘 타로 운세] (${dateFormatted})\n` +
+          `✨ 타로 카드: ${d.tarot.nameKr} (${d.tarot.nameEn})\n` +
+          `💯 종합 지수: ${d.overallScore}점 - ${d.overallGrade}\n` +
+          `💖 애정운: ${d.loveStars} | 🪙 금전운: ${d.wealthStars}\n` +
+          `🌱 건강운: ${d.healthStars} | 🧭 대인운: ${d.careerStars}\n` +
+          `🍀 행운 아이템: ${d.luckyColor}, 숫자 ${d.luckyNum}, ${d.luckyDir}\n\n` +
+          `👉 신비로운 오늘의 타로 운세에서 확인해보세요!`;
+
+        navigator.clipboard.writeText(text).then(() => {
+          showToast('운세 결과가 클립보드에 복사되었습니다!');
+        }).catch(() => {
+          showToast('운세 결과가 복사되었습니다!');
+        });
+      });
+
+      // Render Fortune Result
+      function renderFortuneResult(name, birth, rng) {
+        // Pick Tarot Card
+        const tarotIndex = Math.floor(rng() * TAROT_DECK.length);
+        const tarot = TAROT_DECK[tarotIndex];
+
+        // Overall Score (60 ~ 99)
+        const overallScore = Math.floor(rng() * 38) + 62;
+        let overallData = FORTUNE_MESSAGES.overall.find(item => overallScore >= item.min) || FORTUNE_MESSAGES.overall[0];
+
+        // Stars generator
+        const getStars = (val) => "★".repeat(val) + "☆".repeat(5 - val);
+        const loveScoreVal = Math.floor(rng() * 3) + 3; // 3~5
+        const wealthScoreVal = Math.floor(rng() * 3) + 3;
+        const healthScoreVal = Math.floor(rng() * 3) + 3;
+        const careerScoreVal = Math.floor(rng() * 3) + 3;
+
+        // Messages
+        const loveMsg = FORTUNE_MESSAGES.love[Math.floor(rng() * FORTUNE_MESSAGES.love.length)];
+        const wealthMsg = FORTUNE_MESSAGES.wealth[Math.floor(rng() * FORTUNE_MESSAGES.wealth.length)];
+        const healthMsg = FORTUNE_MESSAGES.health[Math.floor(rng() * FORTUNE_MESSAGES.health.length)];
+        const careerMsg = FORTUNE_MESSAGES.career[Math.floor(rng() * FORTUNE_MESSAGES.career.length)];
+
+        // Lucky items
+        const luckyCol = LUCKY_COLORS[Math.floor(rng() * LUCKY_COLORS.length)];
+        const luckyNum1 = Math.floor(rng() * 45) + 1;
+        const luckyNum2 = (luckyNum1 + Math.floor(rng() * 20) + 1) % 45 + 1;
+        const luckyDir = LUCKY_DIRECTIONS[Math.floor(rng() * LUCKY_DIRECTIONS.length)];
+        const luckyTm = LUCKY_TIMES[Math.floor(rng() * LUCKY_TIMES.length)];
+
+        // Store for copy
+        window.currentFortuneData = {
+          name,
+          tarot,
+          overallScore,
+          overallGrade: overallData.grade,
+          loveStars: getStars(loveScoreVal),
+          wealthStars: getStars(wealthScoreVal),
+          healthStars: getStars(healthScoreVal),
+          careerStars: getStars(careerScoreVal),
+          luckyColor: luckyCol,
+          luckyNum: `${luckyNum1}, ${luckyNum2}`,
+          luckyDir,
+          luckyTm
+        };
+
+        // Update DOM
+        document.getElementById('resUserName').textContent = name;
+
+        // Tarot Card Front
+        document.getElementById('tarotCardNumber').textContent = tarot.num;
+        document.getElementById('tarotCardIcon').textContent = tarot.icon;
+        document.getElementById('tarotCardNameKr').textContent = tarot.nameKr;
+        document.getElementById('tarotCardNameEn').textContent = tarot.nameEn;
+        document.getElementById('tarotCardKeywords').textContent = tarot.keywords;
+
+        // Overall Score
+        document.getElementById('overallScoreNum').textContent = overallScore;
+        document.getElementById('overallGradeText').textContent = overallData.grade;
+        document.getElementById('overallSummaryText').textContent = overallData.summary;
+
+        // Circular progress animation (circumference = 345)
+        const circleBar = document.getElementById('scoreCircleBar');
+        const offset = 345 - (345 * (overallScore / 100));
+        circleBar.style.strokeDashoffset = '345';
+        setTimeout(() => {
+          circleBar.style.strokeDashoffset = offset;
+        }, 100);
+
+        // Categories
+        document.getElementById('loveStars').textContent = getStars(loveScoreVal);
+        document.getElementById('loveDesc').textContent = loveMsg.text;
+        document.getElementById('loveTip').innerHTML = `💡 <strong>조언:</strong> ${loveMsg.tip}`;
+
+        document.getElementById('wealthStars').textContent = getStars(wealthScoreVal);
+        document.getElementById('wealthDesc').textContent = wealthMsg.text;
+        document.getElementById('wealthTip').innerHTML = `💡 <strong>조언:</strong> ${wealthMsg.tip}`;
+
+        document.getElementById('healthStars').textContent = getStars(healthScoreVal);
+        document.getElementById('healthDesc').textContent = healthMsg.text;
+        document.getElementById('healthTip').innerHTML = `💡 <strong>조언:</strong> ${healthMsg.tip}`;
+
+        document.getElementById('careerStars').textContent = getStars(careerScoreVal);
+        document.getElementById('careerDesc').textContent = careerMsg.text;
+        document.getElementById('careerTip').innerHTML = `💡 <strong>조언:</strong> ${careerMsg.tip}`;
+
+        // Lucky Elements
+        document.getElementById('luckyColor').textContent = luckyCol;
+        document.getElementById('luckyNumber').textContent = `${luckyNum1}, ${luckyNum2}`;
+        document.getElementById('luckyDirection').textContent = luckyDir;
+        document.getElementById('luckyTime').textContent = luckyTm;
+
+        // Switch View
+        inputSection.style.display = 'none';
+        resultSection.style.display = 'block';
+
+        // Auto flip tarot card after short delay for dramatic reveal
+        setTimeout(() => {
+          tarotCard3D.classList.add('flipped');
+          playMysticChime();
+          triggerCosmicConfetti();
+        }, 350);
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      function showToast(msg) {
+        toast.textContent = msg;
+        toast.classList.add('show');
+        clearTimeout(window.toastTimer);
+        window.toastTimer = setTimeout(() => {
+          toast.classList.remove('show');
+        }, 2500);
+      }
+
+      function triggerCosmicConfetti() {
+        if (typeof confetti === 'function') {
+          confetti({
+            particleCount: 60,
+            spread: 70,
+            origin: { y: 0.5 },
+            colors: ['#fae084', '#d4af37', '#9333ea', '#38bdf8', '#ffffff']
+          });
+        }
+      }
+    });
+  </script>
 </body>
 </html>
