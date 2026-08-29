@@ -1,34 +1,30 @@
-# 🔮 신비로운 오늘의 타로 운세 (Mystic Tarot Fortune)
+# 🔮 MYSTIC TAROT | Today's Fortune & Summoning
 
-사용자의 **이름**과 **생년월일**을 입력받아 **시드 기반 결정론적 난수(Mulberry32 PRNG)**를 통해 매일 새로운 타로 카드와 오늘의 종합운, 애정운, 금전운, 건강운, 대인운을 제공하는 단일 파일(`index.html`) 웹사이트입니다.
-
----
-
-## 🌐 라이브 웹사이트
-👉 **[https://csj030321-lang.github.io/product-bulider-lecture/](https://csj030321-lang.github.io/product-bulider-lecture/)**
+A single-file (`index.html`) Tarot Oracle web application featuring a **3-second 3D spinning ritual**, **22 Major Arcana Guardian Character Summoning**, **Dark & White Mode**, **Cinzel Decorative typography**, and a **deterministic seed-based random engine (Mulberry32)**.
 
 ---
 
-## ✨ 주요 특징 및 기능
+## 🌐 Live Website
+👉 **[https://csj030321-lang.github.io/today-fortune/](https://csj030321-lang.github.io/today-fortune/)**
 
-1. **시드 기반 일관성 (Deterministic Seed Random)**
-   - 동일한 사용자(이름 + 생년월일)는 **같은 날 언제 접속해도 100% 동일한 결과**가 산출됩니다.
-   - 날짜가 자정을 지나 변경되면 새로운 시드가 생성되어 내일의 새로운 운세가 도출됩니다.
+---
 
-2. **22종 메이저 아르카나 타로 카드 3D 뒤집기**
-   - 신비로운 우주/타로 감성의 3D 카드 플립 애니메이션 (`The Fool` ~ `The World`).
-   - 결과 공개 시 신비로운 챠임 사운드(Web Audio API) 및 별빛 파티클 효과.
+## ✨ Features
 
-3. **4대 핵심 운세 카테고리**
-   - **종합운 (Overall Score)**: 0~100점 원형 게이지 애니메이션 및 등급별 총평.
-   - **애정운 (Love)**: 인연의 흐름 및 솔직한 소통 팁.
-   - **금전운 (Wealth)**: 지출 및 투자 조언.
-   - **건강운 (Health)**: 신체 에너지 및 힐링 가이드.
-   - **대인/성공운 (Career)**: 업무 협업 및 신뢰 가이드.
+1. **3-Second 3D Spinning & Summoning Ritual**
+   - When the user submits their name and birthdate, a dramatic 3-second cosmic magic circle sequence plays.
+   - The tarot deck levitates and spins in 3D with escalating audio chimes (Web Audio API).
 
-4. **오늘의 행운 요소**
-   - 행운의 색상, 행운의 숫자(2개), 행운의 방위, 행운의 시간대 추천.
+2. **22 Major Arcana Guardian Character Summoning**
+   - When the oracle is revealed, a unique Tarot Guardian is summoned (`THE SUN`, `THE STAR`, `THE EMPRESS`, `THE MAGICIAN`, `THE WORLD`, etc.) with personalized dialogue, title, and aura.
 
-5. **완벽한 모바일 최적화 & 단일 파일 (`index.html`)**
-   - 외부 별도 CSS/JS 파일 없이 단일 파일로 동작.
-   - 모바일 터치 친화적 UI/UX 및 결과 원클릭 클립보드 복사 지원.
+3. **Dark & White Mode Switcher**
+   - Instant header toggle (🌙 Dark Mode / ☀️ White Mode) with `localStorage` persistence and OS preference detection.
+
+4. **Cinzel Decorative & Bilingual Design**
+   - Headers and Tarot titles in **English** using `Cinzel Decorative`.
+   - Comprehensive fortune explanations and advice in warm, polished **Korean (한글)**.
+
+5. **Deterministic Seed-based PRNG (Mulberry32)**
+   - The same person on the same date always gets 100% consistent fortune results.
+   - The seed changes automatically when the date advances past midnight.
