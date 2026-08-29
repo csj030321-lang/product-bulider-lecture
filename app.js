@@ -25,7 +25,6 @@ class LottoSoundEngine {
     const gain = this.ctx.createGain();
 
     osc.type = 'sine';
-    // Pop frequency curve
     osc.frequency.setValueAtTime(440, this.ctx.currentTime);
     osc.frequency.exponentialRampToValueAtTime(880, this.ctx.currentTime + 0.08);
 
@@ -77,6 +76,7 @@ class LottoApp {
     this.lastDrawnSet = null;
 
     this.initElements();
+    this.initTheme();
     this.initEventListeners();
     this.initMachineTumblingBalls();
     this.renderFilterGrid();
@@ -94,6 +94,7 @@ class LottoApp {
     // Controls & Toggles
     this.soundToggleBtn = document.getElementById('soundToggleBtn');
     this.themeToggleBtn = document.getElementById('themeToggleBtn');
+    this.themeText = document.getElementById('themeText');
 
     // Live Draw
     this.lotteryMachine = document.getElementById('lotteryMachine');
@@ -138,6 +139,42 @@ class LottoApp {
     this.toast = document.getElementById('toast');
   }
 
+  // Initialize theme from localStorage or OS preference
+  initTheme() {
+    const savedTheme = localStorage.getItem('lotto_theme');
+    if (savedTheme === 'light') {
+      this.setTheme('light', false);
+    } else if (savedTheme === 'dark') {
+      this.setTheme('dark', false);
+    } else {
+      // Default to dark, check system preference if light
+      const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+      this.setTheme(prefersLight ? 'light' : 'dark', false);
+    }
+  }
+
+  // Set theme mode ('dark' or 'light')
+  setTheme(theme, showToastMessage = true) {
+    if (theme === 'light') {
+      document.body.classList.remove('dark-theme');
+      document.body.classList.add('light-theme');
+      if (this.themeText) this.themeText.textContent = '화이트 모드';
+      localStorage.setItem('lotto_theme', 'light');
+      if (showToastMessage) this.showToast('☀️ 화이트(라이트) 모드로 변경되었습니다.');
+    } else {
+      document.body.classList.remove('light-theme');
+      document.body.classList.add('dark-theme');
+      if (this.themeText) this.themeText.textContent = '다크 모드';
+      localStorage.setItem('lotto_theme', 'dark');
+      if (showToastMessage) this.showToast('🌙 다크 모드로 변경되었습니다.');
+    }
+  }
+
+  toggleTheme() {
+    const isCurrentlyLight = document.body.classList.contains('light-theme');
+    this.setTheme(isCurrentlyLight ? 'dark' : 'light', true);
+  }
+
   initEventListeners() {
     // Navigation Tabs
     this.navTabs.forEach(tab => {
@@ -165,13 +202,9 @@ class LottoApp {
       }
     });
 
-    // Theme toggle
+    // Theme toggle (Dark / White Mode)
     this.themeToggleBtn.addEventListener('click', () => {
-      document.body.classList.toggle('light-theme');
-      const isLight = document.body.classList.contains('light-theme');
-      const icon = this.themeToggleBtn.querySelector('i');
-      icon.className = isLight ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
-      this.showToast(isLight ? '라이트 테마로 변경되었습니다.' : '다크 테마로 변경되었습니다.');
+      this.toggleTheme();
     });
 
     // Live Draw Actions

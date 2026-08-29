@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>황금손 로또 6/45 번호 추첨기 | Golden Lotto</title>
-  <meta name="description" content="실감나는 3D 애니메이션과 사운드 효과를 제공하는 로또 6/45 행운 번호 추첨 사이트입니다. 제휴 및 광고 문의 지원.">
+  <meta name="description" content="다크 모드와 화이트 모드를 지원하는 실감나는 3D 애니메이션과 사운드 효과의 로또 6/45 행운 번호 추첨 사이트입니다.">
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
@@ -24,13 +24,26 @@
         <span class="logo-icon">✨</span>
         <h1>황금손 로또 <span>6/45</span></h1>
       </div>
+      
+      <!-- Header Controls: Sound & Theme Switcher -->
       <div class="header-actions">
+        <!-- Sound Toggle -->
         <button id="soundToggleBtn" class="icon-btn" title="소리 켜기/끄기" aria-label="소리 토글">
           <i class="fa-solid fa-volume-high"></i>
         </button>
-        <button id="themeToggleBtn" class="icon-btn" title="테마 변경" aria-label="테마 변경">
-          <i class="fa-solid fa-moon"></i>
-        </button>
+
+        <!-- Theme Mode Switcher (Dark / White) -->
+        <div class="theme-switch-wrapper" title="테마 모드 변경">
+          <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="다크/화이트 모드 변경">
+            <span class="theme-icon-box dark-icon">
+              <i class="fa-solid fa-moon"></i>
+            </span>
+            <span class="theme-icon-box light-icon">
+              <i class="fa-solid fa-sun"></i>
+            </span>
+            <span class="theme-text" id="themeText">다크 모드</span>
+          </button>
+        </div>
       </div>
     </div>
   </header>
@@ -425,7 +438,7 @@
         <a href="#" onclick="document.querySelector('[data-tab=contactSection]').click(); return false;">제휴 및 광고 문의</a>
       </div>
       <p>© 2026 황금손 로또 6/45 번호 추첨기. 행운과 대박을 기원합니다!</p>
-      <p class="disclaimer">본 사이트의 추첨 번호는 무작위 알고리즘에 의해 생성되며, 당첨을 보장하지 않습니다. 제휴 및 문의사항은 문의 폼을 이용해주세요.</p>
+      <p class="disclaimer">본 사이트의 추첨 번호는 무작위 알고리즘에 의해 생성되며, 당첨을 보장하지 않습니다.</p>
     </div>
   </footer>
 
