@@ -1,30 +1,36 @@
-# 🔮 MYSTIC TAROT | Today's Fortune & Summoning
+# 🐶 세영이의 운세 🐾 | 뽀송뽀송 말티즈 오늘의 운세
 
-A single-file (`index.html`) Tarot Oracle web application featuring a **3-second 3D spinning ritual**, **22 Major Arcana Guardian Character Summoning**, **Dark & White Mode**, **Cinzel Decorative typography**, and a **deterministic seed-based random engine (Mulberry32)**.
+말티즈를 주인공으로 한 사랑스럽고 뽀송뽀송한 강아지 캐릭터들이 전하는 **세영이의 오늘 하루 운세** 웹 애플리케이션입니다.
 
 ---
 
-## 🌐 Live Website
+## 🌐 라이브 웹사이트
 👉 **[https://csj030321-lang.github.io/today-fortune/](https://csj030321-lang.github.io/today-fortune/)**
 
 ---
 
-## ✨ Features
+## ✨ 주요 특징 및 변경 사항
 
-1. **3-Second 3D Spinning & Summoning Ritual**
-   - When the user submits their name and birthdate, a dramatic 3-second cosmic magic circle sequence plays.
-   - The tarot deck levitates and spins in 3D with escalating audio chimes (Web Audio API).
+1. **사이트명 & 한글화**:
+   - 제목: **"세영이의 운세 🐾"**
+   - 영문 표기를 모두 친근하고 따뜻한 **한국어(한글)**로 개편.
 
-2. **22 Major Arcana Guardian Character Summoning**
-   - When the oracle is revealed, a unique Tarot Guardian is summoned (`THE SUN`, `THE STAR`, `THE EMPRESS`, `THE MAGICIAN`, `THE WORLD`, etc.) with personalized dialogue, title, and aura.
+2. **기본 입력값 설정 (수정 가능)**:
+   - 성함 / 닉네임 기본값: **`엄세영`**
+   - 생년월일 기본값: **`2002-09-17`**
+   - 사용자가 언제든 자유롭게 수정하여 다른 날짜나 다른 사람으로도 조회 가능.
 
-3. **Dark & White Mode Switcher**
-   - Instant header toggle (🌙 Dark Mode / ☀️ White Mode) with `localStorage` persistence and OS preference detection.
+3. **말티즈 & 강아지 수호신 캐릭터 디자인**:
+   - 기존 타로 카드 컨셉을 탈피하고, 귀엽고 뽀송뽀송한 **말티즈 주인공 강아지 요정들**이 수호신으로 등장.
+   - `햇살 요정 말티즈`, `왕관 쓴 공주 말티즈`, `마법사 말티즈`, `리본 요정 말티즈`, `네잎클로버 말티즈` 등 16종 이상의 사랑스러운 강아지 캐릭터와 맞춤 한마디 대사.
 
-4. **Cinzel Decorative & Bilingual Design**
-   - Headers and Tarot titles in **English** using `Cinzel Decorative`.
-   - Comprehensive fortune explanations and advice in warm, polished **Korean (한글)**.
+4. **3초간의 꼬리 살랑살랑 소환 의식 (3-Second Maltese Ritual)**:
+   - 버튼 클릭 시 3초 동안 말티즈 요정이 꼬리를 흔들며 킁킁거리는 귀여운 소환 애니메이션 연출.
+   - Web Audio API 기반의 톡톡 튀는 효과음과 꽃가루 Confetti 파티클.
 
-5. **Deterministic Seed-based PRNG (Mulberry32)**
-   - The same person on the same date always gets 100% consistent fortune results.
-   - The seed changes automatically when the date advances past midnight.
+5. **다크 모드 & 화이트 모드 지원**:
+   - **화이트 모드**: 뽀송뽀송한 크림 & 베이비 핑크 & 파스텔 옐로우의 사랑스러운 테마.
+   - **다크 모드**: 아늑하고 편안한 미드나잇 퍼플 테마.
+
+6. **시드 기반 일관성 (Mulberry32 PRNG)**:
+   - 같은 사람은 같은 날 항상 100% 동일한 결과가 나오며, 자정이 지나 날짜가 바뀌면 새로운 운세가 도출됩니다.

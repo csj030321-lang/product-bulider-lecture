@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>MYSTIC TAROT | Today's Fortune & Summoning</title>
-  <meta name="description" content="A seed-based mystical Tarot Oracle. Experience dramatic 3D card spinning ritual and guardian character summoning.">
+  <title>세영이의 운세 🐾 | 뽀송뽀송 말티즈 오늘의 운세</title>
+  <meta name="description" content="세영이를 위한 뽀송뽀송 귀여운 말티즈 요정의 오늘의 운세! 종합운, 애정운, 금전운, 건강운을 귀여운 댕댕이 수호신과 함께 확인하세요.">
   
-  <!-- Google Fonts: Cinzel Decorative (Titles), Cinzel, Pretendard -->
+  <!-- Fonts: Pretendard & Gaegu (Cute Korean Handcraft Font) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@500;700;900&family=Pretendard:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Pretendard:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -19,58 +19,63 @@
 
   <style>
     /* ==========================================================================
-       1. THEME VARIABLES (Dark & White Mode)
+       1. VARIABLES & COLOR PALETTE (Cute Maltese & Puppy Aesthetics)
        ========================================================================== */
     :root {
-      --font-decor: 'Cinzel Decorative', serif;
-      --font-cinzel: 'Cinzel', serif;
-      --font-kr: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-body: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-cute: 'Gaegu', cursive, sans-serif;
 
-      --gold-primary: #d4af37;
-      --gold-light: #fae084;
-      --gold-dark: #997819;
-      --gold-gradient: linear-gradient(135deg, #fae084 0%, #d4af37 50%, #aa8214 100%);
-      --gold-glow: rgba(212, 175, 55, 0.4);
-      --gold-glow-strong: rgba(212, 175, 55, 0.85);
+      --maltese-white: #ffffff;
+      --maltese-cream: #fffdf7;
+      --puppy-pink: #ff85a2;
+      --puppy-pink-light: #ffd6e0;
+      --puppy-yellow: #ffb703;
+      --puppy-yellow-light: #fff3cc;
+      --puppy-blue: #70d6ff;
+      --puppy-purple: #c77dff;
 
-      /* Dark Theme (Default) */
-      --bg-base: #080612;
-      --bg-space: radial-gradient(circle at 50% 15%, #1f143a 0%, #0d081e 50%, #05030a 100%);
-      --card-bg: rgba(23, 17, 43, 0.78);
-      --card-bg-hover: rgba(33, 24, 61, 0.9);
-      --card-border: rgba(212, 175, 55, 0.32);
-      --card-border-active: rgba(212, 175, 55, 0.8);
-      --card-shadow: 0 20px 45px -12px rgba(0, 0, 0, 0.85), 0 0 25px rgba(212, 175, 55, 0.1);
+      --paw-color: #ff85a2;
+
+      /* Light / Cream Theme (Default Cute Mode) */
+      --bg-base: #fff9f0;
+      --bg-pattern: radial-gradient(circle at 50% 10%, #fff3e6 0%, #fff9f0 60%, #fef0e2 100%);
+      --card-bg: rgba(255, 255, 255, 0.95);
+      --card-bg-subtle: #fff8f2;
+      --card-border: #ffd8bf;
+      --card-border-active: #ff85a2;
+      --card-shadow: 0 16px 36px -8px rgba(255, 133, 162, 0.15), 0 4px 14px rgba(0, 0, 0, 0.04);
       
-      --text-main: #f8fafc;
-      --text-muted: #b3aed0;
-      --text-gold: #fae084;
-      --input-bg: rgba(11, 8, 24, 0.75);
-      --header-bg: rgba(8, 6, 18, 0.85);
-      --portal-bg: radial-gradient(circle, rgba(147, 51, 234, 0.3) 0%, rgba(212, 175, 55, 0.15) 50%, transparent 70%);
+      --text-main: #3d2f2b;
+      --text-muted: #7d6b65;
+      --text-highlight: #e63946;
+      --text-pink: #ff5d8f;
 
-      --radius-xl: 24px;
-      --radius-lg: 16px;
-      --radius-md: 12px;
-      --radius-sm: 8px;
+      --input-bg: #ffffff;
+      --header-bg: rgba(255, 255, 255, 0.92);
+      
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --radius-sm: 10px;
     }
 
-    /* White (Light) Theme */
-    body.light-theme {
-      --bg-base: #f8fafc;
-      --bg-space: radial-gradient(circle at 50% 15%, #ffffff 0%, #f1f5f9 55%, #e2e8f0 100%);
-      --card-bg: rgba(255, 255, 255, 0.94);
-      --card-bg-hover: rgba(255, 255, 255, 1);
-      --card-border: rgba(212, 175, 55, 0.45);
-      --card-border-active: rgba(212, 175, 55, 0.95);
-      --card-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.08), 0 4px 16px rgba(212, 175, 55, 0.15);
+    /* Cozy Night Theme (Dark Puppy Mode) */
+    body.dark-theme {
+      --bg-base: #1a1528;
+      --bg-pattern: radial-gradient(circle at 50% 10%, #2b2044 0%, #1a1528 60%, #120e1e 100%);
+      --card-bg: rgba(36, 28, 58, 0.92);
+      --card-bg-subtle: #211936;
+      --card-border: rgba(255, 133, 162, 0.35);
+      --card-border-active: #ff85a2;
+      --card-shadow: 0 18px 40px -10px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 133, 162, 0.12);
       
-      --text-main: #0f172a;
-      --text-muted: #475569;
-      --text-gold: #b48c14;
-      --input-bg: #ffffff;
-      --header-bg: rgba(255, 255, 255, 0.88);
-      --portal-bg: radial-gradient(circle, rgba(212, 175, 55, 0.25) 0%, rgba(147, 51, 234, 0.1) 50%, transparent 70%);
+      --text-main: #fcf9f2;
+      --text-muted: #b8afc8;
+      --text-highlight: #ff85a2;
+      --text-pink: #ff9ebb;
+
+      --input-bg: #1c152c;
+      --header-bg: rgba(26, 21, 40, 0.92);
     }
 
     * {
@@ -81,9 +86,9 @@
     }
 
     body {
-      font-family: var(--font-kr);
+      font-family: var(--font-body);
       background: var(--bg-base);
-      background-image: var(--bg-space);
+      background-image: var(--bg-pattern);
       background-attachment: fixed;
       color: var(--text-main);
       min-height: 100vh;
@@ -92,64 +97,39 @@
       position: relative;
       overflow-x: hidden;
       line-height: 1.6;
-      transition: background-color 0.4s ease, color 0.4s ease;
+      transition: background 0.35s ease, color 0.35s ease;
     }
 
-    /* Ambient Constellations */
-    .cosmic-stars {
+    /* Floating Cute Paws & Hearts Background */
+    .cute-bg-elements {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      inset: 0;
       pointer-events: none;
       z-index: 0;
+      opacity: 0.25;
       background: 
-        radial-gradient(1.5px 1.5px at 30px 40px, #ffffff, rgba(0,0,0,0)),
-        radial-gradient(1.5px 1.5px at 120px 180px, #fae084, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 280px 90px, #ffffff, rgba(0,0,0,0)),
-        radial-gradient(1px 1px at 380px 300px, #fae084, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 500px 140px, #ffffff, rgba(0,0,0,0)),
-        radial-gradient(1.5px 1.5px at 680px 380px, #ffffff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 800px 220px, #fae084, rgba(0,0,0,0));
-      background-repeat: repeat;
-      background-size: 800px 800px;
-      opacity: 0.55;
-      animation: starsDrift 140s linear infinite;
+        radial-gradient(circle at 10% 20%, #ff85a2 2px, transparent 2px),
+        radial-gradient(circle at 85% 15%, #ffb703 3px, transparent 3px),
+        radial-gradient(circle at 25% 70%, #70d6ff 2.5px, transparent 2.5px),
+        radial-gradient(circle at 75% 80%, #ff85a2 2px, transparent 2px),
+        radial-gradient(circle at 50% 50%, #c77dff 3px, transparent 3px);
+      background-size: 160px 160px;
     }
 
-    @keyframes starsDrift {
-      from { transform: translateY(0); }
-      to { transform: translateY(-800px); }
-    }
-
-    .nebula-bloom {
-      position: fixed;
-      top: 5%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 700px;
-      height: 700px;
-      background: var(--portal-bg);
-      filter: blur(90px);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* Top Navigation / Header */
+    /* Header */
     .app-header {
       position: sticky;
       top: 0;
       z-index: 100;
-      backdrop-filter: blur(16px);
+      backdrop-filter: blur(14px);
       background: var(--header-bg);
-      border-bottom: 1px solid var(--card-border);
-      padding: 14px 0;
+      border-bottom: 1.5px solid var(--card-border);
+      padding: 12px 0;
       transition: all 0.35s ease;
     }
 
     .header-inner {
-      max-width: 760px;
+      max-width: 680px;
       margin: 0 auto;
       padding: 0 20px;
       display: flex;
@@ -161,33 +141,30 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      user-select: none;
+      text-decoration: none;
     }
 
-    .brand-icon {
-      font-size: 1.5rem;
-      color: var(--gold-primary);
-      animation: runePulse 3s infinite ease-in-out;
+    .brand-avatar {
+      font-size: 1.8rem;
+      animation: puppyBounce 2.5s infinite ease-in-out;
     }
 
-    @keyframes runePulse {
-      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 4px var(--gold-glow)); }
-      50% { transform: scale(1.15); filter: drop-shadow(0 0 14px var(--gold-glow-strong)); }
+    @keyframes puppyBounce {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-5px) rotate(8deg); }
     }
 
     .brand-title {
-      font-family: var(--font-decor);
-      font-size: 1.25rem;
+      font-family: var(--font-cute);
+      font-size: 1.6rem;
       font-weight: 700;
-      letter-spacing: 2px;
-      background: var(--gold-gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: var(--text-highlight);
+      letter-spacing: -0.5px;
     }
 
     .theme-toggle-btn {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
+      background: var(--card-bg-subtle);
+      border: 1.5px solid var(--card-border);
       color: var(--text-main);
       padding: 6px 14px;
       border-radius: 30px;
@@ -195,34 +172,21 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      font-family: var(--font-cinzel);
-      font-size: 0.85rem;
+      font-size: 0.88rem;
       font-weight: 700;
       transition: all 0.25s ease;
     }
 
     .theme-toggle-btn:hover {
-      border-color: var(--gold-primary);
-      box-shadow: 0 0 14px var(--gold-glow);
-      transform: translateY(-1px);
-    }
-
-    .theme-badge {
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      background: var(--gold-primary);
-      color: #0b0818;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.75rem;
+      border-color: var(--puppy-pink);
+      transform: scale(1.04);
+      box-shadow: 0 4px 12px rgba(255, 133, 162, 0.2);
     }
 
     /* Main Container */
     .container {
       width: 100%;
-      max-width: 720px;
+      max-width: 640px;
       margin: 0 auto;
       padding: 24px 20px 60px;
       position: relative;
@@ -232,93 +196,77 @@
     /* Hero Banner */
     .hero-banner {
       text-align: center;
-      margin: 12px 0 28px;
+      margin: 10px 0 26px;
     }
 
-    .hero-badge {
+    .date-badge {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 5px 16px;
-      background: rgba(212, 175, 55, 0.12);
-      border: 1px solid var(--card-border);
-      border-radius: 20px;
-      font-family: var(--font-cinzel);
-      font-size: 0.85rem;
-      color: var(--gold-light);
+      padding: 6px 16px;
+      background: var(--puppy-pink-light);
+      border: 1.5px solid var(--puppy-pink);
+      border-radius: 30px;
+      color: #b01a44;
+      font-size: 0.88rem;
       font-weight: 700;
-      letter-spacing: 1px;
       margin-bottom: 12px;
     }
 
-    body.light-theme .hero-badge {
-      color: #997819;
+    body.dark-theme .date-badge {
+      background: rgba(255, 133, 162, 0.2);
+      color: #ffb3c6;
     }
 
     .hero-title {
-      font-family: var(--font-decor);
-      font-size: 2.1rem;
-      font-weight: 900;
-      letter-spacing: 2px;
-      line-height: 1.25;
-      background: var(--gold-gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 8px;
-      text-shadow: 0 4px 18px rgba(0,0,0,0.4);
+      font-family: var(--font-cute);
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: var(--text-highlight);
+      line-height: 1.2;
+      margin-bottom: 6px;
     }
 
     .hero-subtitle {
-      font-size: 0.96rem;
+      font-size: 0.98rem;
       color: var(--text-muted);
-      letter-spacing: 0.3px;
+      word-break: keep-all;
     }
 
-    /* Common Mystic Card */
-    .mystic-card {
+    /* Common Card */
+    .cute-card {
       background: var(--card-bg);
-      border: 1px solid var(--card-border);
+      border: 2px solid var(--card-border);
       border-radius: var(--radius-xl);
-      padding: 30px 24px;
-      backdrop-filter: blur(16px);
+      padding: 28px 24px;
       box-shadow: var(--card-shadow);
       margin-bottom: 24px;
       position: relative;
-      overflow: hidden;
       transition: all 0.35s ease;
     }
 
-    .mystic-card::before, .mystic-card::after {
-      content: "✦";
-      position: absolute;
-      font-size: 0.8rem;
-      color: var(--gold-primary);
-      opacity: 0.5;
-    }
-    .mystic-card::before { top: 12px; left: 14px; }
-    .mystic-card::after { bottom: 12px; right: 14px; }
-
-    /* Input Form */
-    .section-heading {
-      font-family: var(--font-decor);
-      font-size: 1.35rem;
-      color: var(--gold-light);
+    .cute-card-header {
       text-align: center;
-      margin-bottom: 6px;
-      letter-spacing: 1px;
+      margin-bottom: 22px;
     }
 
-    body.light-theme .section-heading {
-      color: #aa8214;
+    .cute-card-header h2 {
+      font-family: var(--font-cute);
+      font-size: 1.8rem;
+      color: var(--text-pink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
 
-    .section-subdesc {
-      text-align: center;
-      font-size: 0.88rem;
+    .cute-card-header p {
+      font-size: 0.9rem;
       color: var(--text-muted);
-      margin-bottom: 24px;
+      margin-top: 2px;
     }
 
+    /* Form Elements */
     .form-group {
       display: flex;
       flex-direction: column;
@@ -327,19 +275,12 @@
     }
 
     .form-label {
-      font-size: 0.92rem;
+      font-size: 0.95rem;
       font-weight: 700;
       color: var(--text-main);
       display: flex;
       align-items: center;
-      gap: 8px;
-    }
-
-    .form-label-en {
-      font-family: var(--font-cinzel);
-      font-size: 0.75rem;
-      color: var(--gold-primary);
-      letter-spacing: 1px;
+      gap: 6px;
     }
 
     .input-wrapper {
@@ -351,66 +292,66 @@
     .input-icon {
       position: absolute;
       left: 16px;
-      color: var(--gold-primary);
-      font-size: 1rem;
+      color: var(--puppy-pink);
+      font-size: 1.1rem;
       pointer-events: none;
     }
 
     .form-input {
       width: 100%;
-      font-family: var(--font-kr);
-      font-size: 1rem;
+      font-family: var(--font-body);
+      font-size: 1.05rem;
+      font-weight: 600;
       color: var(--text-main);
       background: var(--input-bg);
-      border: 1px solid var(--card-border);
+      border: 2px solid var(--card-border);
       border-radius: var(--radius-lg);
-      padding: 14px 16px 14px 44px;
+      padding: 14px 16px 14px 46px;
       outline: none;
       transition: all 0.25s ease;
     }
 
     .form-input:focus {
-      border-color: var(--gold-primary);
-      box-shadow: 0 0 18px var(--gold-glow);
+      border-color: var(--puppy-pink);
+      box-shadow: 0 0 0 4px rgba(255, 133, 162, 0.2);
     }
 
-    /* Submit Button */
-    .btn-summon {
+    /* Cute Submit Button */
+    .btn-cute-submit {
       width: 100%;
-      margin-top: 12px;
-      padding: 17px;
-      background: var(--gold-gradient);
-      color: #0b0818;
+      margin-top: 10px;
+      padding: 16px;
+      background: linear-gradient(135deg, #ff85a2 0%, #ff5d8f 100%);
+      color: #ffffff;
       border: none;
       border-radius: var(--radius-lg);
-      font-family: var(--font-decor);
-      font-size: 1.15rem;
-      font-weight: 900;
-      letter-spacing: 2px;
+      font-family: var(--font-cute);
+      font-size: 1.55rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
-      box-shadow: 0 10px 28px rgba(212, 175, 55, 0.45);
+      box-shadow: 0 8px 24px rgba(255, 133, 162, 0.4);
       transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .btn-summon:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 14px 36px var(--gold-glow-strong);
-      filter: brightness(1.08);
+    .btn-cute-submit:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 12px 30px rgba(255, 133, 162, 0.55);
     }
 
-    .btn-summon:active {
+    .btn-cute-submit:active {
       transform: translateY(1px);
     }
 
-    .seed-info-text {
+    .seed-hint {
       text-align: center;
-      font-size: 0.8rem;
+      font-size: 0.84rem;
       color: var(--text-muted);
-      margin-top: 14px;
+      margin-top: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -418,13 +359,13 @@
     }
 
     /* ==========================================================================
-       2. 3-SECOND SUMMONING RITUAL MODAL / OVERLAY
+       2. 3-SECOND MALTESE SPINNING RITUAL (Cute Summoning Animation)
        ========================================================================== */
-    .summoning-overlay {
+    .maltese-ritual-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(5, 3, 12, 0.94);
-      backdrop-filter: blur(20px);
+      background: rgba(255, 248, 240, 0.95);
+      backdrop-filter: blur(16px);
       z-index: 1000;
       display: none;
       flex-direction: column;
@@ -434,172 +375,118 @@
       padding: 24px;
     }
 
-    .summoning-overlay.active {
+    body.dark-theme .maltese-ritual-overlay {
+      background: rgba(22, 17, 34, 0.95);
+    }
+
+    .maltese-ritual-overlay.active {
       display: flex;
-      animation: fadeIn 0.4s ease;
+      animation: fadeIn 0.35s ease;
     }
 
-    /* Magic Circle / Rune Ring */
-    .magic-circle {
-      width: 240px;
-      height: 240px;
+    .spinning-maltese-box {
+      width: 180px;
+      height: 180px;
       position: relative;
-      margin-bottom: 28px;
-      perspective: 1000px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .rune-ring {
+    .spinning-circle-ring {
       position: absolute;
       inset: 0;
-      border: 2px dashed var(--gold-primary);
+      border: 3px dashed var(--puppy-pink);
       border-radius: 50%;
-      animation: rotateRune 8s linear infinite;
-      box-shadow: 0 0 35px var(--gold-glow-strong), inset 0 0 25px var(--gold-glow);
+      animation: rotateRing 6s linear infinite;
     }
 
-    @keyframes rotateRune {
+    @keyframes rotateRing {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
     }
 
-    .rune-ring-inner {
-      position: absolute;
-      inset: 20px;
-      border: 1px solid rgba(147, 51, 234, 0.7);
-      border-radius: 50%;
-      animation: rotateRuneRev 6s linear infinite;
+    .spinning-maltese-avatar {
+      font-size: 5rem;
+      animation: spinMaltese 0.9s infinite ease-in-out alternate;
     }
 
-    @keyframes rotateRuneRev {
-      from { transform: rotate(360deg); }
-      to { transform: rotate(0deg); }
+    @keyframes spinMaltese {
+      0% { transform: scale(1) rotate(-15deg); }
+      100% { transform: scale(1.18) rotate(15deg); }
     }
 
-    /* Spinning Tarot Deck */
-    .spinning-deck {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 100px;
-      height: 155px;
-      margin-top: -77px;
-      margin-left: -50px;
-      transform-style: preserve-3d;
-      animation: spinTarotDeck 1s infinite linear;
-    }
-
-    @keyframes spinTarotDeck {
-      0% { transform: rotateY(0deg) rotateZ(0deg) scale(1); }
-      50% { transform: rotateY(180deg) rotateZ(10deg) scale(1.15); filter: drop-shadow(0 0 20px #fae084); }
-      100% { transform: rotateY(360deg) rotateZ(0deg) scale(1); }
-    }
-
-    .spinning-card-face {
-      width: 100%;
-      height: 100%;
-      border-radius: 12px;
-      border: 2px solid var(--gold-primary);
-      background: radial-gradient(circle at 50% 50%, #2a1548 0%, #0d0618 100%);
-      box-shadow: 0 0 25px var(--gold-glow-strong);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .ritual-title-kr {
+      font-family: var(--font-cute);
       font-size: 2.2rem;
-      color: var(--gold-light);
-    }
-
-    .ritual-title {
-      font-family: var(--font-decor);
-      font-size: 1.75rem;
-      letter-spacing: 3px;
-      background: var(--gold-gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 8px;
-    }
-
-    .ritual-status-kr {
-      font-size: 1.05rem;
-      color: var(--gold-light);
       font-weight: 700;
+      color: var(--text-highlight);
       margin-bottom: 6px;
+    }
+
+    .ritual-subtitle-kr {
+      font-size: 1.05rem;
+      color: var(--text-main);
+      font-weight: 600;
       min-height: 28px;
-      transition: all 0.3s ease;
     }
 
-    .ritual-status-en {
-      font-family: var(--font-cinzel);
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      letter-spacing: 2px;
-    }
-
-    .ritual-progress-bar {
+    .ritual-progress {
       width: 220px;
-      height: 4px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 4px;
-      margin-top: 20px;
+      height: 8px;
+      background: rgba(255, 133, 162, 0.2);
+      border-radius: 20px;
+      margin-top: 18px;
       overflow: hidden;
     }
 
     .ritual-progress-fill {
       width: 0%;
       height: 100%;
-      background: var(--gold-gradient);
-      border-radius: 4px;
+      background: linear-gradient(90deg, #ff85a2, #ffb703);
+      border-radius: 20px;
       transition: width 3s linear;
     }
 
     /* ==========================================================================
-       3. RESULT SECTION & SUMMONED CHARACTER PORTAL
+       3. RESULT SECTION & MALTESE GUARDIAN REVEAL
        ========================================================================== */
-    .result-view {
+    .result-section {
       display: none;
-      animation: revealResult 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
-    @keyframes revealResult {
-      from { opacity: 0; transform: translateY(30px) scale(0.97); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(25px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Re-select Profile Header */
-    .result-profile-bar {
+    /* Profile Bar */
+    .profile-bar {
       background: var(--card-bg);
-      border: 1px solid var(--card-border);
+      border: 2px solid var(--card-border);
       border-radius: var(--radius-lg);
       padding: 14px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 24px;
+      margin-bottom: 22px;
       box-shadow: var(--card-shadow);
     }
 
-    .profile-meta strong {
-      color: var(--gold-light);
-      font-size: 1.05rem;
+    .profile-name strong {
+      font-size: 1.15rem;
+      color: var(--text-highlight);
     }
 
-    body.light-theme .profile-meta strong {
-      color: #997819;
-    }
-
-    .profile-meta span {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-left: 6px;
-    }
-
-    .btn-retry-icon {
-      background: transparent;
-      border: 1px solid var(--card-border);
-      color: var(--gold-light);
-      padding: 7px 14px;
+    .btn-edit-input {
+      background: var(--card-bg-subtle);
+      border: 1.5px solid var(--card-border);
+      color: var(--text-main);
+      padding: 6px 14px;
       border-radius: var(--radius-sm);
-      font-family: var(--font-cinzel);
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       font-weight: 700;
       cursor: pointer;
       display: flex;
@@ -608,200 +495,164 @@
       transition: all 0.2s ease;
     }
 
-    body.light-theme .btn-retry-icon {
-      color: #997819;
+    .btn-edit-input:hover {
+      border-color: var(--puppy-pink);
+      color: var(--text-highlight);
     }
 
-    .btn-retry-icon:hover {
-      background: rgba(212, 175, 55, 0.2);
-    }
-
-    /* SUMMONED GUARDIAN HERO CARD */
-    .summon-hero-card {
-      background: linear-gradient(145deg, rgba(38, 26, 68, 0.88) 0%, rgba(18, 12, 38, 0.96) 100%);
-      border: 2px solid var(--gold-primary);
+    /* HERO MALTESE GUARDIAN CARD */
+    .guardian-hero-card {
+      background: linear-gradient(135deg, var(--card-bg) 0%, var(--card-bg-subtle) 100%);
+      border: 2.5px solid var(--puppy-pink);
       border-radius: var(--radius-xl);
-      padding: 36px 24px;
+      padding: 32px 24px;
       text-align: center;
-      margin-bottom: 28px;
-      box-shadow: 0 0 40px var(--gold-glow), inset 0 0 30px rgba(0,0,0,0.5);
+      margin-bottom: 24px;
+      box-shadow: 0 16px 36px rgba(255, 133, 162, 0.22);
       position: relative;
-      overflow: hidden;
     }
 
-    body.light-theme .summon-hero-card {
-      background: linear-gradient(145deg, #ffffff 0%, #fefce8 100%);
-      box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.1), 0 0 25px var(--gold-glow);
-    }
-
-    .summon-badge {
+    .guardian-badge {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       padding: 6px 18px;
-      background: rgba(212, 175, 55, 0.18);
-      border: 1px solid var(--gold-primary);
+      background: var(--puppy-pink-light);
+      border: 1.5px solid var(--puppy-pink);
       border-radius: 30px;
-      font-family: var(--font-decor);
-      font-size: 0.85rem;
+      color: #b01a44;
+      font-family: var(--font-cute);
+      font-size: 1.15rem;
       font-weight: 700;
-      color: var(--gold-light);
-      letter-spacing: 2px;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
     }
 
-    body.light-theme .summon-badge {
-      color: #997819;
+    body.dark-theme .guardian-badge {
+      background: rgba(255, 133, 162, 0.25);
+      color: #ffb3c6;
     }
 
-    /* Summoned Avatar Portal */
-    .summon-avatar-portal {
+    .guardian-avatar-wrapper {
       width: 130px;
       height: 130px;
-      margin: 0 auto 16px;
+      margin: 0 auto 14px;
       border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #fff176 0%, #d4af37 60%, #997819 100%);
+      background: radial-gradient(circle, #ffffff 0%, #fff0f5 70%, #ffd6e0 100%);
+      border: 3.5px solid #ff85a2;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 4.5rem;
-      box-shadow: 0 0 35px var(--gold-glow-strong), inset 0 0 15px rgba(0,0,0,0.4);
-      animation: avatarFloat 3s infinite ease-in-out;
-      border: 3px solid #ffffff;
+      font-size: 4.8rem;
+      box-shadow: 0 10px 25px rgba(255, 133, 162, 0.35);
+      animation: puppyWiggle 3s infinite ease-in-out;
     }
 
-    @keyframes avatarFloat {
-      0%, 100% { transform: translateY(0) scale(1); }
-      50% { transform: translateY(-8px) scale(1.05); }
+    @keyframes puppyWiggle {
+      0%, 100% { transform: rotate(0deg) scale(1); }
+      25% { transform: rotate(-6deg) scale(1.04); }
+      75% { transform: rotate(6deg) scale(1.04); }
     }
 
-    .guardian-card-num {
-      font-family: var(--font-cinzel);
-      font-size: 0.85rem;
-      color: var(--gold-primary);
-      letter-spacing: 2px;
+    .guardian-title-kr {
+      font-family: var(--font-cute);
+      font-size: 2.1rem;
+      font-weight: 700;
+      color: var(--text-highlight);
       margin-bottom: 4px;
     }
 
-    .guardian-name-en {
-      font-family: var(--font-decor);
-      font-size: 1.85rem;
-      font-weight: 900;
-      letter-spacing: 2px;
-      background: var(--gold-gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 4px;
+    .guardian-subtitle-kr {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 16px;
     }
 
-    .guardian-name-kr {
-      font-size: 1.15rem;
-      font-weight: 800;
-      color: var(--text-main);
-      margin-bottom: 14px;
-    }
-
-    .guardian-speech-bubble {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--card-border);
+    .guardian-quote-bubble {
+      background: rgba(255, 255, 255, 0.9);
+      border: 2px solid var(--card-border);
       border-radius: var(--radius-lg);
       padding: 16px 20px;
-      font-size: 0.96rem;
+      font-size: 1.05rem;
+      font-weight: 600;
       color: var(--text-main);
-      line-height: 1.65;
-      max-width: 540px;
+      line-height: 1.6;
+      max-width: 520px;
       margin: 0 auto 16px;
-      position: relative;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
       word-break: keep-all;
     }
 
-    body.light-theme .guardian-speech-bubble {
-      background: rgba(212, 175, 55, 0.08);
+    body.dark-theme .guardian-quote-bubble {
+      background: rgba(25, 18, 38, 0.85);
     }
 
-    .guardian-keywords-tag {
+    .guardian-keywords-badge {
       display: inline-block;
-      padding: 6px 16px;
+      padding: 6px 18px;
       border-radius: 20px;
-      background: rgba(147, 51, 234, 0.2);
-      border: 1px solid rgba(147, 51, 234, 0.4);
-      color: #d8b4fe;
-      font-size: 0.85rem;
-      font-weight: 600;
+      background: rgba(255, 183, 3, 0.2);
+      border: 1.5px solid var(--puppy-yellow);
+      color: #996500;
+      font-size: 0.88rem;
+      font-weight: 700;
     }
 
-    body.light-theme .guardian-keywords-tag {
-      background: rgba(212, 175, 55, 0.15);
-      border-color: rgba(212, 175, 55, 0.4);
-      color: #997819;
+    body.dark-theme .guardian-keywords-badge {
+      color: #ffd166;
     }
 
-    /* Overall Fortune Score & Summary Card */
-    .overall-card {
+    /* Overall Score Card */
+    .score-summary-card {
       background: var(--card-bg);
-      border: 1px solid var(--card-border);
+      border: 2px solid var(--card-border);
       border-radius: var(--radius-xl);
-      padding: 28px 24px;
+      padding: 26px 22px;
       text-align: center;
       margin-bottom: 24px;
       box-shadow: var(--card-shadow);
     }
 
-    .category-heading-en {
-      font-family: var(--font-decor);
-      font-size: 1.25rem;
-      letter-spacing: 2px;
-      color: var(--gold-light);
+    .score-heading {
+      font-family: var(--font-cute);
+      font-size: 1.8rem;
+      color: var(--text-highlight);
       margin-bottom: 4px;
     }
 
-    body.light-theme .category-heading-en {
-      color: #aa8214;
-    }
-
-    .category-heading-kr {
-      font-size: 0.88rem;
-      color: var(--text-muted);
-      margin-bottom: 20px;
-    }
-
-    .score-radial-wrapper {
+    .score-circle-container {
       position: relative;
-      width: 140px;
-      height: 140px;
-      margin: 0 auto 18px;
+      width: 130px;
+      height: 130px;
+      margin: 14px auto 16px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    .score-radial-svg {
+    .score-svg {
       width: 100%;
       height: 100%;
       transform: rotate(-90deg);
     }
 
-    .score-circle-bg {
+    .score-track {
       fill: none;
-      stroke: rgba(255, 255, 255, 0.08);
-      stroke-width: 8;
+      stroke: rgba(255, 133, 162, 0.15);
+      stroke-width: 9;
     }
 
-    body.light-theme .score-circle-bg {
-      stroke: rgba(0, 0, 0, 0.06);
-    }
-
-    .score-circle-progress {
+    .score-fill {
       fill: none;
-      stroke: url(#goldGradScore);
-      stroke-width: 8;
+      stroke: #ff85a2;
+      stroke-width: 9;
       stroke-linecap: round;
-      stroke-dasharray: 377;
-      stroke-dashoffset: 377;
+      stroke-dasharray: 345;
+      stroke-dashoffset: 345;
       transition: stroke-dashoffset 1.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .score-value-box {
+    .score-center-text {
       position: absolute;
       display: flex;
       flex-direction: column;
@@ -809,64 +660,54 @@
     }
 
     .score-number {
-      font-family: var(--font-cinzel);
-      font-size: 2.5rem;
-      font-weight: 900;
+      font-family: var(--font-cute);
+      font-size: 2.8rem;
+      font-weight: 700;
       line-height: 1;
-      color: var(--gold-light);
+      color: var(--text-highlight);
     }
 
-    body.light-theme .score-number {
-      color: #aa8214;
-    }
-
-    .score-sublabel {
-      font-size: 0.75rem;
+    .score-unit {
+      font-size: 0.8rem;
+      font-weight: 700;
       color: var(--text-muted);
-      margin-top: 2px;
-      letter-spacing: 1px;
     }
 
-    .overall-grade-text {
-      font-size: 1.35rem;
+    .overall-grade-title {
+      font-size: 1.3rem;
       font-weight: 800;
-      color: var(--gold-light);
-      margin-bottom: 10px;
+      color: var(--text-pink);
+      margin-bottom: 8px;
     }
 
-    body.light-theme .overall-grade-text {
-      color: #997819;
-    }
-
-    .overall-desc-kr {
+    .overall-detail-text {
       font-size: 0.98rem;
       color: var(--text-main);
       line-height: 1.65;
-      max-width: 580px;
+      max-width: 540px;
       margin: 0 auto;
       word-break: keep-all;
     }
 
     /* 4 Categories Grid */
-    .four-categories-grid {
+    .categories-grid {
       display: grid;
       grid-template-columns: 1fr;
       gap: 16px;
       margin-bottom: 24px;
     }
 
-    @media (min-width: 580px) {
-      .four-categories-grid {
+    @media (min-width: 540px) {
+      .categories-grid {
         grid-template-columns: 1fr 1fr;
       }
     }
 
-    .category-box {
+    .category-card {
       background: var(--card-bg);
-      border: 1px solid var(--card-border);
+      border: 2px solid var(--card-border);
       border-radius: var(--radius-lg);
-      padding: 22px 20px;
-      backdrop-filter: blur(14px);
+      padding: 20px;
       box-shadow: var(--card-shadow);
       display: flex;
       flex-direction: column;
@@ -874,168 +715,145 @@
       transition: all 0.25s ease;
     }
 
-    .category-box:hover {
+    .category-card:hover {
       border-color: var(--card-border-active);
-      transform: translateY(-3px);
+      transform: translateY(-2px);
     }
 
-    .cat-top-row {
+    .cat-header-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 10px;
     }
 
-    .cat-title-block {
+    .cat-name {
+      font-size: 1.05rem;
+      font-weight: 800;
       display: flex;
-      flex-direction: column;
+      align-items: center;
+      gap: 8px;
     }
 
-    .cat-title-en {
-      font-family: var(--font-decor);
-      font-size: 1rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-    }
-
-    .cat-title-en.love { color: #f472b6; }
-    .cat-title-en.wealth { color: var(--gold-light); }
-    .cat-title-en.health { color: #4ade80; }
-    .cat-title-en.career { color: #38bdf8; }
-
-    body.light-theme .cat-title-en.wealth { color: #aa8214; }
-
-    .cat-title-kr {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
+    .cat-name.love { color: #ff5d8f; }
+    .cat-name.wealth { color: #f59e0b; }
+    .cat-name.health { color: #10b981; }
+    .cat-name.career { color: #0284c7; }
 
     .cat-stars {
-      color: #fbbf24;
-      font-size: 0.9rem;
+      color: #ffb703;
+      font-size: 0.95rem;
       letter-spacing: 2px;
     }
 
-    .cat-text-kr {
-      font-size: 0.93rem;
+    .cat-desc-text {
+      font-size: 0.94rem;
       color: var(--text-main);
       line-height: 1.6;
       margin-bottom: 12px;
       word-break: keep-all;
     }
 
-    .cat-advice-box {
-      background: rgba(255, 255, 255, 0.04);
-      border-left: 3px solid var(--gold-primary);
+    .cat-tip-box {
+      background: var(--card-bg-subtle);
+      border-left: 3.5px solid var(--puppy-pink);
       padding: 8px 12px;
-      border-radius: 4px;
-      font-size: 0.82rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
       color: var(--text-muted);
     }
 
-    body.light-theme .cat-advice-box {
-      background: rgba(212, 175, 55, 0.08);
-      color: #334155;
-    }
-
-    /* Lucky Guide Card */
-    .lucky-guide-card {
+    /* Lucky Items Card */
+    .lucky-card {
       background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: var(--radius-lg);
+      border: 2px solid var(--card-border);
+      border-radius: var(--radius-xl);
       padding: 24px 20px;
       margin-bottom: 24px;
-      box-shadow: var(--card-shadow);
       text-align: center;
+      box-shadow: var(--card-shadow);
     }
 
-    .lucky-grid {
+    .lucky-card h3 {
+      font-family: var(--font-cute);
+      font-size: 1.8rem;
+      color: var(--text-highlight);
+      margin-bottom: 14px;
+    }
+
+    .lucky-items-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 12px;
-      margin-top: 16px;
     }
 
-    @media (min-width: 520px) {
-      .lucky-grid {
+    @media (min-width: 480px) {
+      .lucky-items-grid {
         grid-template-columns: repeat(4, 1fr);
       }
     }
 
-    .lucky-item {
-      background: rgba(11, 8, 24, 0.6);
-      border: 1px solid var(--card-border);
+    .lucky-single-box {
+      background: var(--card-bg-subtle);
+      border: 1.5px solid var(--card-border);
       border-radius: var(--radius-md);
-      padding: 14px 10px;
+      padding: 12px 8px;
     }
 
-    body.light-theme .lucky-item {
-      background: #ffffff;
-    }
-
-    .lucky-item-label-en {
-      font-family: var(--font-cinzel);
-      font-size: 0.72rem;
-      color: var(--gold-primary);
-      letter-spacing: 1px;
-      margin-bottom: 2px;
-    }
-
-    .lucky-item-label-kr {
-      font-size: 0.75rem;
+    .lucky-box-label {
+      font-size: 0.78rem;
       color: var(--text-muted);
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
-    .lucky-item-val {
+    .lucky-box-value {
       font-size: 0.98rem;
       font-weight: 800;
-      color: var(--text-main);
+      color: var(--text-highlight);
     }
 
     /* Bottom Action Buttons */
-    .action-row {
+    .actions-grid {
       display: flex;
-      gap: 14px;
+      gap: 12px;
       flex-wrap: wrap;
     }
 
     .btn-action {
       flex: 1;
       min-width: 140px;
-      padding: 16px;
+      padding: 15px;
       border-radius: var(--radius-lg);
-      font-family: var(--font-decor);
-      font-size: 1rem;
+      font-family: var(--font-cute);
+      font-size: 1.35rem;
       font-weight: 700;
-      letter-spacing: 1px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      transition: all 0.25s ease;
+      transition: all 0.2s ease;
     }
 
-    .btn-share {
-      background: var(--gold-gradient);
-      color: #0b0818;
+    .btn-share-fortune {
+      background: linear-gradient(135deg, #ff85a2 0%, #ff5d8f 100%);
+      color: #ffffff;
       border: none;
-      box-shadow: 0 8px 24px rgba(212, 175, 55, 0.4);
+      box-shadow: 0 6px 20px rgba(255, 133, 162, 0.35);
     }
-    .btn-share:hover {
+    .btn-share-fortune:hover {
       transform: translateY(-2px);
-      box-shadow: 0 12px 32px var(--gold-glow-strong);
+      box-shadow: 0 10px 26px rgba(255, 133, 162, 0.45);
     }
 
-    .btn-restart {
-      background: transparent;
-      border: 1px solid var(--card-border);
+    .btn-retest {
+      background: var(--card-bg);
+      border: 2px solid var(--card-border);
       color: var(--text-main);
     }
-    .btn-restart:hover {
-      background: var(--card-bg-hover);
-      border-color: var(--gold-primary);
+    .btn-retest:hover {
+      border-color: var(--puppy-pink);
+      color: var(--text-highlight);
       transform: translateY(-2px);
     }
 
@@ -1045,25 +863,19 @@
       bottom: 24px;
       left: 50%;
       transform: translateX(-50%) translateY(100px);
-      background: rgba(15, 10, 30, 0.95);
-      border: 1px solid var(--gold-primary);
-      color: var(--gold-light);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px var(--gold-glow);
+      background: #3d2f2b;
+      border: 2px solid #ff85a2;
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
       padding: 12px 24px;
       border-radius: 30px;
-      font-size: 0.92rem;
+      font-size: 0.95rem;
       font-weight: 700;
       z-index: 2000;
       opacity: 0;
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       pointer-events: none;
       white-space: nowrap;
-    }
-
-    body.light-theme .toast {
-      background: #ffffff;
-      color: #0f172a;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 0 20px var(--gold-glow);
     }
 
     .toast.show {
@@ -1075,294 +887,256 @@
     .app-footer {
       text-align: center;
       margin-top: auto;
-      padding: 32px 0 24px;
-      font-size: 0.82rem;
+      padding: 30px 0 20px;
+      font-size: 0.84rem;
       color: var(--text-muted);
     }
 
-    .footer-decor {
-      font-family: var(--font-decor);
-      font-size: 0.95rem;
-      color: var(--gold-primary);
-      margin-bottom: 6px;
-    }
-
-    .hidden {
-      display: none !important;
+    .footer-paw {
+      font-size: 1.1rem;
+      color: var(--puppy-pink);
+      margin-bottom: 4px;
     }
   </style>
 </head>
-<body class="dark-theme">
-  <!-- Stars & Glow -->
-  <div class="cosmic-stars"></div>
-  <div class="nebula-bloom"></div>
+<body class="light-theme">
+  <!-- Cute Background Elements -->
+  <div class="cute-bg-elements"></div>
 
-  <!-- SVG Gradient for Score Ring -->
-  <svg style="width:0;height:0;position:absolute;" aria-hidden="true" focusable="false">
-    <linearGradient id="goldGradScore" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#fae084" />
-      <stop offset="50%" stop-color="#d4af37" />
-      <stop offset="100%" stop-color="#aa8214" />
-    </linearGradient>
-  </svg>
-
-  <!-- App Header with Dark/White Mode Switcher -->
+  <!-- Header -->
   <header class="app-header">
     <div class="header-inner">
       <div class="brand-logo">
-        <span class="brand-icon">✧</span>
-        <div class="brand-title">MYSTIC TAROT</div>
+        <span class="brand-avatar">🐶</span>
+        <span class="brand-title">세영이의 운세 🐾</span>
       </div>
       
       <!-- Theme Switcher -->
-      <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="Toggle Theme Mode">
-        <span class="theme-badge" id="themeBadge">🌙</span>
-        <span id="themeModeLabel">DARK</span>
+      <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="테마 모드 변경">
+        <span id="themeBadge">☀️</span>
+        <span id="themeLabel">화이트 모드</span>
       </button>
     </div>
   </header>
 
-  <!-- Main Content -->
+  <!-- Main Container -->
   <main class="container">
     
     <!-- Hero Banner -->
     <section class="hero-banner">
-      <div class="hero-badge">
-        <i class="fa-regular fa-calendar-check"></i> <span id="currentDateEn">AUGUST 29, 2026</span>
+      <div class="date-badge">
+        <i class="fa-solid fa-paw"></i> <span id="currentDateText">2026년 8월 29일 토요일</span>
       </div>
-      <h1 class="hero-title">ORACLE OF DESTINY</h1>
-      <p class="hero-subtitle">우주의 별과 22종 타로의 수호신이 전하는 오늘의 운명과 지혜</p>
+      <h1 class="hero-title">세영이의 오늘 하루 운세 🐾</h1>
+      <p class="hero-subtitle">뽀송뽀송 말티즈 요정들이 세영이의 오늘 하루 행운을 가득 응원해줄게 멍!</p>
     </section>
 
     <!-- SECTION 1: Input Form View -->
-    <section id="inputSection" class="mystic-card">
-      <h2 class="section-heading">ENTER YOUR ESSENCE</h2>
-      <p class="section-subdesc">운명선을 열기 위한 성함과 생년월일을 입력해주세요.</p>
+    <section id="inputSection" class="cute-card">
+      <div class="cute-card-header">
+        <h2><i class="fa-solid fa-bone"></i> 세영이 정보 입력하기</h2>
+        <p>이름과 생년월일을 확인하고 버튼을 누르면 말티즈 요정이 소환돼요!</p>
+      </div>
 
       <form id="fortuneForm">
-        <!-- Name Input -->
+        <!-- Name Input (Default: 엄세영) -->
         <div class="form-group">
           <label class="form-label" for="userName">
-            <span>성함 / 닉네임</span>
-            <span class="form-label-en">YOUR NAME</span>
+            <i class="fa-solid fa-heart" style="color:#ff85a2;"></i> 성함 / 닉네임
           </label>
           <div class="input-wrapper">
-            <i class="fa-regular fa-user input-icon"></i>
-            <input type="text" id="userName" class="form-input" placeholder="예: 홍길동" required autocomplete="name">
+            <i class="fa-solid fa-user input-icon"></i>
+            <input type="text" id="userName" class="form-input" value="엄세영" placeholder="성함을 입력해주세요" required>
           </div>
         </div>
 
-        <!-- Birthdate Input -->
+        <!-- Birthdate Input (Default: 2002-09-17) -->
         <div class="form-group">
           <label class="form-label" for="userBirth">
-            <span>생년월일</span>
-            <span class="form-label-en">DATE OF BIRTH</span>
+            <i class="fa-solid fa-cake-candles" style="color:#ffb703;"></i> 생년월일
           </label>
           <div class="input-wrapper">
-            <i class="fa-regular fa-calendar input-icon"></i>
-            <input type="date" id="userBirth" class="form-input" required value="1998-05-15">
+            <i class="fa-solid fa-calendar-days input-icon"></i>
+            <input type="date" id="userBirth" class="form-input" value="2002-09-17" required>
           </div>
         </div>
 
-        <!-- Summon Button -->
-        <button type="submit" id="btnSummon" class="btn-summon">
-          <i class="fa-solid fa-wand-magic-sparkles"></i> REVEAL MY DESTINY
+        <!-- Submit Button -->
+        <button type="submit" id="btnSummon" class="btn-cute-submit">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> 오늘의 댕댕이 운세 열어보기! 🐾
         </button>
 
-        <p class="seed-info-text">
-          <i class="fa-solid fa-lock"></i> 시드 기반 결정론적 알고리즘으로 같은 날에는 항상 같은 결과가 산출됩니다.
+        <p class="seed-hint">
+          <i class="fa-solid fa-lock"></i> 같은 날에는 항상 같은 결과가 나오고, 내일이 되면 새로운 운세가 찾아와요!
         </p>
       </form>
     </section>
 
-    <!-- SECTION 2: 3-Second Spinning Ritual (Summoning Animation) -->
-    <div id="summoningRitual" class="summoning-overlay">
-      <div class="magic-circle">
-        <div class="rune-ring"></div>
-        <div class="rune-ring-inner"></div>
-        <div class="spinning-deck">
-          <div class="spinning-card-face">☸</div>
-        </div>
+    <!-- SECTION 2: 3-Second Maltese Spinning Ritual (Summoning Animation) -->
+    <div id="malteseRitual" class="maltese-ritual-overlay">
+      <div class="spinning-maltese-box">
+        <div class="spinning-circle-ring"></div>
+        <div class="spinning-maltese-avatar">🐶</div>
       </div>
-      <h2 class="ritual-title">SUMMONING ORACLE</h2>
-      <div class="ritual-status-kr" id="ritualStatusKr">운명의 실타래를 엮고 있습니다...</div>
-      <div class="ritual-status-en" id="ritualStatusEn">ALIGNING CELESTIAL STARS</div>
-      <div class="ritual-progress-bar">
+      <h2 class="ritual-title-kr">말티즈 요정 소환 중... 🐾</h2>
+      <div class="ritual-subtitle-kr" id="ritualStatusText">세영이의 운명선을 킁킁 탐색하고 있어요!</div>
+      <div class="ritual-progress">
         <div class="ritual-progress-fill" id="ritualProgressFill"></div>
       </div>
     </div>
 
     <!-- SECTION 3: Result View -->
-    <section id="resultSection" class="result-view">
+    <section id="resultSection" class="result-section">
       
-      <!-- Profile Re-select Bar -->
-      <div class="result-profile-bar">
-        <div class="profile-meta">
-          <strong id="resName">홍길동</strong> <span>님의 오늘 운명선</span>
+      <!-- Profile Bar -->
+      <div class="profile-bar">
+        <div class="profile-name">
+          <strong id="resName">엄세영</strong> 님의 오늘 하루 운세 🐾
         </div>
-        <button type="button" id="btnReInput" class="btn-retry-icon">
-          <i class="fa-solid fa-rotate-left"></i> RE-ENTER
+        <button type="button" id="btnReInput" class="btn-edit-input">
+          <i class="fa-solid fa-pen-to-square"></i> 정보 수정
         </button>
       </div>
 
-      <!-- SUMMONED GUARDIAN HERO CARD -->
-      <div class="summon-hero-card">
-        <div class="summon-badge">✦ SUMMONED GUARDIAN ✦</div>
+      <!-- HERO MALTESE GUARDIAN CARD -->
+      <div class="guardian-hero-card">
+        <div class="guardian-badge">🐾 오늘의 수호 말티즈 🐾</div>
         
         <!-- Avatar Portal -->
-        <div class="summon-avatar-portal" id="guardianAvatar">☀️</div>
+        <div class="guardian-avatar-wrapper" id="guardianAvatar">🐶</div>
         
-        <div class="guardian-card-num" id="guardianCardNum">THE SUN XIX</div>
-        <h2 class="guardian-name-en" id="guardianNameEn">THE SUN</h2>
-        <div class="guardian-name-kr" id="guardianNameKr">태양의 수호자 • 찬란한 광명</div>
+        <h2 class="guardian-title-kr" id="guardianName">햇살 요정 말티즈</h2>
+        <div class="guardian-subtitle-kr" id="guardianTagline">"세영이의 하루를 밝혀주는 따뜻한 햇살 에너지"</div>
         
         <!-- Speech Bubble -->
-        <div class="guardian-speech-bubble" id="guardianQuote">
-          "그대의 앞길에 찬란한 광명이 깃들 것이니, 망설임 없이 태양을 향해 당당히 나아가라."
+        <div class="guardian-quote-bubble" id="guardianQuote">
+          "세영아, 오늘 하루도 꼬리 살랑살랑 흔들며 햇살처럼 밝게 웃어봐 멍! 기분 좋은 일들이 가득할 거야!"
         </div>
 
-        <div class="guardian-keywords-tag" id="guardianKeywords">성공 • 활력 • 명예 • 기쁨</div>
+        <div class="guardian-keywords-badge" id="guardianKeywords">행복 • 활력 • 사랑스러움 • 긍정</div>
       </div>
 
       <!-- OVERALL SCORE CARD -->
-      <div class="overall-card">
-        <h3 class="category-heading-en">OVERALL DESTINY</h3>
-        <p class="category-heading-kr">오늘의 종합 운세 지수 & 총평</p>
-
-        <div class="score-radial-wrapper">
-          <svg class="score-radial-svg" viewBox="0 0 130 130">
-            <circle class="score-circle-bg" cx="65" cy="65" r="60"></circle>
-            <circle class="score-circle-progress" id="scoreCircleProgress" cx="65" cy="65" r="60"></circle>
+      <div class="score-summary-card">
+        <h3 class="score-heading">🐾 오늘의 종합 운세 지수</h3>
+        
+        <div class="score-circle-container">
+          <svg class="score-svg" viewBox="0 0 120 120">
+            <circle class="score-track" cx="60" cy="60" r="55"></circle>
+            <circle class="score-fill" id="scoreFillCircle" cx="60" cy="60" r="55"></circle>
           </svg>
-          <div class="score-value-box">
-            <span class="score-number" id="overallScoreVal">94</span>
-            <span class="score-sublabel">SCORE</span>
+          <div class="score-center-text">
+            <span class="score-number" id="scoreNumberText">95</span>
+            <span class="score-unit">점</span>
           </div>
         </div>
 
-        <div class="overall-grade-text" id="overallGrade">✨ 대길(大吉) - 눈부신 성취의 날</div>
-        <p class="overall-desc-kr" id="overallDesc">
-          숨겨둔 당신의 잠재력이 최고조로 발휘되는 날입니다. 마음에 품었던 계획을 과감히 실행에 옮기면 뜻밖의 큰 결실과 든든한 조력자가 나타납니다.
+        <div class="overall-grade-title" id="overallGradeTitle">✨ 대박 행운 가득한 날 (대길)</div>
+        <p class="overall-detail-text" id="overallDetailText">
+          세영이의 기분과 에너지가 최고조에 달하는 날이에요! 하고 싶었던 일에 자신감 있게 도전하면 기대 이상의 멋진 성과와 기쁜 소식이 찾아와요.
         </p>
       </div>
 
       <!-- 4 CATEGORY CARDS GRID -->
-      <div class="four-categories-grid">
+      <div class="categories-grid">
         
-        <!-- 1. LOVE & PASSION -->
-        <div class="category-box">
+        <!-- 1. LOVE -->
+        <div class="category-card">
           <div>
-            <div class="cat-top-row">
-              <div class="cat-title-block">
-                <span class="cat-title-en love"><i class="fa-solid fa-heart"></i> LOVE & PASSION</span>
-                <span class="cat-title-kr">애정운</span>
-              </div>
+            <div class="cat-header-row">
+              <span class="cat-name love"><i class="fa-solid fa-heart"></i> 애정운</span>
               <span class="cat-stars" id="loveStars">★★★★★</span>
             </div>
-            <p class="cat-text-kr" id="loveText">
-              상대방과의 소통이 물 흐르듯 원활하며, 싱글이라면 뜻밖의 매력적인 인연이 다가옵니다.
+            <p class="cat-desc-text" id="loveDesc">
+              주변 사람들과의 소통이 사랑스럽고 다정하게 흘러가요. 따뜻한 눈빛과 미소로 인기가 쑥쑥 올라가는 날이에요.
             </p>
           </div>
-          <div class="cat-advice-box" id="loveAdvice">
-            💡 <strong>조언:</strong> 솔직한 감정 표현이 마음에 깊은 울림을 줍니다.
+          <div class="cat-tip-box" id="loveTip">
+            💡 <strong>댕댕이 꿀팁:</strong> 다정한 말 한마디가 상대방의 마음을 사르르 녹여줘요!
           </div>
         </div>
 
-        <!-- 2. WEALTH & FORTUNE -->
-        <div class="category-box">
+        <!-- 2. WEALTH -->
+        <div class="category-card">
           <div>
-            <div class="cat-top-row">
-              <div class="cat-title-block">
-                <span class="cat-title-en wealth"><i class="fa-solid fa-coins"></i> WEALTH & FORTUNE</span>
-                <span class="cat-title-kr">금전운</span>
-              </div>
+            <div class="cat-header-row">
+              <span class="cat-name wealth"><i class="fa-solid fa-coins"></i> 금전운</span>
               <span class="cat-stars" id="wealthStars">★★★★☆</span>
             </div>
-            <p class="cat-text-kr" id="wealthText">
-              작은 투자나 거래에서 긍정적인 성과가 따르며, 지출보다 유입의 흐름이 강합니다.
+            <p class="cat-desc-text" id="wealthDesc">
+              작은 행운이나 기분 좋은 보너스 간식이 생길 수 있어요. 알뜰살뜰하게 계획적인 소비를 하면 지갑이 든든해요.
             </p>
           </div>
-          <div class="cat-advice-box" id="wealthAdvice">
-            💡 <strong>조언:</strong> 충동구매를 피하고 계획된 지출을 유지하세요.
+          <div class="cat-tip-box" id="wealthTip">
+            💡 <strong>댕댕이 꿀팁:</strong> 꼭 필요한 곳에 알차게 쓰면 돈이 복을 불러와요!
           </div>
         </div>
 
-        <!-- 3. HEALTH & VITALITY -->
-        <div class="category-box">
+        <!-- 3. HEALTH -->
+        <div class="category-card">
           <div>
-            <div class="cat-top-row">
-              <div class="cat-title-block">
-                <span class="cat-title-en health"><i class="fa-solid fa-seedling"></i> HEALTH & VITALITY</span>
-                <span class="cat-title-kr">건강운</span>
-              </div>
+            <div class="cat-header-row">
+              <span class="cat-name health"><i class="fa-solid fa-seedling"></i> 건강운</span>
               <span class="cat-stars" id="healthStars">★★★★★</span>
             </div>
-            <p class="cat-text-kr" id="healthText">
-              활력이 넘치고 신체 리듬이 매우 안정적입니다. 가벼운 유산소 운동이 에너지를 더해줍니다.
+            <p class="cat-desc-text" id="healthDesc">
+              발걸음이 사뿐사뿐 가볍고 컨디션이 정말 좋아요! 가벼운 산책이나 스트레칭으로 기분 전환을 해보세요.
             </p>
           </div>
-          <div class="cat-advice-box" id="healthAdvice">
-            💡 <strong>조언:</strong> 충분한 수분 섭취와 따뜻한 차 한 잔을 곁들이세요.
+          <div class="cat-tip-box" id="healthTip">
+            💡 <strong>댕댕이 꿀팁:</strong> 물을 자주 마시고 맛있는 비타민 간식을 챙겨 먹어요!
           </div>
         </div>
 
-        <!-- 4. CAREER & SUCCESS -->
-        <div class="category-box">
+        <!-- 4. CAREER / SOCIAL -->
+        <div class="category-card">
           <div>
-            <div class="cat-top-row">
-              <div class="cat-title-block">
-                <span class="cat-title-en career"><i class="fa-solid fa-compass"></i> CAREER & SUCCESS</span>
-                <span class="cat-title-kr">대인 / 성공운</span>
-              </div>
+            <div class="cat-header-row">
+              <span class="cat-name career"><i class="fa-solid fa-star"></i> 성공 / 대인운</span>
               <span class="cat-stars" id="careerStars">★★★★☆</span>
             </div>
-            <p class="cat-text-kr" id="careerText">
-              주변 사람들의 두터운 신뢰를 얻으며 협력 프로젝트에서 탁월한 리더십을 발휘합니다.
+            <p class="cat-desc-text" id="careerDesc">
+              세영이의 꼼꼼함과 센스가 빛을 발하는 하루예요. 친구들이나 동료들에게 큰 칭찬과 신뢰를 받게 돼요.
             </p>
           </div>
-          <div class="cat-advice-box" id="careerAdvice">
-            💡 <strong>조언:</strong> 상대방의 의견을 먼저 경청하면 귀인이 돕습니다.
+          <div class="cat-tip-box" id="careerTip">
+            💡 <strong>댕댕이 꿀팁:</strong> 자신감 있게 의견을 표현하면 좋은 결과가 따라와요!
           </div>
         </div>
 
       </div>
 
-      <!-- LUCKY GUIDE CARD -->
-      <div class="lucky-guide-card">
-        <h3 class="category-heading-en">LUCKY ELEMENTS</h3>
-        <p class="category-heading-kr">오늘 당신에게 행운을 가져다주는 4가지 비결</p>
-
-        <div class="lucky-grid">
-          <div class="lucky-item">
-            <div class="lucky-item-label-en">COLOR</div>
-            <div class="lucky-item-label-kr">행운의 색상</div>
-            <div class="lucky-item-val" id="luckyColor">골드 옐로우</div>
+      <!-- LUCKY ITEMS CARD -->
+      <div class="lucky-card">
+        <h3>🐾 세영이의 오늘 행운 아이템</h3>
+        
+        <div class="lucky-items-grid">
+          <div class="lucky-single-box">
+            <div class="lucky-box-label">행운의 색상</div>
+            <div class="lucky-box-value" id="luckyColor">파스텔 핑크</div>
           </div>
-          <div class="lucky-item">
-            <div class="lucky-item-label-en">NUMBER</div>
-            <div class="lucky-item-label-kr">행운의 숫자</div>
-            <div class="lucky-item-val" id="luckyNumber">7, 21</div>
+          <div class="lucky-single-box">
+            <div class="lucky-box-label">행운의 숫자</div>
+            <div class="lucky-box-value" id="luckyNumber">7, 17</div>
           </div>
-          <div class="lucky-item">
-            <div class="lucky-item-label-en">DIRECTION</div>
-            <div class="lucky-item-label-kr">행운의 방위</div>
-            <div class="lucky-item-val" id="luckyDirection">남동쪽 (SE)</div>
+          <div class="lucky-single-box">
+            <div class="lucky-box-label">행운의 장소</div>
+            <div class="lucky-box-value" id="luckyPlace">햇살 드는 카페</div>
           </div>
-          <div class="lucky-item">
-            <div class="lucky-item-label-en">TIME</div>
-            <div class="lucky-item-label-kr">행운의 시간대</div>
-            <div class="lucky-item-val" id="luckyTime">14:00 ~ 16:00</div>
+          <div class="lucky-single-box">
+            <div class="lucky-box-label">행운의 시간</div>
+            <div class="lucky-box-value" id="luckyTime">14:00 ~ 16:00</div>
           </div>
         </div>
       </div>
 
       <!-- ACTION BUTTONS -->
-      <div class="action-row">
-        <button type="button" id="btnCopyShare" class="btn-action btn-share">
-          <i class="fa-solid fa-share-nodes"></i> SHARE ORACLE
+      <div class="actions-grid">
+        <button type="button" id="btnShare" class="btn-action btn-share-fortune">
+          <i class="fa-solid fa-share-nodes"></i> 운세 결과 복사하기 🐾
         </button>
-        <button type="button" id="btnRestart" class="btn-action btn-restart">
-          <i class="fa-solid fa-arrow-rotate-right"></i> NEW READING
+        <button type="button" id="btnReset" class="btn-action btn-retest">
+          <i class="fa-solid fa-arrow-rotate-right"></i> 다시 확인하기
         </button>
       </div>
 
@@ -1370,90 +1144,85 @@
 
     <!-- Footer -->
     <footer class="app-footer">
-      <div class="footer-decor">✦ ☽ MYSTIC TAROT ☾ ✦</div>
-      <p>© 2026 MYSTIC TAROT ORACLE. All Rights Reserved.</p>
+      <div class="footer-paw">🐾 🐾 🐾</div>
+      <p>© 2026 세영이의 운세. 매일 세영이의 행복을 응원합니다!</p>
     </footer>
 
   </main>
 
   <!-- Toast Notification -->
-  <div id="toast" class="toast">운세 결과가 클립보드에 복사되었습니다!</div>
+  <div id="toast" class="toast">운세 결과가 클립보드에 복사되었어요! 🐾</div>
 
   <!-- ==========================================================================
-       4. SCRIPT LOGIC (Deterministic Engine + 3s Spinning Ritual + Audio)
-       ========================================================================== -->
+       4. SCRIPT LOGIC (Deterministic Engine + Maltese Summoning + Audio)
+       ========================================================================== */
+  -->
   <script>
     /* -------------------------------------------------------------
-     * 1. 22 Major Arcana Summoned Guardians Database
+     * 1. Maltese & Cute Puppy Guardians Database (22 Unique Characters)
      * ------------------------------------------------------------- */
-    const GUARDIAN_DECK = [
-      { id: 0, num: "THE FOOL 0", nameEn: "THE FOOL", nameKr: "자유의 방랑자 • 순수한 가능성", avatar: "🃏", quote: "과거의 두려움을 훌훌 털어버리라. 새로운 세상이 그대의 순수한 발걸음을 기다리고 있노라.", keywords: "새로운 시작 • 순수 • 자유로운 모험 • 무한한 가능성" },
-      { id: 1, num: "THE MAGICIAN I", nameEn: "THE MAGICIAN", nameKr: "시공의 마법사 • 원소의 지배자", avatar: "🪄", quote: "그대 손안에 이미 모든 도구가 갖추어져 있다. 확고한 의지로 기적을 창조하라.", keywords: "창조력 • 잠재력 발휘 • 명확한 의지 • 기회 포착" },
-      { id: 2, num: "THE HIGH PRIESTESS II", nameEn: "HIGH PRIESTESS", nameKr: "달빛의 여사제 • 비밀의 수호자", avatar: "📜", quote: "내면의 고요한 소리에 귀를 기울이라. 세상의 소음 뒤에 진정한 지혜가 숨쉬고 있다.", keywords: "깊은 직관 • 내면의 지혜 • 통찰력 • 신비로운 영감" },
-      { id: 3, num: "THE EMPRESS III", nameEn: "THE EMPRESS", nameKr: "대지의 여황제 • 풍요의 어머니", avatar: "👑", quote: "그대가 정성껏 가꾼 모든 씨앗이 눈부신 황금빛 결실로 무르익으리라.", keywords: "풍요로움 • 창조적 결실 • 따뜻한 포용 • 번영" },
-      { id: 4, num: "THE EMPEROR IV", nameEn: "THE EMPEROR", nameKr: "질서의 황제 • 강철의 통치자", avatar: "🏛️", quote: "흔들리지 않는 확고한 결단력으로 그대만의 견고한 왕국을 건설하라.", keywords: "확고한 리더십 • 안정된 기반 • 결단력 • 권위" },
-      { id: 5, num: "THE HIEROPHANT V", nameEn: "THE HIEROPHANT", nameKr: "성스러운 교황 • 신뢰의 길잡이", avatar: "🕊️", quote: "선한 가치와 신뢰를 지킬 때, 보이지 않는 스승과 귀인이 그대를 도우리라.", keywords: "현명한 조언 • 신뢰 • 올바른 도덕 • 정신적 성장" },
-      { id: 6, num: "THE LOVERS VI", nameEn: "THE LOVERS", nameKr: "운명의 연인들 • 영혼의 조화", avatar: "💖", quote: "마음이 이끄는 진실된 선택을 하라. 완벽한 사랑과 조화가 그대 곁에 머물리라.", keywords: "아름다운 사랑 • 완벽한 조화 • 가치 있는 선택 • 교감" },
-      { id: 7, num: "THE CHARIOT VII", nameEn: "THE CHARIOT", nameKr: "승리의 전차수 • 불패의 질주", avatar: "⚔️", quote: "두려움을 뚫고 전진하라. 그 어떤 장애물도 그대의 뜨거운 열정을 막지 못하리라.", keywords: "강력한 추진력 • 장애물 극복 • 확고한 승리 • 돌파" },
-      { id: 8, num: "STRENGTH VIII", nameEn: "STRENGTH", nameKr: "용기의 성녀 • 부드러운 힘", avatar: "🦁", quote: "진정한 힘은 거친 분노가 아닌, 부드러운 인내와 따뜻한 포용에서 비롯되느니라.", keywords: "부드러운 카리스마 • 불굴의 용기 • 내면의 힘 • 극복" },
-      { id: 9, num: "THE HERMIT IX", nameEn: "THE HERMIT", nameKr: "등불의 은둔자 • 진리의 현자", avatar: "🏮", quote: "잠시 세상의 분주함을 멈추고 고요히 성찰하라. 그대 영혼의 등불이 길을 밝히리라.", keywords: "진지한 성찰 • 내면의 진리 탐구 • 평온한 휴식 • 해답" },
-      { id: 10, num: "WHEEL OF FORTUNE X", nameEn: "WHEEL OF FORTUNE", nameKr: "운명의 집행관 • 황금빛 전환점", avatar: "☸", quote: "거대한 운명의 수레바퀴가 그대를 향해 돌기 시작했다. 눈부신 기회를 낚아채라.", keywords: "행운의 전환점 • 운명의 기회 • 긍정적 순환 • 도약" },
-      { id: 11, num: "JUSTICE XI", nameEn: "JUSTICE", nameKr: "천칭의 여신 • 정의로운 심판", avatar: "⚖️", quote: "공정하고 명확한 눈으로 세상을 보라. 그대가 뿌린 정직함이 그대로 보답받으리라.", keywords: "공정한 판단 • 균형 잡힌 시각 • 정당한 보상 • 진실" },
-      { id: 12, num: "THE HANGED MAN XII", nameEn: "THE HANGED MAN", nameKr: "시각의 현자 • 기다림의 깨달음", avatar: "⏳", quote: "세상을 거꾸로 바라볼 때 새로운 길이 열리나니, 조급함을 내려놓고 지혜를 품으라.", keywords: "새로운 관점 • 기다림의 지혜 • 발상의 전환 • 통찰" },
-      { id: 13, num: "DEATH / RENEWAL XIII", nameEn: "DEATH & RENEWAL", nameKr: "불사의 불사조 • 찬란한 재생", avatar: "🦋", quote: "낡은 허물을 벗어던질 때 새로운 날개가 돋아나나니, 위대한 부활을 맞이하라.", keywords: "과거의 정리 • 새로운 탄생 • 극적인 도약 • 부활" },
-      { id: 14, num: "TEMPERANCE XIV", nameEn: "TEMPERANCE", nameKr: "조화의 천사 • 평정의 샘", avatar: "🌊", quote: "마음의 극단을 피하고 중용의 미덕을 지키라. 맑고 잔잔한 평화가 샘솟으리라.", keywords: "마음의 평정 • 조화로운 균형 • 유연한 융합 • 치유" },
-      { id: 15, num: "THE DEVIL XV", nameEn: "THE DEVIL", nameKr: "해방의 투사 • 족쇄를 부수는 자", avatar: "🔥", quote: "그대를 옭아매던 헛된 집착과 유혹을 불태우라. 자유로운 영혼의 진정한 주인이 되라.", keywords: "집착 극복 • 열정의 바른 사용 • 유혹 경계 • 자유" },
-      { id: 16, num: "THE TOWER XVI", nameEn: "THE TOWER", nameKr: "번개의 파괴자 • 낡은 틀의 타파", avatar: "⚡", quote: "거짓된 껍데기가 무너져 내리고 진정한 기반이 드러나니, 두려움 없이 다시 일어서라.", keywords: "낡은 틀의 붕괴 • 신선한 각성 • 빠른 재정비 • 돌파구" },
-      { id: 17, num: "THE STAR XVII", nameEn: "THE STAR", nameKr: "은하의 성녀 • 희망의 나비", avatar: "⭐", quote: "어두운 밤하늘을 수놓은 저 별빛처럼, 그대의 소망은 머지않아 환히 빛나리라.", keywords: "희망찬 미래 • 영감의 샘 • 빛나는 꿈의 실현 • 치유" },
-      { id: 18, num: "THE MOON XVIII", nameEn: "THE MOON", nameKr: "환상의 달여신 • 영혼의 항해자", avatar: "🌙", quote: "안개 낀 밤길이라도 그대 안의 예술적 직관을 믿으라. 환상 너머의 보물을 찾으리라.", keywords: "풍부한 감수성 • 안개 속의 길잡이 • 예술적 직관 • 해소" },
-      { id: 19, num: "THE SUN XIX", nameEn: "THE SUN", nameKr: "태양의 수호자 • 찬란한 광명", avatar: "☀️", quote: "그대의 앞길에 찬란한 광명이 깃들 것이니, 망설임 없이 태양을 향해 당당히 나아가라.", keywords: "최고의 성공 • 찬란한 행복 • 넘치는 에너지 • 승리" },
-      { id: 20, num: "JUDGEMENT XX", nameEn: "JUDGEMENT", nameKr: "부활의 천사 • 운명의 나팔", avatar: "🎺", quote: "기나긴 어둠이 끝나고 눈부신 축복의 나팔 소리가 울려 퍼지니, 보상을 누리라.", keywords: "기쁜 소식 • 노력의 결실 • 새로운 부활 • 해방" },
-      { id: 21, num: "THE WORLD XXI", nameEn: "THE WORLD", nameKr: "우주의 아르콘 • 완전한 완성", avatar: "🌍", quote: "그대가 걸어온 모든 여정이 마침내 완벽한 조화를 이루었노라. 승리의 화관을 받으라.", keywords: "완벽한 성취 • 대단원의 완성 • 영광스러운 조화 • 찬란" }
+    const MALTESE_GUARDIANS = [
+      { id: 0, name: "햇살 요정 말티즈", tagline: "세영이의 하루를 밝혀주는 따뜻한 햇살 에너지", avatar: "🐶", quote: "세영아, 오늘 하루도 꼬리 살랑살랑 흔들며 햇살처럼 밝게 웃어봐 멍! 기분 좋은 일들이 가득할 거야!", keywords: "행복 • 활력 • 사랑스러움 • 긍정" },
+      { id: 1, name: "왕관 쓴 공주 말티즈", tagline: "오늘 세상에서 제일 빛나고 소중한 주인공", avatar: "👑", quote: "오늘 세영이는 세상에서 제일 소중하고 우아한 공주님이야 멍! 당당하게 어깨 펴고 걸어봐!", keywords: "자신감 • 품격 • 빛나는 매력 • 주인공" },
+      { id: 2, name: "마법사 말티즈", tagline: "모든 소원을 이루어주는 마법의 뼈다귀 지팡이", avatar: "🪄", quote: "마법의 뼈다귀 지팡이로 세영이 앞길에 행운을 뿅뿅 뿌려줄게 멍! 소망하는 일이 척척 풀릴 거야!", keywords: "기적 • 소원 성취 • 번뜩이는 아이디어 • 행운" },
+      { id: 3, name: "리본 요정 말티즈", tagline: "세영이에게 사랑과 다정한 인연을 엮어주는 요정", avatar: "🎀", quote: "예쁜 분홍 리본처럼 세영이 곁에 따뜻하고 소중한 인연들이 예쁘게 묶일 거야 멍!", keywords: "사랑 • 다정한 인연 • 소통 • 화목" },
+      { id: 4, name: "용감한 캡틴 말티즈", tagline: "세영이를 든든하게 지켜주는 쪼꼬미 보디가드", avatar: "🦸", quote: "두려워하지 마 멍! 쪼꼬만 내가 세영이를 지켜주는 든든한 대장 강아지니까 걱정 뚝!", keywords: "용기 • 든든함 • 장애물 극복 • 수호" },
+      { id: 5, name: "별빛 천사 말티즈", tagline: "밤하늘의 가장 밝은 별처럼 반짝이는 응원", avatar: "⭐", quote: "밤하늘에 반짝이는 별처럼 세영이의 꿈과 소원이 하나씩 예쁘게 이루어질 거야 멍!", keywords: "희망 • 영감 • 소원 성취 • 힐링" },
+      { id: 6, name: "네잎클로버 말티즈", tagline: "풀숲에서 찾아낸 특급 행운 배달부", avatar: "🍀", quote: "풀숲을 킁킁거리며 세영이를 위해 찾은 네잎클로버를 선물할게 멍! 오늘 대박 행운 가득!", keywords: "특급 행운 • 뜻밖의 기쁨 • 횡재수 • 축복" },
+      { id: 7, name: "식빵 굽는 포근 말티즈", tagline: "따뜻하고 푹신한 이불 속 같은 안락함", avatar: "🍞", quote: "갓 구운 빵처럼 몽글몽글하고 포근한 하루를 보내 멍! 맛있는 간식 챙겨 먹는 거 잊지 마!", keywords: "평온 • 안락함 • 힐링 • 편안한 휴식" },
+      { id: 8, name: "달콤 디저트 말티즈", tagline: "달달한 딸기 케이크처럼 기분 좋은 달콤함", avatar: "🧁", quote: "달콤한 딸기 마카롱처럼 세영이 하루에 달달하고 행복한 순간들이 가득 쏟아질 거야 멍!", keywords: "달콤함 • 기분 전환 • 활력 충전 • 기쁨" },
+      { id: 9, name: "천재 박사 말티즈", tagline: "안경 쓴 똑똑이 말티즈의 명쾌한 지혜", avatar: "🎓", quote: "오늘 세영이의 반짝이는 두뇌와 직관이 100점 만점에 100점이야 멍! 무엇이든 완벽하게 해낼 거야!", keywords: "명석함 • 학업/업무 성취 • 지혜 • 명쾌함" },
+      { id: 10, name: "하트 뿜뿜 말티즈", tagline: "세영이에게 무한 애정 텔레파시 발사", avatar: "💖", quote: "세영아 너무 좋아 멍! 사랑스러운 세영이에게 오늘 온 세상의 하트를 전부 선물할게!", keywords: "무한 사랑 • 힐링 • 인기 폭발 • 다정함" },
+      { id: 11, name: "우주 비행사 말티즈", tagline: "우주 끝까지 날아오르는 슈퍼 에너지", avatar: "🚀", quote: "세영이의 에너지는 우주 최강 멍! 높이높이 날아올라 멋진 목표를 달성해보자!", keywords: "도약 • 넘치는 에너지 • 성공 • 성장" },
+      { id: 12, name: "벚꽃 요정 말티즈", tagline: "화사하게 흩날리는 봄날의 꽃잎", avatar: "🌸", quote: "봄날의 화사한 벚꽃잎처럼 세영이의 얼굴에 예쁜 미소가 활짝 피어날 거야 멍!", keywords: "화사함 • 새로운 시작 • 꽃길 • 기분 좋은 날" },
+      { id: 13, name: "꿈나라 요정 말티즈", tagline: "스트레스는 날리고 꿀잠을 선물하는 요정", avatar: "💤", quote: "걱정은 다 잊고 푹 쉬어 멍! 꿀잠 자고 일어나면 내일은 더 좋은 일들이 기다릴 거야!", keywords: "숙면 • 피로 회복 • 마음의 평화 • 안식" },
+      { id: 14, name: "무지개 요정 말티즈", tagline: "비 온 뒤 찾아오는 일곱 빛깔 기적", avatar: "🌈", quote: "잠깐의 힘듦 뒤에는 눈부신 무지개가 뜨는 법이야 멍! 세영이 앞길은 언제나 무지개 꽃길!", keywords: "희망 • 기적 • 분위기 반전 • 화사함" },
+      { id: 15, name: "산책 대장 말티즈", tagline: "신나게 깡총깡총 뛰어노는 활력 대장", avatar: "🦮", quote: "가벼운 발걸음으로 산책하듯 신나게 하루를 즐겨봐 멍! 발걸음 닿는 곳마다 행운이 팡팡!", keywords: "상쾌함 • 활력 • 가벼운 발걸음 • 건강" }
     ];
 
     /* -------------------------------------------------------------
-     * 2. Fortunes & Lucky Elements Data
+     * 2. Fortunes Database (Tailored for Seyoung)
      * ------------------------------------------------------------- */
-    const FORTUNE_DATABASE = {
+    const FORTUNES_DATA = {
       overall: [
-        { min: 90, grade: "✨ 대길(大吉) - 눈부신 성취의 날", desc: "숨겨둔 당신의 잠재력이 최고조로 발휘되는 날입니다. 마음에 품었던 계획을 과감히 실행에 옮기면 뜻밖의 큰 결실과 든든한 조력자가 나타납니다." },
-        { min: 78, grade: "🌟 중길(中吉) - 순풍에 돛 단 듯한 하루", desc: "모든 일이 물 흐르듯 순조롭게 흘러가며 작은 노력으로도 큰 만족을 얻을 수 있는 날입니다. 긍정적인 마음가짐이 행운을 끌어당깁니다." },
-        { min: 65, grade: "🍃 소길(小吉) - 평온하고 안정된 기운", desc: "서두르지 않고 묵묵히 자신의 페이스를 유지할 때 가장 알찬 결실이 맺어집니다. 주변과의 잔잔한 소통 속에서 소소한 행복을 찾으세요." },
-        { min: 50, grade: "🛡️ 평안(平安) - 지혜로운 관망의 날", desc: "무리한 확장보다는 현재 상태를 차분히 점검하고 내실을 다지기에 적합한 날입니다. 내면의 소리에 귀를 기울이며 여유를 가지세요." },
-        { min: 0,  grade: "🌱 조심(慎重) - 새로운 도약을 위한 정비", desc: "돌다리도 두들겨 보고 건너는 신중함이 큰 화를 막고 복을 부릅니다. 오늘 마주치는 변수는 더 큰 도약을 위한 값진 밑거름입니다." }
+        { min: 92, grade: "✨ 대박 행운 가득한 날 (대길)", desc: "세영이의 기분과 에너지가 최고조에 달하는 멋진 날이에요! 하고 싶었던 일에 자신감 있게 도전하면 기대 이상의 멋진 성과와 기쁜 소식이 찾아와요." },
+        { min: 80, grade: "🌟 꽃길만 걷는 날 (중길)", desc: "모든 일이 물 흐르듯 순조롭게 풀리고 주변 사람들에게 다정한 칭찬과 사랑을 듬뿍 받는 흐뭇한 하루가 될 거예요." },
+        { min: 68, grade: "🍃 몽글몽글 평온한 날 (소길)", desc: "욕심내지 않고 세영이만의 속도로 차분하게 걸어갈 때 가장 알찬 행복이 맺혀요. 소소한 티타임과 간식에서 큰 기쁨을 느껴보세요." },
+        { min: 55, grade: "☕ 포근한 휴식이 어울리는 날 (평안)", desc: "무리하게 달리기보다는 스스로를 토닥토닥 칭찬해주며 여유를 갖기에 딱 좋은 날이에요. 좋아하는 음악을 듣고 푹 쉬어보세요." },
+        { min: 0,  grade: "🌱 조심조심 충전하는 날 (충전)", desc: "작은 일에도 신중함을 가지면 생각지 못한 큰 복이 생겨요. 오늘 하루는 나를 위한 따뜻한 충전의 시간으로 만들어보세요." }
       ],
       love: [
-        { text: "마음을 열고 솔직하게 다가가면 상대방도 따뜻하게 화답합니다. 솔로라면 예상치 못한 장소에서 호감 어린 눈빛을 받게 됩니다.", advice: "미소와 다정한 말 한마디가 최고의 매력 포인트입니다." },
-        { text: "서로에 대한 신뢰가 한층 깊어지는 하루입니다. 사소한 대화 속에서 서로의 진심을 확인하게 됩니다.", advice: "상대방의 취향을 배려하는 작은 서프라이즈를 준비해보세요." },
-        { text: "잔잔하고 편안한 감정의 교류가 이어집니다. 무리한 약속보다는 편안한 대화로 마음의 안정을 찾으세요.", advice: "조용한 카페나 산책로에서의 데이트가 좋습니다." },
-        { text: "사소한 오해가 생길 수 있으니 감정적인 대화는 잠시 미루고 차분하게 경청하는 자세를 유지하세요.", advice: "역지사지의 마음으로 상대의 입장을 먼저 생각해보세요." }
+        { text: "세영이의 사랑스러운 매력이 뿜뿜 넘치는 날이에요! 다정한 눈빛과 미소로 사람들의 마음을 사로잡아요.", tip: "솔직한 감정 표현과 환한 미소가 최고의 행운 열쇠예요!" },
+        { text: "소중한 사람들과의 대화가 무척 즐겁고 따뜻해요. 서로의 진심을 확인하며 마음이 훈훈해져요.", tip: "맛있는 간식을 나누어 먹으며 즐거운 수다를 떨어보세요." },
+        { text: "편안하고 잔잔한 인연의 흐름이 이어져요. 부담 없는 대화 속에서 마음의 안정을 찾을 수 있어요.", tip: "따뜻한 차 한 잔 마시며 편안한 시간을 보내보세요." },
+        { text: "사소한 오해가 생기지 않도록 차분하게 귀 기울여주는 배려가 관계를 더욱 돈독하게 해줘요.", tip: "상대방의 입장에서 한 번 더 생각해주면 감동이 배가 돼요." }
       ],
       wealth: [
-        { text: "재물운의 흐름이 매우 활발합니다. 기대치 않던 보너스나 유익한 경제적 기회가 찾아올 수 있습니다.", advice: "재테크 아이디어를 정리하거나 장기 계획을 세우기에 최적입니다." },
-        { text: "수입과 지출의 밸런스가 아주 좋습니다. 실속 있는 소비로 만족감이 높은 하루가 됩니다.", advice: "필요했던 물품을 합리적인 가격에 구매할 찬스가 생깁니다." },
-        { text: "안정적인 금전 흐름이 유지됩니다. 욕심을 내기보다는 기존 자산을 차분히 관리하는 것이 유리합니다.", advice: "불필요한 지출 목록을 점검하고 커피 한 잔의 절약을 실천해보세요." },
-        { text: "충동적인 지출이나 과소비를 경계해야 할 시점입니다. 고가의 쇼핑이나 투자는 하루 뒤로 미루세요.", advice: "지갑을 열기 전 꼭 필요한 지출인지 세 번 생각하세요." }
+        { text: "금전운의 흐름이 아주 좋아요! 생각지 못한 작은 보너스나 기분 좋은 깜짝 선물이 찾아올 수 있어요.", tip: "마음에 쏙 드는 실속 있는 아이템을 득템할 찬스예요!" },
+        { text: "수입과 지출의 밸런스가 똑 부러져요. 기분 좋게 쓴 돈이 세영이에게 더 큰 행복으로 돌아와요.", tip: "필요한 물품을 꼼꼼하게 비교해서 현명하게 소비해보세요." },
+        { text: "안정적인 흐름이 유지돼요. 불필요한 충동구매만 살짝 주의하면 지갑이 든든하게 채워져요.", tip: "커피 한 잔의 여유를 즐기며 소비 계획을 점검해보세요." },
+        { text: "지갑을 열기 전에 꼭 필요한지 한 번 더 생각해보는 알뜰살뜰 지혜가 필요한 날이에요.", tip: "오늘은 저축이나 위시리스트 정리에 집중해보세요." }
       ],
       health: [
-        { text: "몸과 마음의 에너지가 넘치고 컨디션이 최상입니다. 새로운 운동이나 취미를 시작하기에 훌륭합니다.", advice: "가벼운 조깅이나 스트레칭으로 활력을 유지하세요." },
-        { text: "생체 리듬이 안정적이며 피로 회복 속도가 빠릅니다. 맑은 정신으로 업무나 학업에 집중할 수 있습니다.", advice: "신선한 채소와 제철 과일로 비타민을 보충하세요." },
-        { text: "전반적으로 양호하나 오후 시간대에 가벼운 나른함이 올 수 있습니다. 충분한 수분을 섭취하세요.", advice: "눈의 피로를 풀기 위해 먼 곳을 바라보며 휴식하세요." },
-        { text: "면역력 관리에 신경 써야 할 때입니다. 과로를 피하고 규칙적인 수면 시간을 확보하세요.", advice: "따뜻한 허브티를 마시고 반신욕으로 피로를 녹이세요." }
+        { text: "발걸음이 깃털처럼 가볍고 컨디션이 최고예요! 에너지가 넘쳐서 하루 종일 기분 좋게 활동할 수 있어요.", tip: "가벼운 스트레칭이나 산책으로 상쾌함을 더해보세요!" },
+        { text: "생체 리듬이 무척 안정적이에요. 맑은 정신으로 집중력이 쑥쑥 올라가요.", tip: "신선한 과일과 영양 만점 식사로 에너지를 챙기세요." },
+        { text: "전반적으로 좋지만 오후에 가벼운 나른함이 올 수 있어요. 충분한 수분을 챙겨주세요.", tip: "눈의 피로를 풀기 위해 먼 곳을 바라보며 기지개를 켜보세요." },
+        { text: "무리한 일정은 피하고 밤에 따뜻하게 꿀잠 자는 것이 가장 중요해요.", tip: "따뜻한 물로 샤워하고 푹신한 이불 속에서 힐링하세요." }
       ],
       career: [
-        { text: "당신의 아이디어와 성과가 돋보여 주변의 신뢰와 인정을 한 몸에 받는 보람찬 날입니다.", advice: "자신감 있게 의견을 제안하면 뜻을 함께할 동료가 생깁니다." },
-        { text: "협업과 커뮤니케이션이 매우 매끄럽게 진행됩니다. 막혔던 프로젝트가 활로를 찾습니다.", advice: "동료에게 먼저 감사의 인사를 건네며 팀워크를 다져보세요." },
-        { text: "차분하게 맡은 바 책임을 다할 때 실속을 챙길 수 있습니다. 기본에 충실하세요.", advice: "오늘 할 일 목록(To-Do)을 우선순위대로 정리해보세요." },
-        { text: "주변의 작은 의견 차이에 흔들리지 마세요. 원칙을 지키며 침착하게 대처하면 무난히 해결됩니다.", advice: "중요한 문서는 두 번 검토하여 실수를 예방하세요." }
+        { text: "세영이의 센스와 꼼꼼함이 빛을 발해요! 주변 사람들에게 큰 칭찬과 인정을 받게 되는 날이에요.", tip: "자신감 있게 세영이의 생각을 표현해보세요!" },
+        { text: "해야 할 일들이 척척 계획대로 풀려요. 기분 좋은 성취감으로 하루를 보람차게 마무리할 수 있어요.", tip: "오늘 할 일을 하나씩 체크하며 기쁨을 느껴보세요." },
+        { text: "기본에 충실하며 차분하게 진행할 때 가장 좋은 결과가 나와요.", tip: "서두르지 말고 하나씩 꼼꼼하게 매듭지어보세요." },
+        { text: "주변의 작은 의견 차이에 당황하지 말고 침착하게 대처하면 술술 잘 풀려요.", tip: "중요한 내용은 메모해두면 실수를 완벽하게 예방해요." }
       ]
     };
 
-    const LUCKY_COLORS = ["골드 옐로우", "미스틱 퍼플", "스카이 블루", "포레스트 그린", "로즈 핑크", "크림 화이트", "딥 네이비", "루비 레드"];
-    const LUCKY_DIRECTIONS = ["동남쪽 (SE)", "정동쪽 (E)", "남서쪽 (SW)", "정남쪽 (S)", "북서쪽 (NW)", "정북쪽 (N)"];
-    const LUCKY_TIMES = ["08:00 ~ 10:00", "11:00 ~ 13:00", "14:00 ~ 16:00", "17:00 ~ 19:00", "20:00 ~ 22:00"];
+    const LUCKY_COLORS = ["파스텔 핑크", "크림 옐로우", "스카이 블루", "라벤더 퍼플", "민트 그린", "밀크 화이트", "코랄 피치", "따뜻한 베이지"];
+    const LUCKY_PLACES = ["햇살 드는 카페", "조용한 공원 산책로", "포근한 내 방 침대", "아기자기한 소품샵", "맛있는 베이커리", "서점/도서관"];
+    const LUCKY_TIMES = ["09:00 ~ 11:00", "12:30 ~ 14:00", "15:00 ~ 17:00", "18:30 ~ 20:00", "21:00 ~ 23:00"];
 
     /* -------------------------------------------------------------
-     * 3. Deterministic PRNG Engine (Mulberry32)
+     * 3. Deterministic Seed PRNG (Mulberry32)
      * ------------------------------------------------------------- */
     function createSeededRandom(seedStr) {
       let h = 2166136261 >>> 0;
@@ -1470,9 +1239,9 @@
     }
 
     /* -------------------------------------------------------------
-     * 4. Web Audio Synthesizer (Spinning & Summoning Chimes)
+     * 4. Web Audio Synthesizer (Cute Puppy Bounces & Fanfare)
      * ------------------------------------------------------------- */
-    class MysticSoundSynthesizer {
+    class CuteSoundEngine {
       constructor() {
         this.ctx = null;
       }
@@ -1487,18 +1256,18 @@
         }
       }
 
-      playSpinningHum() {
+      playSpinningBoing() {
         this.init();
         if (!this.ctx) return;
 
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
 
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(120, this.ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(480, this.ctx.currentTime + 2.8);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(320, this.ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(750, this.ctx.currentTime + 2.8);
 
-        gain.gain.setValueAtTime(0.08, this.ctx.currentTime);
+        gain.gain.setValueAtTime(0.12, this.ctx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 2.9);
 
         osc.connect(gain);
@@ -1508,27 +1277,28 @@
         osc.stop(this.ctx.currentTime + 2.9);
       }
 
-      playSummoningBurst() {
+      playPuppyFanfare() {
         this.init();
         if (!this.ctx) return;
 
-        const chord = [523.25, 659.25, 783.99, 1046.50, 1318.51, 1567.98]; // C5, E5, G5, C6, E6, G6
-        chord.forEach((freq, idx) => {
+        // Cute sweet arpeggio
+        const notes = [523.25, 659.25, 783.99, 1046.50, 1318.51]; // C5, E5, G5, C6, E6
+        notes.forEach((freq, idx) => {
           const osc = this.ctx.createOscillator();
           const gain = this.ctx.createGain();
-          const st = this.ctx.currentTime + idx * 0.07;
+          const st = this.ctx.currentTime + idx * 0.08;
 
-          osc.type = 'sine';
+          osc.type = 'triangle';
           osc.frequency.setValueAtTime(freq, st);
 
-          gain.gain.setValueAtTime(0.22, st);
-          gain.gain.exponentialRampToValueAtTime(0.001, st + 0.85);
+          gain.gain.setValueAtTime(0.2, st);
+          gain.gain.exponentialRampToValueAtTime(0.001, st + 0.6);
 
           osc.connect(gain);
           gain.connect(this.ctx.destination);
 
           osc.start(st);
-          osc.stop(st + 0.85);
+          osc.stop(st + 0.6);
         });
       }
     }
@@ -1537,152 +1307,137 @@
      * 5. Main Application Logic
      * ------------------------------------------------------------- */
     document.addEventListener('DOMContentLoaded', () => {
-      const soundSynth = new MysticSoundSynthesizer();
+      const soundEngine = new CuteSoundEngine();
 
       // Elements
       const fortuneForm = document.getElementById('fortuneForm');
       const userNameInput = document.getElementById('userName');
       const userBirthInput = document.getElementById('userBirth');
       const inputSection = document.getElementById('inputSection');
-      const summoningRitual = document.getElementById('summoningRitual');
+      const malteseRitual = document.getElementById('malteseRitual');
       const resultSection = document.getElementById('resultSection');
-      const ritualStatusKr = document.getElementById('ritualStatusKr');
-      const ritualStatusEn = document.getElementById('ritualStatusEn');
+      const ritualStatusText = document.getElementById('ritualStatusText');
       const ritualProgressFill = document.getElementById('ritualProgressFill');
       const themeToggleBtn = document.getElementById('themeToggleBtn');
       const themeBadge = document.getElementById('themeBadge');
-      const themeModeLabel = document.getElementById('themeModeLabel');
-      const currentDateEn = document.getElementById('currentDateEn');
+      const themeLabel = document.getElementById('themeLabel');
+      const currentDateText = document.getElementById('currentDateText');
       const toast = document.getElementById('toast');
-      const btnCopyShare = document.getElementById('btnCopyShare');
-      const btnRestart = document.getElementById('btnRestart');
+      const btnShare = document.getElementById('btnShare');
+      const btnReset = document.getElementById('btnReset');
       const btnReInput = document.getElementById('btnReInput');
 
       // Theme Management
       function applyTheme(theme, showToastMsg = false) {
-        if (theme === 'light') {
-          document.body.classList.remove('dark-theme');
-          document.body.classList.add('light-theme');
-          themeBadge.textContent = '☀️';
-          themeModeLabel.textContent = 'LIGHT';
-          localStorage.setItem('fortune_theme', 'light');
-          if (showToastMsg) showToast('☀️ 화이트(라이트) 모드로 변경되었습니다.');
-        } else {
+        if (theme === 'dark') {
           document.body.classList.remove('light-theme');
           document.body.classList.add('dark-theme');
           themeBadge.textContent = '🌙';
-          themeModeLabel.textContent = 'DARK';
-          localStorage.setItem('fortune_theme', 'dark');
-          if (showToastMsg) showToast('🌙 다크 모드로 변경되었습니다.');
+          themeLabel.textContent = '다크 모드';
+          localStorage.setItem('seyoung_theme', 'dark');
+          if (showToastMsg) showToast('🌙 아늑한 밤하늘 다크 모드로 변경되었어요!');
+        } else {
+          document.body.classList.remove('dark-theme');
+          document.body.classList.add('light-theme');
+          themeBadge.textContent = '☀️';
+          themeLabel.textContent = '화이트 모드';
+          localStorage.setItem('seyoung_theme', 'light');
+          if (showToastMsg) showToast('☀️ 뽀송뽀송 화이트 모드로 변경되었어요!');
         }
       }
 
-      const savedTheme = localStorage.getItem('fortune_theme');
-      if (savedTheme) {
-        applyTheme(savedTheme, false);
-      } else {
-        const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
-        applyTheme(prefersLight ? 'light' : 'dark', false);
-      }
+      const savedTheme = localStorage.getItem('seyoung_theme') || 'light';
+      applyTheme(savedTheme, false);
 
       themeToggleBtn.addEventListener('click', () => {
-        const isLight = document.body.classList.contains('light-theme');
-        applyTheme(isLight ? 'dark' : 'light', true);
+        const isDark = document.body.classList.contains('dark-theme');
+        applyTheme(isDark ? 'light' : 'dark', true);
       });
 
-      // Date Format in English
+      // Date Format in Korean
       const now = new Date();
-      const monthNames = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
-      const dateFormattedEn = `${monthNames[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
-      if (currentDateEn) currentDateEn.textContent = dateFormattedEn;
+      const days = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
+      const dateFormatted = `${now.getFullYear()}년 ${now.getMonth() + 1}월 ${now.getDate()}일 ${days[now.getDay()]}`;
+      if (currentDateText) currentDateText.textContent = dateFormatted;
 
       const dateSeedKey = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}`;
 
-      // Form Submit -> 3-Second Summoning Ritual
+      // Form Submit -> 3-Second Maltese Spinning Ritual
       fortuneForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        const name = userNameInput.value.trim();
-        const birth = userBirthInput.value.trim();
+        const name = userNameInput.value.trim() || '엄세영';
+        const birth = userBirthInput.value.trim() || '2002-09-17';
 
-        if (!name || !birth) {
-          alert('성함과 생년월일을 모두 입력해주세요.');
-          return;
-        }
-
-        // Start 3-Second Ritual
-        start3SecondSummoning(name, birth);
+        start3SecondRitual(name, birth);
       });
 
-      function start3SecondSummoning(name, birth) {
+      function start3SecondRitual(name, birth) {
         inputSection.style.display = 'none';
-        summoningRitual.classList.add('active');
+        malteseRitual.classList.add('active');
         ritualProgressFill.style.width = '0%';
-        soundSynth.playSpinningHum();
+        soundEngine.playSpinningBoing();
 
         setTimeout(() => {
           ritualProgressFill.style.width = '100%';
         }, 50);
 
         // Phase 1 (0 ~ 1s)
-        ritualStatusKr.textContent = "우주의 별들이 운명의 실타래를 엮고 있습니다...";
-        ritualStatusEn.textContent = "WEAVING THE CELESTIAL THREADS";
+        ritualStatusText.textContent = `${name}님의 오늘 운명선을 킁킁 탐색하고 있어요!`;
 
         // Phase 2 (1 ~ 2s)
         setTimeout(() => {
-          ritualStatusKr.textContent = "타로의 수호 영혼들이 그대의 기운에 응답합니다...";
-          ritualStatusEn.textContent = "GUARDIAN SPIRITS AWAKENING";
+          ritualStatusText.textContent = "말티즈 요정이 꼬리를 살랑살랑 흔들며 달려오고 있어요!";
         }, 1000);
 
         // Phase 3 (2 ~ 3s)
         setTimeout(() => {
-          ritualStatusKr.textContent = "✦ 소환 준비 완료! 운명의 문이 열립니다 ✦";
-          ritualStatusEn.textContent = "THE GATES OF DESTINY ARE OPENING";
+          ritualStatusText.textContent = "✦ 짠! 오늘의 수호 말티즈가 도착했어요! ✦";
         }, 2000);
 
         // Finish at 3.0s (3000ms)
         setTimeout(() => {
-          summoningRitual.classList.remove('active');
-          soundSynth.playSummoningBurst();
-          triggerCosmicBurst();
+          malteseRitual.classList.remove('active');
+          soundEngine.playPuppyFanfare();
+          triggerPuppyConfetti();
 
-          // Calculate Seed and Render
+          // Seed-based Random calculation
           const seedStr = `${name}_${birth}_${dateSeedKey}`;
           const rng = createSeededRandom(seedStr);
-          renderSummonedResult(name, rng);
+          renderFortuneResult(name, rng);
         }, 3000);
       }
 
-      function renderSummonedResult(name, rng) {
-        // Pick Summoned Guardian
-        const guardianIndex = Math.floor(rng() * GUARDIAN_DECK.length);
-        const guardian = GUARDIAN_DECK[guardianIndex];
+      function renderFortuneResult(name, rng) {
+        // Pick Guardian
+        const guardianIndex = Math.floor(rng() * MALTESE_GUARDIANS.length);
+        const guardian = MALTESE_GUARDIANS[guardianIndex];
 
-        // Overall Score (62 ~ 99)
-        const overallScore = Math.floor(rng() * 38) + 62;
-        let overallData = FORTUNE_DATABASE.overall.find(item => overallScore >= item.min) || FORTUNE_DATABASE.overall[0];
+        // Overall Score (75 ~ 99)
+        const overallScore = Math.floor(rng() * 25) + 75;
+        let overallData = FORTUNES_DATA.overall.find(item => overallScore >= item.min) || FORTUNES_DATA.overall[0];
 
-        // Star Ratings (3~5)
+        // Star Ratings (4~5 for uplifting happiness)
         const getStars = (val) => "★".repeat(val) + "☆".repeat(5 - val);
-        const loveScoreVal = Math.floor(rng() * 3) + 3;
-        const wealthScoreVal = Math.floor(rng() * 3) + 3;
-        const healthScoreVal = Math.floor(rng() * 3) + 3;
-        const careerScoreVal = Math.floor(rng() * 3) + 3;
+        const loveScoreVal = Math.floor(rng() * 2) + 4; // 4~5
+        const wealthScoreVal = Math.floor(rng() * 2) + 4;
+        const healthScoreVal = Math.floor(rng() * 2) + 4;
+        const careerScoreVal = Math.floor(rng() * 2) + 4;
 
-        // Category Messages
-        const loveMsg = FORTUNE_DATABASE.love[Math.floor(rng() * FORTUNE_DATABASE.love.length)];
-        const wealthMsg = FORTUNE_DATABASE.wealth[Math.floor(rng() * FORTUNE_DATABASE.wealth.length)];
-        const healthMsg = FORTUNE_DATABASE.health[Math.floor(rng() * FORTUNE_DATABASE.health.length)];
-        const careerMsg = FORTUNE_DATABASE.career[Math.floor(rng() * FORTUNE_DATABASE.career.length)];
+        // Messages
+        const loveMsg = FORTUNES_DATA.love[Math.floor(rng() * FORTUNES_DATA.love.length)];
+        const wealthMsg = FORTUNES_DATA.wealth[Math.floor(rng() * FORTUNES_DATA.wealth.length)];
+        const healthMsg = FORTUNES_DATA.health[Math.floor(rng() * FORTUNES_DATA.health.length)];
+        const careerMsg = FORTUNES_DATA.career[Math.floor(rng() * FORTUNES_DATA.career.length)];
 
         // Lucky items
         const luckyCol = LUCKY_COLORS[Math.floor(rng() * LUCKY_COLORS.length)];
-        const luckyNum1 = Math.floor(rng() * 45) + 1;
-        const luckyNum2 = (luckyNum1 + Math.floor(rng() * 20) + 1) % 45 + 1;
-        const luckyDir = LUCKY_DIRECTIONS[Math.floor(rng() * LUCKY_DIRECTIONS.length)];
+        const luckyNum1 = Math.floor(rng() * 30) + 1;
+        const luckyNum2 = (luckyNum1 + Math.floor(rng() * 15) + 1);
+        const luckyPlc = LUCKY_PLACES[Math.floor(rng() * LUCKY_PLACES.length)];
         const luckyTm = LUCKY_TIMES[Math.floor(rng() * LUCKY_TIMES.length)];
 
-        // Store for Copy
-        window.currentFortuneOracle = {
+        // Store for copy
+        window.currentFortuneData = {
           name,
           guardian,
           overallScore,
@@ -1693,58 +1448,57 @@
           careerStars: getStars(careerScoreVal),
           luckyColor: luckyCol,
           luckyNum: `${luckyNum1}, ${luckyNum2}`,
-          luckyDir,
-          luckyTm
+          luckyPlace: luckyPlc,
+          luckyTime: luckyTm
         };
 
         // Populate DOM
         document.getElementById('resName').textContent = name;
 
-        // Guardian Portal
+        // Guardian Hero Card
         document.getElementById('guardianAvatar').textContent = guardian.avatar;
-        document.getElementById('guardianCardNum').textContent = guardian.num;
-        document.getElementById('guardianNameEn').textContent = guardian.nameEn;
-        document.getElementById('guardianNameKr').textContent = guardian.nameKr;
+        document.getElementById('guardianName').textContent = guardian.name;
+        document.getElementById('guardianTagline').textContent = `"${guardian.tagline}"`;
         document.getElementById('guardianQuote').textContent = `"${guardian.quote}"`;
         document.getElementById('guardianKeywords').textContent = guardian.keywords;
 
-        // Overall Score
-        document.getElementById('overallScoreVal').textContent = overallScore;
-        document.getElementById('overallGrade').textContent = overallData.grade;
-        document.getElementById('overallDesc').textContent = overallData.desc;
+        // Score Card
+        document.getElementById('scoreNumberText').textContent = overallScore;
+        document.getElementById('overallGradeTitle').textContent = overallData.grade;
+        document.getElementById('overallDetailText').textContent = overallData.desc;
 
-        // Animate Radial Score Bar (circumference = 377)
-        const circleBar = document.getElementById('scoreCircleProgress');
-        const offset = 377 - (377 * (overallScore / 100));
-        circleBar.style.strokeDashoffset = '377';
+        // Animate Radial Score Circle (circumference = 345)
+        const scoreCircle = document.getElementById('scoreFillCircle');
+        const offset = 345 - (345 * (overallScore / 100));
+        scoreCircle.style.strokeDashoffset = '345';
         setTimeout(() => {
-          circleBar.style.strokeDashoffset = offset;
+          scoreCircle.style.strokeDashoffset = offset;
         }, 120);
 
         // 4 Categories
         document.getElementById('loveStars').textContent = getStars(loveScoreVal);
-        document.getElementById('loveText').textContent = loveMsg.text;
-        document.getElementById('loveAdvice').innerHTML = `💡 <strong>조언:</strong> ${loveMsg.advice}`;
+        document.getElementById('loveDesc').textContent = loveMsg.text;
+        document.getElementById('loveTip').innerHTML = `💡 <strong>댕댕이 꿀팁:</strong> ${loveMsg.tip}`;
 
         document.getElementById('wealthStars').textContent = getStars(wealthScoreVal);
-        document.getElementById('wealthText').textContent = wealthMsg.text;
-        document.getElementById('wealthAdvice').innerHTML = `💡 <strong>조언:</strong> ${wealthMsg.advice}`;
+        document.getElementById('wealthDesc').textContent = wealthMsg.text;
+        document.getElementById('wealthTip').innerHTML = `💡 <strong>댕댕이 꿀팁:</strong> ${wealthMsg.tip}`;
 
         document.getElementById('healthStars').textContent = getStars(healthScoreVal);
-        document.getElementById('healthText').textContent = healthMsg.text;
-        document.getElementById('healthAdvice').innerHTML = `💡 <strong>조언:</strong> ${healthMsg.advice}`;
+        document.getElementById('healthDesc').textContent = healthMsg.text;
+        document.getElementById('healthTip').innerHTML = `💡 <strong>댕댕이 꿀팁:</strong> ${healthMsg.tip}`;
 
         document.getElementById('careerStars').textContent = getStars(careerScoreVal);
-        document.getElementById('careerText').textContent = careerMsg.text;
-        document.getElementById('careerAdvice').innerHTML = `💡 <strong>조언:</strong> ${careerMsg.advice}`;
+        document.getElementById('careerDesc').textContent = careerMsg.text;
+        document.getElementById('careerTip').innerHTML = `💡 <strong>댕댕이 꿀팁:</strong> ${careerMsg.tip}`;
 
-        // Lucky Elements
+        // Lucky Items
         document.getElementById('luckyColor').textContent = luckyCol;
         document.getElementById('luckyNumber').textContent = `${luckyNum1}, ${luckyNum2}`;
-        document.getElementById('luckyDirection').textContent = luckyDir;
+        document.getElementById('luckyPlace').textContent = luckyPlc;
         document.getElementById('luckyTime').textContent = luckyTm;
 
-        // Show Result
+        // Show Result Section
         resultSection.style.display = 'block';
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
@@ -1755,26 +1509,26 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
 
-      btnRestart.addEventListener('click', resetView);
+      btnReset.addEventListener('click', resetView);
       btnReInput.addEventListener('click', resetView);
 
       // Copy Share Result
-      btnCopyShare.addEventListener('click', () => {
-        if (!window.currentFortuneOracle) return;
-        const d = window.currentFortuneOracle;
-        const text = `🔮 [${d.name}님의 오늘 타로 오라클] (${dateFormattedEn})\n` +
-          `👑 소환된 수호신: ${d.guardian.nameEn} - ${d.guardian.nameKr}\n` +
-          `💬 수호신의 조언: "${d.guardian.quote}"\n` +
-          `💯 종합 지수: ${d.overallScore}점 (${d.overallGrade})\n` +
+      btnShare.addEventListener('click', () => {
+        if (!window.currentFortuneData) return;
+        const d = window.currentFortuneData;
+        const text = `🐶 [${d.name}님의 오늘 말티즈 운세] 🐾 (${dateFormatted})\n` +
+          `✨ 오늘의 수호 말티즈: ${d.guardian.name}\n` +
+          `💬 말티즈의 한마디: "${d.guardian.quote}"\n` +
+          `💯 종합 행운 지수: ${d.overallScore}점 (${d.overallGrade})\n` +
           `💖 애정운: ${d.loveStars} | 🪙 금전운: ${d.wealthStars}\n` +
-          `🌱 건강운: ${d.healthStars} | 🧭 대인운: ${d.careerStars}\n` +
-          `🍀 행운 가이드: ${d.luckyColor}, 숫자 ${d.luckyNum}, ${d.luckyDir}\n\n` +
-          `👉 신비로운 오늘의 타로 운세에서 나의 수호신을 소환해보세요!`;
+          `🌱 건강운: ${d.healthStars} | ⭐ 성공운: ${d.careerStars}\n` +
+          `🍀 행운 아이템: ${d.luckyColor}, 숫자 ${d.luckyNum}, ${d.luckyPlace}\n\n` +
+          `👉 세영이의 운세에서 나의 수호 말티즈를 만나보세요! 🐾`;
 
         navigator.clipboard.writeText(text).then(() => {
-          showToast('운세 결과가 클립보드에 복사되었습니다!');
+          showToast('운세 결과가 클립보드에 복사되었어요! 🐾');
         }).catch(() => {
-          showToast('운세 결과가 복사되었습니다!');
+          showToast('운세 결과가 복사되었어요! 🐾');
         });
       });
 
@@ -1787,13 +1541,13 @@
         }, 2500);
       }
 
-      function triggerCosmicBurst() {
+      function triggerPuppyConfetti() {
         if (typeof confetti === 'function') {
           confetti({
             particleCount: 80,
             spread: 80,
             origin: { y: 0.45 },
-            colors: ['#fae084', '#d4af37', '#9333ea', '#38bdf8', '#ffffff']
+            colors: ['#ff85a2', '#ffb703', '#70d6ff', '#ffd6e0', '#ffffff']
           });
         }
       }
