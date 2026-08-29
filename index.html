@@ -1351,7 +1351,7 @@
         { name: "염소자리", symbol: "♑", start: [12, 22], end: [12, 31] }
       ];
 
-      for (let z of zodiacs) {
+      for (const z of zodiacs) {
         if (
           (month === z.start[0] && day >= z.start[1]) ||
           (month === z.end[0] && day <= z.end[1])
@@ -1561,7 +1561,7 @@
 
         // Overall Score (78 ~ 99 for happy uplifting vibes)
         const overallScore = Math.floor(rng() * 22) + 78;
-        let overallData = FORTUNES_DB.overall.find(item => overallScore >= item.min) || FORTUNES_DB.overall[0];
+        const overallData = FORTUNES_DB.overall.find(item => overallScore >= item.min) || FORTUNES_DB.overall[0];
 
         // 4 Category Star Ratings (3~5)
         const getStarString = (count) => "⭐".repeat(count) + "☆".repeat(5 - count);
