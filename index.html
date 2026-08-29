@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>황금손 로또 6/45 번호 추첨기 | Golden Lotto</title>
+  <meta name="description" content="실감나는 3D 애니메이션과 사운드 효과를 제공하는 로또 6/45 행운 번호 추첨 사이트입니다.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body class="dark-theme">
+  <!-- Background Glow & Particles -->
+  <div class="bg-glow"></div>
+  <div class="bg-grid"></div>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="logo">
+        <span class="logo-icon">✨</span>
+        <h1>황금손 로또 <span>6/45</span></h1>
+      </div>
+      <div class="header-actions">
+        <button id="soundToggleBtn" class="icon-btn" title="소리 켜기/끄기" aria-label="소리 토글">
+          <i class="fa-solid fa-volume-high"></i>
+        </button>
+        <button id="themeToggleBtn" class="icon-btn" title="테마 변경" aria-label="테마 변경">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="app-main">
+    <div class="container">
+
+      <!-- Navigation Tabs -->
+      <nav class="main-nav">
+        <button class="nav-tab active" data-tab="liveDraw">
+          <i class="fa-solid fa-play"></i> 생방송 라이브 추첨
+        </button>
+        <button class="nav-tab" data-tab="multiDraw">
+          <i class="fa-solid fa-layer-group"></i> 5세트 일괄 생성 (A~E)
+        </button>
+        <button class="nav-tab" data-tab="filterModal">
+          <i class="fa-solid fa-sliders"></i> 고정수 / 제외수 설정
+          <span id="activeFilterBadge" class="filter-badge hidden">0</span>
+        </button>
+        <button class="nav-tab" data-tab="historySection">
+          <i class="fa-solid fa-clock-rotate-left"></i> 추첨 기록
+        </button>
+        <button class="nav-tab" data-tab="statsSection">
+          <i class="fa-solid fa-chart-pie"></i> 번호 분석 & 통계
+        </button>
+      </nav>
+
+      <!-- TAB 1: Live Draw Machine -->
+      <section id="liveDrawTab" class="tab-pane active">
+        <div class="draw-hero-card">
+          <!-- Lottery Machine Visualization -->
+          <div class="machine-wrapper">
+            <div class="machine-sphere" id="lotteryMachine">
+              <div class="machine-inner">
+                <div class="rotating-balls" id="tumblingBalls">
+                  <!-- Animated decorative tumbling balls generated via JS -->
+                </div>
+                <div class="machine-light-ring"></div>
+              </div>
+              <div class="machine-pipe"></div>
+            </div>
+          </div>
+
+          <!-- Drawn Balls Display -->
+          <div class="draw-result-container">
+            <div class="result-label">추첨된 행운의 번호</div>
+            <div class="balls-display" id="liveBallsContainer">
+              <div class="ball-slot" data-index="0"><span class="placeholder">?</span></div>
+              <div class="ball-slot" data-index="1"><span class="placeholder">?</span></div>
+              <div class="ball-slot" data-index="2"><span class="placeholder">?</span></div>
+              <div class="ball-slot" data-index="3"><span class="placeholder">?</span></div>
+              <div class="ball-slot" data-index="4"><span class="placeholder">?</span></div>
+              <div class="ball-slot" data-index="5"><span class="placeholder">?</span></div>
+              <div class="bonus-plus">+</div>
+              <div class="ball-slot bonus-slot" data-index="6"><span class="placeholder">?</span></div>
+            </div>
+            <div class="bonus-tag">보너스 번호</div>
+          </div>
+
+          <!-- Quick Stats of Current Draw -->
+          <div class="current-draw-stats hidden" id="currentDrawStats">
+            <span class="stat-pill"><i class="fa-solid fa-calculator"></i> 번호 총합: <strong id="currentSum">0</strong></span>
+            <span class="stat-pill"><i class="fa-solid fa-scale-balanced"></i> 홀:짝 = <strong id="currentOddEven">0:0</strong></span>
+            <span class="stat-pill"><i class="fa-solid fa-chart-line"></i> 고저 비율: <strong id="currentHighLow">0:0</strong></span>
+          </div>
+
+          <!-- Action Controls -->
+          <div class="draw-controls">
+            <button id="startLiveDrawBtn" class="btn btn-primary btn-glow">
+              <i class="fa-solid fa-dice"></i> 실시간 추첨 시작!
+            </button>
+            <button id="instantDrawBtn" class="btn btn-secondary">
+              <i class="fa-solid fa-bolt"></i> 즉시 번호 확인
+            </button>
+            <button id="copyLiveResultBtn" class="btn btn-outline" disabled>
+              <i class="fa-solid fa-copy"></i> 번호 복사
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: Multi 5-Set Draw (A~E) -->
+      <section id="multiDrawTab" class="tab-pane">
+        <div class="card multi-card">
+          <div class="card-header">
+            <div>
+              <h2><i class="fa-solid fa-receipt"></i> 1회 구매용 5세트 (A, B, C, D, E)</h2>
+              <p class="card-subtitle">로또 용지 한 장(5,000원) 분량의 추천 번호 조합을 한 번에 생성합니다.</p>
+            </div>
+            <div class="card-actions">
+              <button id="generateMultiBtn" class="btn btn-primary">
+                <i class="fa-solid fa-arrows-rotate"></i> 5세트 자동 추출
+              </button>
+              <button id="copyAllMultiBtn" class="btn btn-outline">
+                <i class="fa-solid fa-clipboard-check"></i> 5세트 전체 복사
+              </button>
+            </div>
+          </div>
+
+          <div class="multi-sets-list" id="multiSetsList">
+            <!-- 5 rows injected dynamically -->
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: Fixed / Excluded Numbers Filter Modal/Section -->
+      <section id="filterModalTab" class="tab-pane">
+        <div class="card filter-card">
+          <div class="card-header">
+            <div>
+              <h2><i class="fa-solid fa-sliders"></i> 번호 맞춤 필터링</h2>
+              <p class="card-subtitle">원하는 고정수(반드시 포함)와 제외수(절대 미포함)를 선택하세요.</p>
+            </div>
+            <button id="resetFilterBtn" class="btn btn-outline btn-sm">
+              <i class="fa-solid fa-trash-can"></i> 필터 초기화
+            </button>
+          </div>
+
+          <div class="filter-mode-selector">
+            <label class="radio-label">
+              <input type="radio" name="filterMode" value="fixed" checked>
+              <span class="radio-custom fixed-radio">
+                <i class="fa-solid fa-thumbtack"></i> 고정수 선택 (최대 5개)
+              </span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="filterMode" value="excluded">
+              <span class="radio-custom excluded-radio">
+                <i class="fa-solid fa-ban"></i> 제외수 선택 (최대 39개)
+              </span>
+            </label>
+          </div>
+
+          <!-- 1~45 Number Grid Selector -->
+          <div class="number-picker-grid" id="numberPickerGrid">
+            <!-- 1 to 45 buttons injected via JS -->
+          </div>
+
+          <div class="filter-summary">
+            <div class="filter-box fixed-box">
+              <h3><span class="badge fixed-badge">고정수</span> <span id="fixedCount">(0/5)</span></h3>
+              <div class="selected-tags" id="fixedTags">
+                <span class="empty-text">선택된 고정수가 없습니다.</span>
+              </div>
+            </div>
+            <div class="filter-box excluded-box">
+              <h3><span class="badge excluded-badge">제외수</span> <span id="excludedCount">(0/39)</span></h3>
+              <div class="selected-tags" id="excludedTags">
+                <span class="empty-text">선택된 제외수가 없습니다.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: History -->
+      <section id="historySectionTab" class="tab-pane">
+        <div class="card history-card">
+          <div class="card-header">
+            <div>
+              <h2><i class="fa-solid fa-clock-rotate-left"></i> 나의 추첨 기록</h2>
+              <p class="card-subtitle">로컬 브라우저에 자동 보관된 이전 추첨 번호 목록입니다.</p>
+            </div>
+            <div class="card-actions">
+              <button id="clearHistoryBtn" class="btn btn-outline btn-danger btn-sm">
+                <i class="fa-solid fa-trash"></i> 전체 삭제
+              </button>
+            </div>
+          </div>
+
+          <div class="history-list" id="historyList">
+            <!-- Dynamic History -->
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 5: Statistics & Insights -->
+      <section id="statsSectionTab" class="tab-pane">
+        <div class="card stats-card">
+          <div class="card-header">
+            <h2><i class="fa-solid fa-chart-pie"></i> 로또 6/45 번호대별 가이드 & 꿀팁</h2>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-info-card">
+              <h3><span class="color-dot dot-yellow"></span> 1 ~ 10 번대 (노랑)</h3>
+              <p>첫 시작 번호로 자주 출현하는 1번대 구간입니다.</p>
+            </div>
+            <div class="stat-info-card">
+              <h3><span class="color-dot dot-blue"></span> 11 ~ 20 번대 (파랑)</h3>
+              <p>평균적으로 1~2개씩 꾸준히 포함되는 황금 밸런스 구간입니다.</p>
+            </div>
+            <div class="stat-info-card">
+              <h3><span class="color-dot dot-red"></span> 21 ~ 30 번대 (빨강)</h3>
+              <p>중간 허리를 담당하는 번호대로 조합 시 필수적인 핵심 구간입니다.</p>
+            </div>
+            <div class="stat-info-card">
+              <h3><span class="color-dot dot-gray"></span> 31 ~ 40 번대 (회색)</h3>
+              <p>후반부 번호대로 고액 당첨 조합에 자주 등장합니다.</p>
+            </div>
+            <div class="stat-info-card">
+              <h3><span class="color-dot dot-green"></span> 41 ~ 45 번대 (초록)</h3>
+              <p>총 5개 숫자로 구성되며 엔딩 번호로 활약합니다.</p>
+            </div>
+            <div class="stat-info-card special-card">
+              <h3><i class="fa-solid fa-lightbulb"></i> 당첨 밸런스 TIP</h3>
+              <p>번호 총합은 보통 <strong>100 ~ 170</strong> 사이, 홀짝 비율은 <strong>3:3 또는 4:2, 2:4</strong>일 때 당첨 확률 통계가 가장 높습니다!</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Info Banner / Official Link -->
+      <aside class="official-banner">
+        <div class="banner-content">
+          <i class="fa-solid fa-award banner-icon"></i>
+          <div>
+            <h4>동행복권 공식 로또 6/45 추첨 안내</h4>
+            <p>매주 토요일 오후 8시 35분 MBC 생방송 추첨 (만 19세 이상 구매 가능)</p>
+          </div>
+        </div>
+        <a href="https://dhlottery.co.kr" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline">
+          동행복권 공식사이트 <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        </a>
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">번호가 클립보드에 복사되었습니다!</div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="container">
+      <p>© 2026 황금손 로또 6/45 번호 추첨기. 행운과 대박을 기원합니다!</p>
+      <p class="disclaimer">본 사이트의 추첨 번호는 무작위 알고리즘에 의해 생성되며, 당첨을 보장하지 않습니다.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
