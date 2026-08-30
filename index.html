@@ -952,6 +952,131 @@
       font-weight: 700;
       color: var(--text-muted);
     }
+
+    .footer-partner-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 14px;
+      padding: 8px 20px;
+      background: var(--card-bg);
+      border: 2.5px solid var(--sticker-border);
+      border-radius: 30px;
+      font-family: var(--font-hand);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      box-shadow: var(--sticker-shadow-sm);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .footer-partner-link:hover {
+      transform: translate(-1px, -2px);
+      box-shadow: var(--sticker-shadow);
+      background: var(--kitsch-yellow-light);
+    }
+
+    /* ==========================================================================
+       PARTNERSHIP INQUIRY MODAL
+       ========================================================================== */
+    .partner-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(45, 35, 46, 0.55);
+      backdrop-filter: blur(6px);
+      z-index: 1500;
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 60px 16px;
+      overflow-y: auto;
+    }
+
+    .partner-modal-overlay.active {
+      display: flex;
+      animation: popIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .partner-modal-box {
+      width: 100%;
+      max-width: 480px;
+      background: var(--card-bg);
+      border: 3px solid var(--sticker-border);
+      border-radius: var(--radius-xl);
+      padding: 26px 22px 22px;
+      box-shadow: var(--sticker-shadow-lg);
+      position: relative;
+    }
+
+    .btn-modal-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 34px;
+      height: 34px;
+      border: 2.5px solid var(--sticker-border);
+      border-radius: 50%;
+      background: var(--card-bg);
+      color: var(--text-dark);
+      font-size: 1.05rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: var(--sticker-shadow-sm);
+      transition: all 0.15s ease;
+    }
+
+    .btn-modal-close:hover {
+      background: var(--kitsch-coral);
+      color: #ffffff;
+    }
+
+    .partner-modal-title {
+      font-family: var(--font-kitsch);
+      font-size: 1.5rem;
+      color: var(--kitsch-purple);
+      margin-bottom: 4px;
+      padding-right: 30px;
+    }
+
+    .partner-modal-desc {
+      font-family: var(--font-hand);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .kitsch-textarea {
+      width: 100%;
+      min-height: 110px;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      background: var(--bg-base);
+      border: 2.5px solid var(--sticker-border);
+      border-radius: var(--radius-lg);
+      padding: 13px 14px;
+      outline: none;
+      resize: vertical;
+      box-shadow: inset 2px 2px 0px rgba(0,0,0,0.06);
+      transition: all 0.2s ease;
+    }
+
+    .kitsch-textarea:focus {
+      border-color: var(--kitsch-pink);
+      background: #ffffff;
+      box-shadow: 0 0 0 4px rgba(255, 112, 166, 0.25);
+    }
+
+    .btn-kitsch-magic:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none !important;
+    }
   </style>
 </head>
 <body>
@@ -1201,12 +1326,64 @@
     <footer class="app-footer">
       <p>🐾 세영이의 운세 • 귀여운 강아지 점성술소 🔮</p>
       <p style="font-size: 0.95rem; margin-top: 4px;">매일 세영이에게 즐거운 행복과 행운이 가득하길 멍!</p>
+      <button type="button" id="btnOpenPartner" class="footer-partner-link">
+        <i class="fa-solid fa-handshake"></i> 제휴 문의
+      </button>
     </footer>
 
   </main>
 
   <!-- Toast Notification -->
   <div id="toast" class="toast">운세 결과가 클립보드에 복사되었어요! 🐾</div>
+
+  <!-- Partnership Inquiry Modal -->
+  <div id="partnerModal" class="partner-modal-overlay">
+    <div class="partner-modal-box">
+      <button type="button" id="btnClosePartner" class="btn-modal-close" aria-label="닫기">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div class="partner-modal-title">🤝 제휴 문의</div>
+      <p class="partner-modal-desc">세영이의 운세와 함께하고 싶은 제안이 있다면 편하게 남겨주세요 멍!</p>
+
+      <form id="partnerForm" action="https://formspree.io/f/xdeooqza" method="POST">
+        <div class="form-group">
+          <label class="form-label" for="partnerName">🙋 담당자 성함</label>
+          <div class="input-box">
+            <span class="input-icon">🙋</span>
+            <input type="text" id="partnerName" name="담당자 성함" class="kitsch-input" placeholder="성함을 입력해주세요" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="partnerCompany">🏢 회사 / 브랜드명</label>
+          <div class="input-box">
+            <span class="input-icon">🏢</span>
+            <input type="text" id="partnerCompany" name="회사/브랜드명" class="kitsch-input" placeholder="회사 또는 브랜드명 (선택)">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="partnerEmail">📧 회신받을 이메일</label>
+          <div class="input-box">
+            <span class="input-icon">📧</span>
+            <input type="email" id="partnerEmail" name="이메일" class="kitsch-input" placeholder="example@email.com" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="partnerMessage">💬 문의 내용</label>
+          <textarea id="partnerMessage" name="문의 내용" class="kitsch-textarea" placeholder="제휴 제안 내용을 자유롭게 남겨주세요!" required></textarea>
+        </div>
+
+        <input type="hidden" name="_subject" value="[세영이의 운세] 새로운 제휴 문의가 도착했어요 🐾">
+        <input type="text" name="_gotcha" style="display:none">
+
+        <button type="submit" id="btnPartnerSubmit" class="btn-kitsch-magic">
+          <i class="fa-solid fa-paper-plane"></i> 문의 보내기
+        </button>
+      </form>
+    </div>
+  </div>
 
   <!-- ==========================================================================
        4. SCRIPT LOGIC (Zodiac Calc + Dog Astrologers + 15+ Fortunes + Confetti)
@@ -1465,6 +1642,11 @@
       const btnShareKitsch = document.getElementById('btnShareKitsch');
       const btnRetryKitsch = document.getElementById('btnRetryKitsch');
       const btnReInput = document.getElementById('btnReInput');
+      const btnOpenPartner = document.getElementById('btnOpenPartner');
+      const btnClosePartner = document.getElementById('btnClosePartner');
+      const partnerModal = document.getElementById('partnerModal');
+      const partnerForm = document.getElementById('partnerForm');
+      const btnPartnerSubmit = document.getElementById('btnPartnerSubmit');
 
       // Update Live Zodiac on birthdate input
       function updateLiveZodiac() {
@@ -1680,6 +1862,52 @@
           toast.classList.remove('show');
         }, 2500);
       }
+
+      // Partnership Inquiry Modal
+      function openPartnerModal() {
+        partnerModal.classList.add('active');
+      }
+
+      function closePartnerModal() {
+        partnerModal.classList.remove('active');
+      }
+
+      btnOpenPartner.addEventListener('click', openPartnerModal);
+      btnClosePartner.addEventListener('click', closePartnerModal);
+      partnerModal.addEventListener('click', (e) => {
+        if (e.target === partnerModal) closePartnerModal();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && partnerModal.classList.contains('active')) closePartnerModal();
+      });
+
+      partnerForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const originalLabel = btnPartnerSubmit.innerHTML;
+        btnPartnerSubmit.disabled = true;
+        btnPartnerSubmit.innerHTML = '<i class="fa-solid fa-paw"></i> 전송 중...';
+
+        try {
+          const response = await fetch(partnerForm.action, {
+            method: 'POST',
+            body: new FormData(partnerForm),
+            headers: { 'Accept': 'application/json' }
+          });
+
+          if (response.ok) {
+            showToast('제휴 문의가 접수되었어요! 곧 연락드릴게요 🐾');
+            partnerForm.reset();
+            closePartnerModal();
+          } else {
+            showToast('앗, 전송에 실패했어요. 잠시 후 다시 시도해주세요 🥲');
+          }
+        } catch (err) {
+          showToast('앗, 전송에 실패했어요. 인터넷 연결을 확인해주세요 🥲');
+        } finally {
+          btnPartnerSubmit.disabled = false;
+          btnPartnerSubmit.innerHTML = originalLabel;
+        }
+      });
 
       // Kitsch Confetti with Bones, Stars, and Hearts
       function triggerKitschConfetti() {
